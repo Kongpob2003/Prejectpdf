@@ -115,16 +115,14 @@
   margin-bottom: 20px;
 }
 
-/* summary-box */
-.summary-box {
-  background: #1A285F;
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 20%;
+.summary-row {
+  display: flex;
+  align-items: flex-end; /* ปุ่มต่ำกว่ากล่องนิดหน่อย */
+  justify-content: space-between;
+  width: 95%;
+  margin-bottom: 20px;
 }
 
-/* ปุ่มอัปโหลด */
 .upload-btn {
   background: #1A285F;
   color: white;
@@ -132,5 +130,5 @@
   padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 90px;
 }
+

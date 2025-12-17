@@ -12,7 +12,9 @@
       <li>JAE</li>
       <li>ประกันคุณภาพ</li>
       <li>หมวดหมู่</li>
-      <li class="logout">ออกจากระบบ</li>
+      <li class="logout" (click)="logout()">ออกจากระบบ</li>
+
+
     </ul>
   </aside>
 
@@ -50,3 +52,12 @@
 
   </main>
 </div>
+
+<script>
+  function goLogin() {
+    window.location.href = '/login';
+    // ถ้าเป็นไฟล์ html ธรรมดา:
+    // window.location.href = 'login.html';
+  }
+</script>
+

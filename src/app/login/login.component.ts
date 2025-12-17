@@ -12,6 +12,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   login() {
+    // UI only (ยังไม่เช็ค user)
     this.router.navigate(['/home']);
   }
 }
