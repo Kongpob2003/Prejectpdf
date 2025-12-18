@@ -18,8 +18,22 @@
 }
 
 .sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 12px;            /* ระยะห่างไอคอนกับข้อความ */
   padding: 12px 0;
   cursor: pointer;
+  font-size: 16px;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 8px;
+  border-radius: 6px;
+}
+
+.material-icons {
+  font-size: 22px;
 }
 
 .logout {
@@ -38,7 +52,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-info .material-icons {
+  font-size: 28px;
+  color: #1A285F;
 }
 
 .top-bar input {
@@ -48,14 +76,33 @@
   border: 1px solid #ccc;
 }
 
-/* Boxes */
 .summary-box {
-  background: #1A285F;
-  color: white;
+  background: #FFA726;          /* 🟧 สีส้ม */
+  color: #000;                  /* ตัวหนังสือดำ */
   padding: 20px;
   border-radius: 12px;
-  margin-bottom: 20px;
-  width: 15%;               /* สั้นลง ขยับขวาเข้าซ้าย */
+  width: 20%;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.summary-icon {
+  font-size: 40px;
+  color: #000;
+}
+
+.summary-text h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.summary-text p {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 /* กล่องไฟล์ */
@@ -91,8 +138,29 @@
 }
 
 .file-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 14px;                 /* ระยะห่างไอคอนกับข้อความ */
+  padding: 14px 12px;        /* ขยายช่อง */
+  margin-bottom: 10px;       /* ระยะห่างระหว่างแต่ละไฟล์ */
+  border-radius: 8px;
+  background-color: #fff3e0; /* พื้นหลังสีส้มอ่อน */
+  color: #000;
+}
+
+.file-list li:hover {
+  background-color: #ffe0b2; /* hover แล้วเข้มขึ้น */
+  cursor: pointer;
+}
+
+.file-icon {
+  font-size: 26px;
+  color: #e53935;            /* แดง PDF */
+}
+
+.file-name {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 /* แถบปุ่มอัปโหลดเหนือกล่อง */
@@ -104,15 +172,33 @@
   
 }
 
+.search-box {
+  position: relative;
+}
 
+.search-box input {
+  width: 320px;
+  padding: 10px 14px 10px 40px; /* เว้นที่ให้ไอคอน */
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  background-color: #D9D9D9;
+}
 
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 20px;
+}
 /* แถว summary */
 .summary-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 95%;
-  margin-bottom: 20px;
+  margin-top: 24px;
 }
 
 .summary-row {
@@ -132,3 +218,141 @@
   cursor: pointer;
 }
 
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;   /* สีเทาอ่อน */
+  margin: 16px 0 24px 0;    /* ระยะห่างบน-ล่าง */
+}
+
+/* Grid */
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.file-card {
+  position: relative;
+  background: #fff3e0;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.file-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ไอคอน PDF */
+.file-icon {
+  font-size: 48px;
+  color: #e53935;
+  margin-bottom: 10px;
+}
+
+/* ชื่อไฟล์ */
+.file-name {
+  font-size: 15px;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+/* สถานะ */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.status-badge.sent {
+  background: #c8e6c9;
+  color: #256029;
+}
+
+.status-badge.pending {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+/* ปุ่มลบ */
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: red;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-box {
+  background: white;
+  width: 600px;
+  max-width: 90%;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.pdf-preview {
+  height: 300px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
+}
+
+/* Google Drive feel */
+.file-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
+
+.file-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.pdf-preview {
+  border: none;
+}

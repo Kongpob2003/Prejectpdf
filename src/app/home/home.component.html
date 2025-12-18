@@ -4,17 +4,17 @@
   <aside class="sidebar">
     <h2 class="logo">My PDF</h2>
     <ul>
-      <li>หน้าหลัก</li>
-      <li>ข้อมูลส่วนตัว</li>
-      <li>ปฏิทิน</li>
-      <li>เพิ่มลดผู้ใช้</li>
-      <li>ประชาสัมพันธ์</li>
-      <li>JAE</li>
-      <li>ประกันคุณภาพ</li>
-      <li>หมวดหมู่</li>
-      <li class="logout" (click)="logout()">ออกจากระบบ</li>
-
-
+      <li><span class="material-icons">home</span>หน้าหลัก</li>
+      <li><span class="material-icons">person</span>ข้อมูลส่วนตัว</li>
+      <li><span class="material-icons">calendar_month</span>ปฏิทิน</li>
+      <li><span class="material-icons">group_add</span>เพิ่มลดผู้ใช้</li>
+      <li><span class="material-icons">campaign</span>ประชาสัมพันธ์</li>
+      <li><span class="material-icons">description</span>JAE</li>
+      <li><span class="material-icons">verified</span>ประกันคุณภาพ</li>
+      <li><span class="material-icons">category</span>หมวดหมู่</li>
+      <li class="logout" (click)="logout()">
+        <span class="material-icons">logout</span>ออกจากระบบ
+      </li>
     </ul>
   </aside>
 
@@ -23,41 +23,94 @@
 
     <!-- Top bar -->
     <div class="top-bar">
-      <input type="text" placeholder="ค้นหาชื่อไฟล์">
-      <div class="user-name">ชื่อผู้ใช้</div>
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input
+          type="text"
+          placeholder="ค้นหาชื่อไฟล์"
+          [(ngModel)]="searchText"
+        >
+      </div>
+
+      <div class="user-info">
+        <span class="user-name">ชื่อผู้ใช้</span>
+        <span class="material-icons">account_circle</span>
+      </div>
     </div>
-    
+
+    <div class="divider"></div>
+
     <!-- Summary -->
-    <!-- Summary + Upload -->
-<div class="summary-row">
-  <div class="summary-box">
-    <h3>เอกสารทั้งหมด</h3>
-    <p>10 ไฟล์</p>
-  </div>
+    <div class="summary-row">
+      <div class="summary-box">
+        <span class="material-icons summary-icon">description</span>
+        <div class="summary-text">
+          <p class="summary-number">{{ files.length }} ไฟล์</p>
+          <h3>เอกสารทั้งหมด</h3>
+        </div>
+      </div>
 
-  <button class="upload-btn">อัปโหลดไฟล์</button>
-</div>
+      <button class="upload-btn">อัปโหลดไฟล์</button>
+    </div>
 
+    <!-- Tabs -->
+    <div class="tabs">
+      <button
+        [class.active]="activeTab === 'all'"
+        (click)="activeTab = 'all'">ทั้งหมด</button>
 
-    <!-- My files -->
+      <button
+        [class.active]="activeTab === 'sent'"
+        (click)="activeTab = 'sent'">ส่งแล้ว</button>
+
+      <button
+        [class.active]="activeTab === 'unsent'"
+        (click)="activeTab = 'unsent'">ยังไม่ส่ง</button>
+    </div>
+
+    <!-- Files -->
     <div class="files-box">
-      <h3>ไฟล์ของฉัน</h3>
+      <div class="file-grid">
 
-      <ul class="file-list">
-        <li>เอกสาร_1.pdf</li>
-        <li>เอกสาร_2.pdf</li>
-        <li>เอกสาร_3.pdf</li>
-      </ul>
+        <div
+          class="file-card"
+          *ngFor="let file of filteredFiles; let i = index"
+          (click)="openModal(file)"
+        >
+          <span
+            class="material-icons delete-icon"
+            (click)="deleteFile($event, i)"
+          >delete</span>
+
+          <span class="material-icons file-icon">picture_as_pdf</span>
+          <div class="file-name">{{ file.name }}</div>
+
+          <span
+            class="status-badge"
+            [ngClass]="file.status"
+          >
+            {{ file.status === 'sent' ? 'ส่งแล้ว' : 'ยังไม่ส่ง' }}
+          </span>
+        </div>
+
+      </div>
     </div>
 
   </main>
 </div>
 
-<script>
-  function goLogin() {
-    window.location.href = '/login';
-    // ถ้าเป็นไฟล์ html ธรรมดา:
-    // window.location.href = 'login.html';
-  }
-</script>
+<!-- Modal -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <h3>{{ selectedFile?.name }}</h3>
 
+    <iframe
+      class="pdf-preview"
+      [src]="selectedFile?.url"
+      width="100%"
+      height="400"
+    ></iframe>
+
+    <button class="upload-btn" (click)="closeModal()">ปิด</button>
+  </div>
+</div>
