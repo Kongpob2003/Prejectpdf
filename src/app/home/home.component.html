@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <button class="upload-btn">อัปโหลดไฟล์</button>
+      <button class="upload-btn" (click)="openUpload()">อัปโหลดไฟล์</button>
     </div>
 
     <!-- Tabs -->
@@ -99,7 +99,7 @@
   </main>
 </div>
 
-<!-- Modal -->
+<!-- Preview Modal -->
 <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
     <h3>{{ selectedFile?.name }}</h3>
@@ -114,3 +114,79 @@
     <button class="upload-btn" (click)="closeModal()">ปิด</button>
   </div>
 </div>
+
+
+<!-- Upload Popup -->
+<div class="upload-backdrop" *ngIf="showUpload" (click)="closeUpload()">
+
+  <div class="upload-modal" (click)="$event.stopPropagation()">
+    <h3>อัปโหลดเอกสาร</h3>
+
+    <div class="upload-form">
+
+      <!-- Title -->
+      <label>หัวเรื่อง</label>
+      <input
+        type="text"
+        placeholder="กรอกชื่อเอกสาร"
+        [(ngModel)]="uploadFile"
+      />
+
+      <!-- File upload -->
+      <label>ไฟล์ PDF</label>
+      <label class="file-upload">
+        <span class="material-icons">picture_as_pdf</span>
+        <div>คลิกเพื่อเลือกไฟล์</div>
+
+        <input
+          type="file"
+          accept="application/pdf"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+
+        <div
+          class="file-name-preview"
+          *ngIf="uploadFileName"
+        >
+          {{ uploadFileName }}
+        </div>
+      </label>
+
+      <label class="form-label">เลือกอาจารย์</label>
+
+<div class="teacher-grid">
+  <div
+    class="teacher-card"
+    *ngFor="let t of teachers"
+    (click)="toggleTeacher(t)"
+    [class.selected]="selectedTeachers.includes(t)"
+  >
+    <span class="material-icons">person</span>
+    <div>{{ t }}</div>
+  </div>
+</div>
+
+
+
+
+<p class="teacher-count" *ngIf="selectedTeachers.length > 0">
+  เลือกแล้ว {{ selectedTeachers.length }} คน
+</p>
+
+
+      <!-- Actions -->
+      <div class="upload-actions">
+        <button class="btn-cancel" (click)="closeUpload()">ยกเลิก</button>
+        <button
+          class="btn-submit"
+          (click)="submitUpload()"
+        >
+          อัปโหลด
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+

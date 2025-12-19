@@ -1,10 +1,16 @@
+/* =====================
+   Layout
+===================== */
 .home-container {
   display: flex;
   height: 100vh;
   background: #f2f2f2;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* Sidebar */
+/* =====================
+   Sidebar
+===================== */
 .sidebar {
   width: 260px;
   background: #1A285F;
@@ -20,20 +26,16 @@
 .sidebar li {
   display: flex;
   align-items: center;
-  gap: 12px;            /* ระยะห่างไอคอนกับข้อความ */
-  padding: 12px 0;
+  gap: 12px;
+  padding: 12px;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
 .sidebar li:hover {
-  background: rgba(255, 255, 255, 0.1);
-  padding-left: 8px;
-  border-radius: 6px;
-}
-
-.material-icons {
-  font-size: 22px;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .logout {
@@ -41,25 +43,54 @@
   color: #ffb3b3;
 }
 
-/* Content */
+.material-icons {
+  font-size: 22px;
+}
+
+/* =====================
+   Content
+===================== */
 .content {
   flex: 1;
   padding: 24px;
+  overflow-y: auto;
 }
 
-/* Top bar */
+/* =====================
+   Top bar
+===================== */
 .top-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  width: 320px;
+  padding: 10px 14px 10px 40px;
+  border-radius: 12px;
+  border: none;
+  background: #D9D9D9;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
 }
 
 .user-info {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
   font-weight: 600;
   color: #333;
 }
@@ -69,34 +100,46 @@
   color: #1A285F;
 }
 
-.top-bar input {
-  width: 320px;
-  padding: 10px 14px;
-  border-radius: 12px;      /* ช่องค้นหาโค้ง */
-  border: 1px solid #ccc;
+/* =====================
+   Divider
+===================== */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  margin: 16px 0 24px;
+}
+
+/* =====================
+   Summary
+===================== */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin-bottom: 24px;
 }
 
 .summary-box {
-  background: #FFA726;          /* 🟧 สีส้ม */
-  color: #000;                  /* ตัวหนังสือดำ */
-  padding: 20px;
-  border-radius: 12px;
-  width: 20%;
-
   display: flex;
   align-items: center;
   gap: 16px;
+  background: #FFA726;
+  color: #000;
+  padding: 20px;
+  border-radius: 14px;
+  min-width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .summary-icon {
   font-size: 40px;
-  color: #000;
 }
 
 .summary-text h3 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
 }
 
 .summary-text p {
@@ -105,170 +148,105 @@
   font-weight: 700;
 }
 
-/* กล่องไฟล์ */
-.files-box {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  width: 95%;               /* สั้นลง */
-}
-
-/* Header กล่องไฟล์ */
-.files-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.files-header button {
-  background: #1A285F;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* เอาจุดหน้าเอกสารออก */
-.file-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.file-list li {
-  display: flex;
-  align-items: center;
-  gap: 14px;                 /* ระยะห่างไอคอนกับข้อความ */
-  padding: 14px 12px;        /* ขยายช่อง */
-  margin-bottom: 10px;       /* ระยะห่างระหว่างแต่ละไฟล์ */
-  border-radius: 8px;
-  background-color: #fff3e0; /* พื้นหลังสีส้มอ่อน */
-  color: #000;
-}
-
-.file-list li:hover {
-  background-color: #ffe0b2; /* hover แล้วเข้มขึ้น */
-  cursor: pointer;
-}
-
-.file-icon {
-  font-size: 26px;
-  color: #e53935;            /* แดง PDF */
-}
-
-.file-name {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* แถบปุ่มอัปโหลดเหนือกล่อง */
-.upload-bar {
-  width: 95%;                 /* ให้เท่ากล่องเอกสาร */
-  display: flex;
-  justify-content: flex-end;  /* ชิดขวา */
-  margin-bottom: 12px;
-  
-}
-
-.search-box {
-  position: relative;
-}
-
-.search-box input {
-  width: 320px;
-  padding: 10px 14px 10px 40px; /* เว้นที่ให้ไอคอน */
-  border-radius: 12px;
-  border: 1px solid #ccc;
-  background-color: #D9D9D9;
-}
-
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-  font-size: 20px;
-}
-/* แถว summary */
-.summary-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 95%;
-  margin-top: 24px;
-}
-
-.summary-row {
-  display: flex;
-  align-items: flex-end; /* ปุ่มต่ำกว่ากล่องนิดหน่อย */
-  justify-content: space-between;
-  width: 95%;
-  margin-bottom: 20px;
-}
-
+/* =====================
+   Buttons
+===================== */
 .upload-btn {
   background: #1A285F;
   color: white;
   border: none;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* =====================
+   Tabs
+===================== */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: white;
   cursor: pointer;
 }
 
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: #ddd;   /* สีเทาอ่อน */
-  margin: 16px 0 24px 0;    /* ระยะห่างบน-ล่าง */
+.tabs button.active {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
 }
 
-/* Grid */
+/* =====================
+   Files Grid
+===================== */
+.files-box {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  width: 95%;
+}
+
 .file-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
-/* Card */
+/* =====================
+   File Card
+===================== */
 .file-card {
   position: relative;
-  background: #fff3e0;
+  background: white;
   border-radius: 14px;
   padding: 20px;
   text-align: center;
   cursor: pointer;
+  border: 1px solid #e0e0e0;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   transition: 0.2s;
 }
 
 .file-card:hover {
   transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
 }
 
-/* ไอคอน PDF */
 .file-icon {
   font-size: 48px;
   color: #e53935;
   margin-bottom: 10px;
 }
 
-/* ชื่อไฟล์ */
 .file-name {
-  font-size: 15px;
+  font-size: 14px;
   color: #000;
   margin-bottom: 8px;
+  word-break: break-word;
 }
 
-/* สถานะ */
+/* =====================
+   Status Badge
+===================== */
 .status-badge {
   display: inline-block;
-  padding: 4px 10px;
+  padding: 4px 12px;
   font-size: 12px;
   border-radius: 20px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .status-badge.sent {
@@ -276,12 +254,14 @@
   color: #256029;
 }
 
-.status-badge.pending {
+.status-badge.unsent {
   background: #ffcdd2;
   color: #b71c1c;
 }
 
-/* ปุ่มลบ */
+/* =====================
+   Delete Icon
+===================== */
 .delete-icon {
   position: absolute;
   top: 10px;
@@ -295,6 +275,9 @@
   color: red;
 }
 
+/* =====================
+   Modal
+===================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -309,50 +292,182 @@
   background: white;
   width: 600px;
   max-width: 90%;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 20px;
 }
 
 .pdf-preview {
+  width: 100%;
   height: 300px;
-  background: #f2f2f2;
+  border: none;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin: 16px 0;
 }
 
-.tabs {
+/* =====================
+   Upload Popup Overlay
+===================== */
+.upload-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
-.tabs button {
-  padding: 6px 14px;
-  border-radius: 20px;
+/* =====================
+   Upload Popup Box
+===================== */
+.upload-modal {
+  background: #ffffff;
+  width: 420px;
+  max-width: 92%;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: scaleUp 0.2s ease-in-out;
+}
+
+.upload-modal h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A285F;
+}
+
+/* =====================
+   Upload Form
+===================== */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Label */
+.upload-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Text input */
+.upload-form input[type="text"] {
+  padding: 10px 14px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  background: #fff;
-  cursor: pointer;
+  outline: none;
+  font-size: 14px;
 }
 
-.tabs button.active {
-  background: #1A285F;
-  color: white;
+.upload-form input[type="text"]:focus {
   border-color: #1A285F;
 }
 
-/* Google Drive feel */
-.file-card {
-  background: #fff;
-  border: 1px solid #e0e0e0;
+/* =====================
+   File Upload
+===================== */
+.file-upload {
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #666;
 }
 
-.file-card:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+.file-upload:hover {
+  border-color: #1A285F;
+  background: #f5f7ff;
 }
 
-.pdf-preview {
+.file-upload .material-icons {
+  font-size: 36px;
+  color: #e53935;
+  margin-bottom: 6px;
+}
+
+.file-name-preview {
+  font-size: 13px;
+  color: #333;
+  margin-top: 6px;
+}
+
+
+
+/* =====================
+   Popup Buttons
+===================== */
+.upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-cancel {
+  background: #eee;
   border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background: #1A285F;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =====================
+   Animations
+===================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.teacher-card {
+  border: 2px solid #ddd;
+  padding: 14px;
+  text-align: center;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.teacher-card.selected {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
 }
