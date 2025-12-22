@@ -1,0 +1,93 @@
+<div class="home-container">
+  <!-- Sidebar -->
+  <aside class="sidebar minimal">
+
+  <!-- Logo -->
+  <div class="logo-box">
+    <span class="material-icons logo-icon">picture_as_pdf</span>
+    <span class="logo-text">My PDF</span>
+  </div>
+
+  <!-- Back button -->
+  <button class="back-btn" routerLink="/home">
+    <span class="material-icons">arrow_back</span>
+    กลับหน้าหลัก
+  </button>
+
+</aside>
+
+
+
+  <!-- Content -->
+  <main class="content center-content">
+
+  <div class="profile-card">
+    <div class="profile-header">
+      <span class="material-icons avatar">account_circle</span>
+      <div>
+        <h2>ข้อมูลส่วนตัว</h2>
+        <p>จัดการข้อมูลบัญชีของคุณ</p>
+      </div>
+    </div>
+
+    <div class="profile-form">
+      <div class="form-group">
+        <label>ชื่อผู้ใช้</label>
+        <input
+          type="text"
+          [(ngModel)]="profile.username"
+          [disabled]="!isEditing"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>อีเมล</label>
+        <input
+          type="email"
+          [(ngModel)]="profile.email"
+          [disabled]="!isEditing"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>รหัสผ่าน</label>
+        <input
+          type="password"
+          [(ngModel)]="profile.password"
+          [disabled]="!isEditing"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>เบอร์โทร</label>
+        <input
+          type="text"
+          [(ngModel)]="profile.phone"
+          [disabled]="!isEditing"
+        />
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button
+        *ngIf="!isEditing"
+        class="btn-edit"
+        (click)="editProfile()"
+      >
+        แก้ไขข้อมูล
+      </button>
+
+      <button
+        *ngIf="isEditing"
+        class="btn-save"
+        (click)="saveProfile()"
+      >
+        บันทึกข้อมูล
+      </button>
+    </div>
+
+  </div>
+
+</main>
+
+</div>

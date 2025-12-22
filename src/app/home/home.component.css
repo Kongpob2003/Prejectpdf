@@ -471,3 +471,43 @@
   color: white;
   border-color: #1A285F;
 }
+
+.sidebar li.active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* =====================
+   Logo
+===================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 28px;   /* เว้นจากเมนู */
+  margin-top: -6px;      /* ขยับขึ้นด้านบน */
+}
+
+.logo-icon {
+  font-size: 38px;
+  color: #ff5252;
+  animation: float 3s ease-in-out infinite;        /* สีแดง PDF */
+}
+
+.logo-box {
+  animation: slideFade 0.6s ease-out;
+  cursor: pointer;
+}
+
+.logo-box:hover {
+  transform: scale(1.05);
+}
+
+
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}

@@ -1,12 +1,21 @@
 <div class="home-container">
-
   <!-- Sidebar -->
   <aside class="sidebar">
-    <h2 class="logo">My PDF</h2>
+   <div class="logo logo-box">
+  <span class="material-icons logo-icon">picture_as_pdf</span>
+  <span class="logo-text">MyPDF</span>
+</div>
+
+
     <ul>
       <li><span class="material-icons">home</span>หน้าหลัก</li>
-      <li><span class="material-icons">person</span>ข้อมูลส่วนตัว</li>
-      <li><span class="material-icons">calendar_month</span>ปฏิทิน</li>
+      <li (click)="goProfile()">
+  <span class="material-icons">person</span>
+  ข้อมูลส่วนตัว
+</li>
+
+
+      <li (click)="calender()"><span class="material-icons">calendar_month</span>ปฏิทิน</li>
       <li><span class="material-icons">group_add</span>เพิ่มลดผู้ใช้</li>
       <li><span class="material-icons">campaign</span>ประชาสัมพันธ์</li>
       <li><span class="material-icons">description</span>JAE</li>
@@ -20,16 +29,11 @@
 
   <!-- Content -->
   <main class="content">
-
     <!-- Top bar -->
     <div class="top-bar">
       <div class="search-box">
         <span class="material-icons search-icon">search</span>
-        <input
-          type="text"
-          placeholder="ค้นหาชื่อไฟล์"
-          [(ngModel)]="searchText"
-        >
+        <input type="text" placeholder="ค้นหาชื่อไฟล์" [(ngModel)]="searchText" />
       </div>
 
       <div class="user-info">
@@ -55,47 +59,34 @@
 
     <!-- Tabs -->
     <div class="tabs">
-      <button
-        [class.active]="activeTab === 'all'"
-        (click)="activeTab = 'all'">ทั้งหมด</button>
+      <button [class.active]="activeTab === 'all'" (click)="activeTab = 'all'">ทั้งหมด</button>
 
-      <button
-        [class.active]="activeTab === 'sent'"
-        (click)="activeTab = 'sent'">ส่งแล้ว</button>
+      <button [class.active]="activeTab === 'sent'" (click)="activeTab = 'sent'">ส่งแล้ว</button>
 
-      <button
-        [class.active]="activeTab === 'unsent'"
-        (click)="activeTab = 'unsent'">ยังไม่ส่ง</button>
+      <button [class.active]="activeTab === 'unsent'" (click)="activeTab = 'unsent'">
+        ยังไม่ส่ง
+      </button>
     </div>
 
     <!-- Files -->
     <div class="files-box">
       <div class="file-grid">
-
         <div
           class="file-card"
           *ngFor="let file of filteredFiles; let i = index"
           (click)="openModal(file)"
         >
-          <span
-            class="material-icons delete-icon"
-            (click)="deleteFile($event, i)"
-          >delete</span>
+          <span class="material-icons delete-icon" (click)="deleteFile($event, i)">delete</span>
 
           <span class="material-icons file-icon">picture_as_pdf</span>
           <div class="file-name">{{ file.name }}</div>
 
-          <span
-            class="status-badge"
-            [ngClass]="file.status"
-          >
+          <span class="status-badge" [ngClass]="file.status">
             {{ file.status === 'sent' ? 'ส่งแล้ว' : 'ยังไม่ส่ง' }}
           </span>
         </div>
-
       </div>
     </div>
-
   </main>
 </div>
 
@@ -104,33 +95,21 @@
   <div class="modal-box" (click)="$event.stopPropagation()">
     <h3>{{ selectedFile?.name }}</h3>
 
-    <iframe
-      class="pdf-preview"
-      [src]="selectedFile?.url"
-      width="100%"
-      height="400"
-    ></iframe>
+    <iframe class="pdf-preview" [src]="selectedFile?.url" width="100%" height="400"></iframe>
 
     <button class="upload-btn" (click)="closeModal()">ปิด</button>
   </div>
 </div>
 
-
 <!-- Upload Popup -->
 <div class="upload-backdrop" *ngIf="showUpload" (click)="closeUpload()">
-
   <div class="upload-modal" (click)="$event.stopPropagation()">
     <h3>อัปโหลดเอกสาร</h3>
 
     <div class="upload-form">
-
       <!-- Title -->
       <label>หัวเรื่อง</label>
-      <input
-        type="text"
-        placeholder="กรอกชื่อเอกสาร"
-        [(ngModel)]="uploadFile"
-      />
+      <input type="text" placeholder="กรอกชื่อเอกสาร" [(ngModel)]="uploadFile" />
 
       <!-- File upload -->
       <label>ไฟล์ PDF</label>
@@ -138,55 +117,36 @@
         <span class="material-icons">picture_as_pdf</span>
         <div>คลิกเพื่อเลือกไฟล์</div>
 
-        <input
-          type="file"
-          accept="application/pdf"
-          hidden
-          (change)="onFileSelected($event)"
-        />
+        <input type="file" accept="application/pdf" hidden (change)="onFileSelected($event)" />
 
-        <div
-          class="file-name-preview"
-          *ngIf="uploadFileName"
-        >
+        <div class="file-name-preview" *ngIf="uploadFileName">
           {{ uploadFileName }}
         </div>
       </label>
 
       <label class="form-label">เลือกอาจารย์</label>
 
-<div class="teacher-grid">
-  <div
-    class="teacher-card"
-    *ngFor="let t of teachers"
-    (click)="toggleTeacher(t)"
-    [class.selected]="selectedTeachers.includes(t)"
-  >
-    <span class="material-icons">person</span>
-    <div>{{ t }}</div>
-  </div>
-</div>
+      <div class="teacher-grid">
+        <div
+          class="teacher-card"
+          *ngFor="let t of teachers"
+          (click)="toggleTeacher(t)"
+          [class.selected]="selectedTeachers.includes(t)"
+        >
+          <span class="material-icons">person</span>
+          <div>{{ t }}</div>
+        </div>
+      </div>
 
-
-
-
-<p class="teacher-count" *ngIf="selectedTeachers.length > 0">
-  เลือกแล้ว {{ selectedTeachers.length }} คน
-</p>
-
+      <p class="teacher-count" *ngIf="selectedTeachers.length > 0">
+        เลือกแล้ว {{ selectedTeachers.length }} คน
+      </p>
 
       <!-- Actions -->
       <div class="upload-actions">
         <button class="btn-cancel" (click)="closeUpload()">ยกเลิก</button>
-        <button
-          class="btn-submit"
-          (click)="submitUpload()"
-        >
-          อัปโหลด
-        </button>
+        <button class="btn-submit" (click)="submitUpload()">อัปโหลด</button>
       </div>
-
     </div>
   </div>
 </div>
-
