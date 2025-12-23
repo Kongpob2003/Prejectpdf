@@ -1,0 +1,81 @@
+/* ===== Sidebar Minimal (Profile / Calendar) ===== */
+.sidebar.minimal {
+  width: 220px;
+  background: #1A285F;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ===== Logo ===== */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  cursor: pointer;
+  animation: slideFade 0.6s ease-out;
+}
+
+.logo-box:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon {
+  font-size: 36px;
+  color: #ff5252;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-text {
+  letter-spacing: 0.5px;
+}
+
+/* ===== Back Button ===== */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateX(-4px);
+}
+
+/* ===== Animations ===== */
+@keyframes float {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.home-container {
+  display: flex;
+  height: 100vh;
+  background: #f2f2f2;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}

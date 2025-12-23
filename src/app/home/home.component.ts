@@ -16,7 +16,27 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
-  calender() {
+  goRelation() {
+  this.router.navigate(['/relation']);
+}
+
+  goQualityassurance() {
+  this.router.navigate(['/qualityassurance']);
+}
+
+  goJae() {
+  this.router.navigate(['/jae']);
+}
+
+  goCategory() {
+  this.router.navigate(['/category']);
+}
+
+  goAdddelete() {
+  this.router.navigate(['/adddeleteuser']);
+}
+
+  goCalender() {
   this.router.navigate(['/calender']);
 }
 

@@ -1,0 +1,115 @@
+<div class="home-container">
+
+  <!-- Sidebar -->
+  <aside class="sidebar minimal">
+    <div class="logo-box">
+      <span class="material-icons logo-icon">picture_as_pdf</span>
+      <span class="logo-text">My PDF</span>
+    </div>
+
+    <button class="back-btn" routerLink="/home">
+      <span class="material-icons">arrow_back</span>
+      กลับหน้าหลัก
+    </button>
+  </aside>
+
+  <!-- Content -->
+  <main class="content center-content">
+
+    <div class="user-card">
+
+      <!-- Header -->
+      <div class="user-header">
+        <h2>จัดการผู้ใช้</h2>
+        <p>เพิ่ม / ลบ ผู้ใช้งานในระบบ</p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button
+          [class.active]="activeTab === 'add'"
+          (click)="activeTab = 'add'">
+          ➕ เพิ่มผู้ใช้
+        </button>
+
+        <button
+          [class.active]="activeTab === 'delete'"
+          (click)="activeTab = 'delete'">
+          🗑️ ลบผู้ใช้
+        </button>
+      </div>
+
+      <!-- ADD USER -->
+      <div *ngIf="activeTab === 'add'" class="tab-content">
+
+        <div class="form-group">
+          <label>ชื่อผู้ใช้</label>
+          <input type="text" [(ngModel)]="newUser.username">
+        </div>
+
+        <div class="form-group">
+          <label>อีเมล</label>
+          <input type="email" [(ngModel)]="newUser.email">
+        </div>
+
+        <div class="form-group">
+          <label>รหัสผ่าน</label>
+          <input type="password" [(ngModel)]="newUser.password">
+        </div>
+
+        <div class="form-group">
+          <label>เบอร์โทร</label>
+          <input type="password" [(ngModel)]="newUser.phone">
+        </div>
+
+        <div class="form-group">
+          <label>สิทธิ์ผู้ใช้</label>
+          <select [(ngModel)]="newUser.role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button class="btn-submit" (click)="addUser()">เพิ่มผู้ใช้</button>
+        </div>
+
+      </div>
+
+      <!-- DELETE USER -->
+      <div *ngIf="activeTab === 'delete'" class="tab-content">
+
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>ชื่อผู้ใช้</th>
+              <th>รหัสผ่าน</th>
+              <th>อีเมล</th>
+              <th>เบอร์โทร</th>
+              <th>สิทธิ์</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let user of users; let i = index">
+              <td>{{ user.username }}</td>
+              <td>{{ user.password }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button class="btn-delete" (click)="deleteUser(i)">
+                  ลบ
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </main>
+</div>

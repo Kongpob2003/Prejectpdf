@@ -1,5 +1,4 @@
 <div class="home-container">
-
   <!-- Sidebar -->
   <aside class="sidebar minimal">
     <div class="logo-box">
@@ -12,7 +11,57 @@
       กลับหน้าหลัก
     </button>
   </aside>
+  <!-- Content -->
+  <main class="content center-content">
+    <div class="calendar-card">
+      <!-- Header -->
+      <div class="calendar-header">
+        <h2>ปฏิทินเอกสาร</h2>
+        <span>{{ monthName }} {{ year }}</span>
+      </div>
 
-  
+      <!-- Summary -->
+      <div class="calendar-summary">
+        <!-- Admin -->
+        <div class="summary-box admin" *ngIf="role === 'admin'">
+          <span class="material-icons">upload_file</span>
+          <div>
+            <p class="number">{{ totalSent }}</p>
+            <span>เอกสารที่ถูกส่งทั้งหมด</span>
+          </div>
+        </div>
 
+        <!-- User -->
+        <div class="summary-box user" *ngIf="role === 'user'">
+          <span class="material-icons">inbox</span>
+          <div>
+            <p class="number">{{ todayReceived }}</p>
+            <span>เอกสารที่ส่งมาให้วันนี้</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calendar-body">
+      <!-- Calendar -->
+      <div class="calendar-grid">
+        <div class="day-name" *ngFor="let d of days">
+          {{ d }}
+        </div>
+
+        <div
+          class="day-cell"
+          *ngFor="let day of calendarDays"
+          [class.today]="day.isToday"
+          [class.has-doc]="day.receivedCount > 0"
+        >
+          <span class="date">{{ day.date }}</span>
+
+          <span class="badge" *ngIf="day.receivedCount > 0">
+            {{ day.receivedCount }}
+          </span>
+        </div>
+      </div>
+      </div>
+    </div>
+  </main>
 </div>
