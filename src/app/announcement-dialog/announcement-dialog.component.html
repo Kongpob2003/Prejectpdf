@@ -1,0 +1,56 @@
+<h2 mat-dialog-title class="dialog-title">
+  📢 เพิ่มประกาศข่าวสาร
+</h2>
+
+<div mat-dialog-content>
+  <div class="dialog-inner">
+
+    <mat-form-field appearance="outline">
+      <mat-label>หัวข้อ</mat-label>
+      <input matInput [(ngModel)]="data.title">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>รายละเอียด</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="4"
+        cdkAutosizeMaxRows="8"
+        [(ngModel)]="data.detail">
+      </textarea>
+    </mat-form-field>
+
+    <!-- แนบไฟล์ -->
+<div>
+  <!-- input file (ซ่อน) -->
+  <input
+    type="file"
+    #fileInput
+    hidden
+    (change)="onFileSelected($event)"
+  >
+
+  <!-- ปุ่ม Material -->
+  <button
+    mat-stroked-button
+    type="button"
+    (click)="fileInput.click()">
+    📎 แนบไฟล์
+  </button>
+
+  <!-- แสดงชื่อไฟล์ -->
+  <div class="file-name" *ngIf="data.fileName">
+    {{ data.fileName }}
+  </div>
+</div>
+
+  </div>
+</div>
+
+<div mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="cancel()">ยกเลิก</button>
+  <button mat-flat-button color="primary" (click)="submit()">
+    บันทึกประกาศ
+  </button>
+</div>

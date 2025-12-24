@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/relation/announcement-dialog/announcement-dialog.componentts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

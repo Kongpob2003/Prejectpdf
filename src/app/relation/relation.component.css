@@ -57,8 +57,8 @@
 
 /* ===== Animations ===== */
 @keyframes float {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-6px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
   100% { transform: translateY(0); }
 }
 
@@ -73,9 +73,117 @@
   }
 }
 
+/* ===== Layout ===== */
+.content {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .home-container {
   display: flex;
   height: 100vh;
   background: #f2f2f2;
   font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.relation-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+/* ===== Card ===== */
+.relation-card {
+  width: 100%;
+  max-width: 1100px;
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 14px 35px rgba(0,0,0,0.15);
+}
+
+/* ===== Header ===== */
+.relation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.relation-header h2 {
+  margin: 0;
+  color: #1A285F;
+}
+
+.btn-add {
+  background: #1A285F;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
+}
+
+/* ===== Search ===== */
+.search-input {
+  width: 97%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+/* ===== Announcement List ===== */
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.announcement-card {
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  padding: 18px;
+  transition: 0.2s;
+}
+
+.announcement-card h3 {
+  margin: 0 0 6px;
+  color: #1A285F;
+}
+
+.announcement-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.file-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #1A285F;
+  font-size: 14px;
+}
+
+.date {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #777;
+}
+
+.custom-dialog .mat-mdc-dialog-container {
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }

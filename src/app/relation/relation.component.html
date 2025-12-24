@@ -13,6 +13,49 @@
     </button>
   </aside>
 
-  
+  <!-- Content -->
+  <main class="content center-content">
 
+    <div class="relation-card">
+
+      <!-- Header -->
+      <div class="relation-header">
+        <h2>📢 ประชาสัมพันธ์</h2>
+        <button class="btn-add" (click)="openPopup()">
+          ➕ เพิ่มประกาศ
+        </button>
+      </div>
+
+      <!-- Search -->
+      <input
+        class="search-input"
+        type="text"
+        placeholder="ค้นหาประกาศ / ข่าวสาร"
+        [(ngModel)]="searchText"
+      />
+
+      <!-- Announcement List -->
+      <div class="announcement-list">
+        <div
+          class="announcement-card"
+          *ngFor="let a of filteredAnnouncements()"
+        >
+          <h3>{{ a.title }}</h3>
+          <p>{{ a.detail }}</p>
+
+          <a *ngIf="a.fileName" class="file-link">
+            📎 {{ a.fileName }}
+          </a>
+
+          <span class="date">
+            {{ a.date | date:'dd/MM/yyyy HH:mm' }}
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
 </div>
+
+
