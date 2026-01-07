@@ -131,21 +131,25 @@ toggleTeacher(t: string) {
   }
 
   submitUpload() {
-  if (!this.uploadTitle || !this.uploadFile) {
-    alert('กรุณากรอกข้อมูลให้ครบ');
+  // เงื่อนไขกรอกครบ (ถ้าคุณมีอยู่แล้วให้ใช้ของเดิม)
+  if (!this.uploadFile || !this.uploadFileName || this.selectedTeachers.length === 0) {
     return;
   }
 
-  const fileUrl = URL.createObjectURL(this.uploadFile);
+  // ✅ แสดงข้อความสำเร็จ
+  this.uploadSuccess = true;
 
-  this.files.unshift({
-    name: this.uploadTitle + '.pdf',
-    status: 'unsent',
-    url: fileUrl
-  });
-
+  // ปิด popup
   this.closeUpload();
+
+  // ⏱ ซ่อนข้อความอัตโนมัติหลัง 2 วินาที
+  setTimeout(() => {
+    this.uploadSuccess = false;
+  }, 2000);
 }
+
+
+uploadSuccess = false;
 
   
 }

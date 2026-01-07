@@ -42,6 +42,7 @@ export class RelationComponent {
   });
 
   dialogRef.afterClosed().subscribe(result => {
+    
   if (!result) return;
 
   this.announcements.unshift({
