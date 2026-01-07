@@ -50,7 +50,11 @@
 
 <div mat-dialog-actions align="end" class="dialog-actions">
   <button mat-button (click)="cancel()">ยกเลิก</button>
-  <button mat-flat-button color="primary" (click)="submit()">
-    บันทึกประกาศ
-  </button>
+  <button
+  mat-flat-button
+  color="primary"
+  [disabled]="!data.title?.trim() || !data.detail?.trim()"
+  (click)="submit()">
+  บันทึกประกาศ
+</button>
 </div>

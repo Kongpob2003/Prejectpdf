@@ -36,26 +36,24 @@ export class RelationComponent {
   constructor(private dialog: MatDialog) {}
 
   openPopup() {
-    const dialogRef = this.dialog.open(AnnouncementDialogComponent, {
-  width: '700px',
-  maxWidth: '95vw',
-  panelClass: 'custom-dialog'
+  const dialogRef = this.dialog.open(AnnouncementDialogComponent, {
+    width: '700px',
+    maxWidth: '95vw'
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+  if (!result) return;
+
+  this.announcements.unshift({
+    title: result.title,
+    detail: result.detail,
+    fileName: result.fileName,
+    date: new Date()
+  });
 });
 
+}
 
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (!result) return;
-
-      this.announcements.unshift({
-        title: result.title,
-        detail: result.detail,
-        fileName: result.fileName,
-        date: new Date()
-      });
-    });
-  }
 
   filteredAnnouncements() {
     return this.announcements.filter(a =>

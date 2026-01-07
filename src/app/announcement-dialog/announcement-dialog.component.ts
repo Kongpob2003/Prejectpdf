@@ -44,7 +44,18 @@ export class AnnouncementDialogComponent {
   }
 
   submit() {
-    if (!this.data.title || !this.data.detail) return;
-    this.dialogRef.close(this.data);
+  const title = this.data.title?.trim();
+  const detail = this.data.detail?.trim();
+
+  if (!title || !detail) {
+    return; // ❌ ไม่ต้อง alert แล้ว เพราะปุ่มถูก disable อยู่
   }
+
+  // ✅ ปิด dialog + ส่งข้อมูลกลับ
+  this.dialogRef.close({
+    title,
+    detail,
+    fileName: this.data.fileName
+  });
+}
 }
