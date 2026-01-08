@@ -13,6 +13,81 @@
     </button>
   </aside>
 
-  
+  <!-- Content -->
+  <main class="content">
+
+    <!-- ===== Folder View ===== -->
+    <div *ngIf="!selectedTeacher">
+      <h2>📂 เอกสาร JAE</h2>
+
+      <div class="folder-grid">
+        <div
+          class="folder-card"
+          *ngFor="let t of teachers"
+          (click)="openTeacher(t)"
+        >
+          <span class="material-icons folder-icon">folder</span>
+          <div class="folder-name">{{ t.name }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== File View ===== -->
+<div *ngIf="selectedTeacher as teacher">
+
+  <div class="header-row">
+    <button class="back-link" (click)="backToFolders()">
+      ← รายชื่ออาจารย์
+    </button>
+
+    <h2>{{ teacher.name }}</h2>
+
+    <!-- ปุ่มเพิ่มปี (ขวาบน) -->
+    <button class="add-year-btn" (click)="addYear()">
+      ➕ ปีการศึกษา
+    </button>
+  </div>
+
+  <!-- ปี -->
+  <div class="year-tabs">
+    <button
+      *ngFor="let y of teacher.years"
+      [class.active]="selectedYear === y"
+      (click)="selectedYear = y; selectedTerm = y.terms[0]"
+    >
+      ปี {{ y.year }}
+    </button>
+  </div>
+
+  <!-- เทอม -->
+  <div class="year-tabs" *ngIf="selectedYear as y">
+    <button
+      *ngFor="let t of y.terms"
+      [class.active]="selectedTerm === t"
+      (click)="selectedTerm = t"
+    >
+      เทอม {{ t.term }}
+    </button>
+  </div>
+
+  <!-- ไฟล์ -->
+  <div *ngIf="selectedTerm as term">
+    <div
+      class="file-item"
+      *ngFor="let f of term.files"
+      (click)="openPreview(f)"
+    >
+      <span class="material-icons">picture_as_pdf</span>
+      {{ f.name }}
+    </div>
+
+    <p *ngIf="term.files.length === 0">
+      ไม่มีเอกสารในเทอมนี้
+    </p>
+  </div>
 
 </div>
+
+
+
+   

@@ -2,59 +2,63 @@
   📢 เพิ่มประกาศข่าวสาร
 </h2>
 
-<div mat-dialog-content>
-  <div class="dialog-inner">
+<form [formGroup]="form">
+  <div mat-dialog-content>
+    <div class="dialog-inner">
 
-    <mat-form-field appearance="outline">
-      <mat-label>หัวข้อ</mat-label>
-      <input matInput [(ngModel)]="data.title">
-    </mat-form-field>
+      <!-- หัวข้อ -->
+      <mat-form-field appearance="outline">
+        <mat-label>หัวข้อ</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>รายละเอียด</mat-label>
-      <textarea
-        matInput
-        cdkTextareaAutosize
-        cdkAutosizeMinRows="4"
-        cdkAutosizeMaxRows="8"
-        [(ngModel)]="data.detail">
-      </textarea>
-    </mat-form-field>
+      <!-- รายละเอียด -->
+      <mat-form-field appearance="outline">
+        <mat-label>รายละเอียด</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="4"
+          cdkAutosizeMaxRows="8"
+          formControlName="detail">
+        </textarea>
+      </mat-form-field>
 
-    <!-- แนบไฟล์ -->
-<div>
-  <!-- input file (ซ่อน) -->
-  <input
-    type="file"
-    #fileInput
-    hidden
-    (change)="onFileSelected($event)"
-  >
+      <!-- แนบไฟล์ -->
+      <div>
+        <input
+          type="file"
+          accept="application/pdf"
+          hidden
+          #fileInput
+          (change)="onFileSelected($event)"
+        >
 
-  <!-- ปุ่ม Material -->
-  <button
-    mat-stroked-button
-    type="button"
-    (click)="fileInput.click()">
-    📎 แนบไฟล์
-  </button>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="fileInput.click()">
+          📎 แนบไฟล์ PDF
+        </button>
 
-  <!-- แสดงชื่อไฟล์ -->
-  <div class="file-name" *ngIf="data.fileName">
-    {{ data.fileName }}
+        <div class="file-name" *ngIf="form.value.fileName">
+          {{ form.value.fileName }}
+        </div>
+      </div>
+
+    </div>
   </div>
-</div>
 
+  <div mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-button (click)="cancel()">ยกเลิก</button>
+
+    <!-- ✅ ปุ่ม disabled จนกว่าจะครบ -->
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="form.invalid"
+      (click)="submit()">
+      บันทึกประกาศ
+    </button>
   </div>
-</div>
-
-<div mat-dialog-actions align="end" class="dialog-actions">
-  <button mat-button (click)="cancel()">ยกเลิก</button>
-  <button
-  mat-flat-button
-  color="primary"
-  [disabled]="!data.title?.trim() || !data.detail?.trim()"
-  (click)="submit()">
-  บันทึกประกาศ
-</button>
-</div>
+</form>

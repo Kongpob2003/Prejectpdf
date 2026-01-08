@@ -79,3 +79,109 @@
   background: #f2f2f2;
   font-family: "Segoe UI", system-ui, sans-serif;
 }
+
+.content {
+  flex: 1;
+  padding: 32px;
+}
+
+/* ===== Folder ===== */
+.folder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.folder-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.folder-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.folder-icon {
+  font-size: 48px;
+  color: #1A285F;
+}
+
+.folder-name {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* ===== Header ===== */
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1A285F;
+  font-weight: 600;
+}
+
+/* ===== Tabs ===== */
+.year-tabs {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.year-tabs button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.year-tabs button.active {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
+}
+
+/* ===== Files ===== */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-item {
+  background: white;
+  padding: 14px 18px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-year-btn {
+  margin-left: auto;
+  background: #1A285F;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.add-year-btn:hover {
+  background: #2c3f8f;
+  transform: translateY(-2px);
+}
+
