@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { UserLocalStorge } from '../../model/response';
+
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +18,22 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent {
 
+  user: UserLocalStorge | null = null;
+  constructor(private router: Router,
+    private auth: AuthService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
-  constructor(private router: Router) {}
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.user = this.auth.getUser();
+      console.log('HOME USER:', this.user);
 
+      if (!this.user) {
+        this.router.navigate(['/login']);
+      }
+    }
+  }
   goRelation() {
   this.router.navigate(['/relation']);
 }
@@ -47,7 +65,7 @@ export class HomeComponent {
   logout() {
     this.router.navigate(['/login']);
   }
-
+  
   // ===== FILE LIST =====
   files = [
     { name: 'เอกสาร_1.pdf', status: 'sent', url: 'assets/sample.pdf' },
