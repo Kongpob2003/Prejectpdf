@@ -22,7 +22,6 @@ export class AuthService {
     if (!isPlatformBrowser(this.platformId)) {
       return null; // 👈 สำคัญมาก
     }
-
     const data = localStorage.getItem(this.KEY);
     return data ? JSON.parse(data) : null;
   }

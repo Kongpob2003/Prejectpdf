@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { identity, lastValueFrom } from 'rxjs';
 import { Backend } from '../services/api/backend';
 import { UserLoginRes } from '../../model/response';
 import { AuthService } from '../services/auth.service';
@@ -51,16 +50,12 @@ export class LoginComponent {
       // ใช้งาน AuthService ใน LoginComponent
       this.auth.setUser(user);
 
-      alert('เข้าสู่ระบบสำเร็จ');
-
       // ✅ เช็ค role / type (ถ้ามี)
       if (user.type === 'admin') {
         this.router.navigate(['/home']);
       } else {
         this.router.navigate(['/home']);
       }
-     
-
     } catch (error) {
       console.error(error);
       alert('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้');

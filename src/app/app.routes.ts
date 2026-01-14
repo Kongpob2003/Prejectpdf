@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '../app/services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -14,7 +15,8 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () =>
-      import('./home/home.component').then(m => m.HomeComponent)
+      import('./home/home.component').then(m => m.HomeComponent),
+    canActivate:[authGuard]
   },
   {
     path: 'profile',
@@ -39,7 +41,8 @@ export const routes: Routes = [
   {
     path: 'jae',
     loadComponent: () =>
-      import('./jae/jae.component').then(m => m.JaeComponent)
+      import('./jae/jae.component').then(m => m.JaeComponent),
+    canActivate:[authGuard]
   },
   {
     path: 'qualityassurance',

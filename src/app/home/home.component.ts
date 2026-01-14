@@ -3,8 +3,14 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
+
+
+
 import { AuthService } from '../services/auth.service';
 import { UserLocalStorge } from '../../model/response';
+import { Backend } from '../services/api/backend';
+import { DocumentItemPos } from '../../model/document_Item_pos';
 
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -19,21 +25,13 @@ import { isPlatformBrowser } from '@angular/common';
 export class HomeComponent {
 
   user: UserLocalStorge | null = null;
+  document: DocumentItemPos[] = [];
   constructor(private router: Router,
     private auth: AuthService,
+    private backend : Backend,
+     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
-
-  ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.user = this.auth.getUser();
-      console.log('HOME USER:', this.user);
-
-      if (!this.user) {
-        this.router.navigate(['/login']);
-      }
-    }
-  }
   goRelation() {
   this.router.navigate(['/relation']);
 }
@@ -63,28 +61,42 @@ export class HomeComponent {
 }
 
   logout() {
+    this.auth.logout();
     this.router.navigate(['/login']);
   }
   
   // ===== FILE LIST =====
-  files = [
-    { name: 'เอกสาร_1.pdf', status: 'sent', url: 'assets/sample.pdf' },
-    { name: 'เอกสาร_2.pdf', status: 'unsent', url: 'assets/sample.pdf' },
-    { name: 'เอกสาร_3.pdf', status: 'sent', url: 'assets/sample.pdf' }
-  ];
+  // files = [
+  //   { name: 'เอกสาร_1.pdf', status: 'sent', url: 'assets/sample.pdf' },
+  //   { name: 'เอกสาร_2.pdf', status: 'unsent', url: 'assets/sample.pdf' },
+  //   { name: 'เอกสาร_3.pdf', status: 'sent', url: 'assets/sample.pdf' }
+  // ];
+  async ngOnInit() {
+    // ข้อมูล user
+    if (isPlatformBrowser(this.platformId)) {
+      this.user = await this.auth.getUser();
+      console.log('HOME USER:', this.user);
+      this.document = await this.backend.GetFile();
+      console.log(this.document);
+      // ⭐ บังคับ Angular re-render
+    this.cdr.detectChanges();
+    }
+  }
 
   searchText = '';
   activeTab: 'all' | 'sent' | 'unsent' = 'all';
 
   get filteredFiles() {
-    return this.files.filter(file => {
-      const matchSearch =
-        file.name.toLowerCase().includes(this.searchText.toLowerCase());
-      const matchTab =
-        this.activeTab === 'all' || file.status === this.activeTab;
-      return matchSearch && matchTab;
-    });
-  }
+  return this.document.filter(file => {
+    const matchSearch =
+      file.file_name.toLowerCase().includes(this.searchText.toLowerCase());
+    const matchTab =
+      this.activeTab === 'all' ||
+      (this.activeTab === 'sent' && file.statue === '1') ||
+      (this.activeTab === 'unsent' && file.statue === '0');
+    return matchSearch && matchTab;
+  });
+}
 
   // ===== PREVIEW MODAL =====
   showModal = false;
@@ -101,7 +113,7 @@ export class HomeComponent {
 
   deleteFile(event: Event, index: number) {
     event.stopPropagation();
-    this.files.splice(index, 1);
+    this.document.splice(index, 1);
   }
 
   // ===== UPLOAD =====
