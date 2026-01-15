@@ -73,9 +73,330 @@
   }
 }
 
+/* ===== Layout ===== */
 .home-container {
   display: flex;
   height: 100vh;
   background: #f2f2f2;
   font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.content {
+  flex: 1;
+  padding: 32px;
+}
+
+/* ===== Header ===== */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  font-weight: 600;
+  color: #1A285F;
+}
+
+/* ===== Category Grid ===== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.category-icon {
+  font-size: 48px;
+  color: #1A285F;
+  margin-bottom: 10px;
+}
+
+.category-name {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.category-desc {
+  font-size: 13px;
+  color: #777;
+}
+
+.category-count {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #1A285F;
+  background: #eef1ff;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* ===== Empty ===== */
+.empty-text {
+  margin-top: 40px;
+  text-align: center;
+  color: #888;
+}
+
+/* ===== Category ===== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: 0.25s;
+  text-align: center;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.category-icon {
+  font-size: 48px;
+  color: #1A285F;
+}
+
+.category-name {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.category-desc {
+  font-size: 13px;
+  color: #777;
+}
+
+.category-count {
+  margin-top: 10px;
+  font-size: 12px;
+  background: #eef1ff;
+  color: #1A285F;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ===== File ===== */
+.file-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.file-item {
+  background: white;
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.file-item:hover {
+  background: #f5f7ff;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: 500;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #777;
+}
+
+.empty-text {
+  margin-top: 24px;
+  color: #888;
+}
+
+/* ===== Folder View ===== */
+.folder-view {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Header */
+.folder-header {
+  background: linear-gradient(135deg, #1A285F, #2f3f91);
+  color: white;
+  padding: 24px 28px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+}
+
+.folder-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.folder-big-icon {
+  font-size: 56px;
+  opacity: 0.9;
+}
+
+.folder-header h2 {
+  margin: 0;
+}
+
+.folder-header p {
+  margin: 4px 0;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.folder-count {
+  font-size: 12px;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ===== File Grid ===== */
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* File Card */
+.file-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.file-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.file-icon-box {
+  background: #eef1ff;
+  color: #1A285F;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-detail {
+  flex: 1;
+}
+
+.file-name {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.file-size {
+  font-size: 12px;
+  color: #777;
+}
+
+.open-icon {
+  color: #999;
+  transition: 0.2s;
+}
+
+.file-card:hover .open-icon {
+  color: #1A285F;
+}
+
+/* ===== Empty ===== */
+.empty-box {
+  margin-top: 40px;
+  text-align: center;
+  color: #777;
+}
+
+.empty-box span {
+  font-size: 48px;
+  opacity: 0.6;
+}
+
+/* ===== Anim ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Modern Back Button ===== */
+.back-btn-modern {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  color: #1A285F;
+  border: 1px solid #d6dcff;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(26,40,95,0.08);
+}
+
+.back-btn-modern .material-icons {
+  font-size: 18px;
+}
+
+/* Hover */
+.back-btn-modern:hover {
+  background: #1A285F;
+  color: white;
+  transform: translateX(-4px);
+  box-shadow: 0 8px 18px rgba(26,40,95,0.25);
+}
+
+/* Active */
+.back-btn-modern:active {
+  transform: translateX(-2px) scale(0.98);
 }

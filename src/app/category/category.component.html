@@ -13,6 +13,81 @@
     </button>
   </aside>
 
-  
+  <!-- Content -->
+  <main class="content">
+
+    <!-- ================= Category View ================= -->
+    <div *ngIf="!selectedCategory">
+      <h2>📂 หมวดหมู่เอกสาร</h2>
+
+      <div class="category-grid">
+        <div
+          class="category-card"
+          *ngFor="let c of categories"
+          (click)="openCategory(c)"
+        >
+          <span class="material-icons category-icon">folder</span>
+
+          <div class="category-name">{{ c.name }}</div>
+          <div class="category-desc">{{ c.description }}</div>
+
+          <div class="category-count">
+            {{ c.files.length }} ไฟล์
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= File View ================= -->
+<div *ngIf="selectedCategory" class="folder-view">
+
+  <!-- Header -->
+  <div class="folder-header">
+    <button class="back-btn-modern" (click)="backToCategories()">
+  <span class="material-icons">arrow_back</span>
+  หมวดหมู่ทั้งหมด
+</button>
+
+
+
+    <div class="folder-info">
+      <span class="material-icons folder-big-icon">folder_open</span>
+      <div>
+        <h2>{{ selectedCategory.name }}</h2>
+        <p>{{ selectedCategory.description }}</p>
+        <span class="folder-count">
+          {{ selectedCategory.files.length }} ไฟล์
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Files -->
+  <div class="file-grid" *ngIf="selectedCategory.files.length">
+
+    <div
+      class="file-card"
+      *ngFor="let f of selectedCategory.files"
+    >
+      <div class="file-icon-box">
+        <span class="material-icons">picture_as_pdf</span>
+      </div>
+
+      <div class="file-detail">
+        <div class="file-name">{{ f.name }}</div>
+        <div class="file-size">{{ f.size }}</div>
+      </div>
+
+      <span class="material-icons open-icon">open_in_new</span>
+    </div>
+
+  </div>
+
+  <!-- Empty -->
+  <div class="empty-box" *ngIf="selectedCategory.files.length === 0">
+    <span class="material-icons">folder_off</span>
+    <p>ยังไม่มีไฟล์ในหมวดหมู่นี้</p>
+  </div>
 
 </div>
+
