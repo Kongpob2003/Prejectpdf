@@ -1,5 +1,4 @@
 <div class="home-container">
-
   <!-- Sidebar -->
   <aside class="sidebar minimal">
     <div class="logo-box">
@@ -15,9 +14,7 @@
 
   <!-- Content -->
   <main class="content center-content">
-
     <div class="user-card">
-
       <!-- Header -->
       <div class="user-header">
         <h2>จัดการผู้ใช้</h2>
@@ -41,75 +38,122 @@
 
       <!-- ADD USER -->
       <div *ngIf="activeTab === 'add'" class="tab-content">
-
         <div class="form-group">
-          <label>ชื่อผู้ใช้</label>
-          <input type="text" [(ngModel)]="newUser.username">
+          <label>ชื่อผู้ใช้ <span class="required">*</span></label>
+          <input
+            type="text"
+            [(ngModel)]="newUser.username"
+            placeholder="กรอกชื่อผู้ใช้"
+            required
+          />
         </div>
 
         <div class="form-group">
-          <label>อีเมล</label>
-          <input type="email" [(ngModel)]="newUser.email">
+          <label>อีเมล <span class="required">*</span></label>
+          <input
+            type="email"
+            [(ngModel)]="newUser.email"
+            placeholder="example@email.com"
+            required
+          />
         </div>
 
         <div class="form-group">
-          <label>รหัสผ่าน</label>
-          <input type="password" [(ngModel)]="newUser.password">
+          <label>รหัสผ่าน <span class="required">*</span></label>
+          <input
+            type="password"
+            [(ngModel)]="newUser.password"
+            placeholder="กรอกรหัสผ่าน"
+            required
+          />
+          <small
+            *ngIf="newUser.password"
+            [class]="getPasswordStrengthClass()"
+          >
+            ความแข็งแรง: {{ getPasswordStrength() }}
+          </small>
         </div>
 
         <div class="form-group">
-          <label>เบอร์โทร</label>
-          <input type="password" [(ngModel)]="newUser.phone">
+          <label>เบอร์โทร <span class="required">*</span></label>
+          <input
+            type="tel"
+            [(ngModel)]="newUser.phone"
+            placeholder="เบอร์โทร"
+            maxlength="10"
+            required
+          />
         </div>
 
         <div class="form-group">
-          <label>สิทธิ์ผู้ใช้</label>
-          <select [(ngModel)]="newUser.role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
+          <label>สิทธิ์ผู้ใช้ <span class="required">*</span></label>
+          <select [(ngModel)]="newUser.type">
+            <option value="user">User (อาจารย์)</option>
+            <option value="admin">Admin (ผู้ดูแลระบบ)</option>
           </select>
         </div>
 
         <div class="actions">
-          <button class="btn-submit" (click)="addUser()">เพิ่มผู้ใช้</button>
+          <button class="btn-submit" (click)="addUser()">
+            <span class="material-icons">person_add</span>
+            เพิ่มผู้ใช้
+          </button>
         </div>
-
       </div>
 
       <!-- DELETE USER -->
       <div *ngIf="activeTab === 'delete'" class="tab-content">
+        <div class="table-container">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th>ชื่อผู้ใช้</th>
+                <th>อีเมล</th>
+                <th>เบอร์โทร</th>
+                <th>สิทธิ์</th>
+                <th>การจัดการ</th>
+              </tr>
+            </thead>
 
-        <table class="user-table">
-          <thead>
-            <tr>
-              <th>ชื่อผู้ใช้</th>
-              <th>รหัสผ่าน</th>
-              <th>อีเมล</th>
-              <th>เบอร์โทร</th>
-              <th>สิทธิ์</th>
-              <th></th>
-            </tr>
-          </thead>
+            <tbody>
+              <tr *ngFor="let user of users ">
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.phone }}</td>
+                <td>
+                  <span
+                    class="badge"
+                    [class.badge-admin]="user.type === 'admin'"
+                    [class.badge-user]="user.type === 'user'"
+                  >
+                    {{ user.type === 'admin' ? 'Admin' : 'User' }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    class="btn-delete"
+                    (click)="deleteUser(user.uid)"
+                  >
+                    <span class="material-icons">delete</span>
+                    ลบ
+                  </button>
+                </td>
+              </tr>
 
-          <tbody>
-            <tr *ngFor="let user of users; let i = index">
-              <td>{{ user.username }}</td>
-              <td>{{ user.password }}</td>
-              <td>{{ user.email }}</td>
-              <td>{{ user.phone }}</td>
-              <td>{{ user.role }}</td>
-              <td>
-                <button class="btn-delete" (click)="deleteUser(i)">
-                  ลบ
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <tr *ngIf="users.length === 0">
+                <td colspan="5" class="no-data">ไม่มีข้อมูลผู้ใช้</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
+        <div class="user-count" *ngIf="users.length > 0">
+          <div style="display: flex; padding-top: 2em; gap: 0.2em;">
+              <span class="material-icons">people</span>
+              ทั้งหมด {{ users.length }} คน
+          </div>
+        </div>
       </div>
-
     </div>
-
   </main>
 </div>

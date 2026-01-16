@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { UserLocalStorge } from '../../model/response';
+import { UserLoginRes } from '../../model/response';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,13 @@ export class AuthService {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
-  setUser(user: UserLocalStorge) {
+  setUser(user: UserLoginRes) {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.KEY, JSON.stringify(user));
     }
   }
 
-  getUser(): UserLocalStorge | null {
+  getUser(): UserLoginRes | null {
     if (!isPlatformBrowser(this.platformId)) {
       return null; // 👈 สำคัญมาก
     }
