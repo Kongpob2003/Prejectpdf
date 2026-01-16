@@ -400,3 +400,137 @@
 .back-btn-modern:active {
   transform: translateX(-2px) scale(0.98);
 }
+
+/* ===== Sticky Header + Breadcrumb ===== */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 16px 20px;
+  margin-bottom: 20px;
+
+  backdrop-filter: blur(14px);
+  background: rgba(255,255,255,0.7);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Glass Back Button */
+.back-glass-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(26, 40, 95, 0.15);
+  backdrop-filter: blur(10px);
+  color: #1A285F;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.45),
+    0 6px 16px rgba(26,40,95,0.25);
+
+  transition: all 0.25s ease;
+}
+
+.back-glass-btn:hover {
+  background: #1A285F;
+  color: white;
+  transform: translateX(-4px) scale(1.05);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #555;
+}
+
+.crumb {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.crumb:hover {
+  color: #1A285F;
+  text-decoration: underline;
+}
+
+.crumb.active {
+  color: #1A285F;
+  font-weight: 700;
+  cursor: default;
+}
+
+.divider {
+  opacity: 0.5;
+}
+
+/* ===== Folder Header ===== */
+.folder-header {
+  position: relative;
+  background: linear-gradient(135deg, #1A285F, #2f3f91);
+  color: white;
+  padding: 32px 28px 28px;
+  border-radius: 18px;
+  margin-bottom: 28px;
+}
+
+/* ===== Back Button in Folder ===== */
+.back-folder-btn {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.35);
+  color: white;
+
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.folder-header {
+  position: relative;
+  background: linear-gradient(135deg, #1A285F, #2f3f91);
+  color: white;
+
+  /* 👇 เพิ่ม padding-top ให้มากกว่าความสูงปุ่ม */
+  padding: 72px 28px 32px;
+
+  border-radius: 18px;
+  margin-bottom: 28px;
+}
+
+
+/* Hover */
+.back-folder-btn:hover {
+  background: white;
+  color: #1A285F;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}

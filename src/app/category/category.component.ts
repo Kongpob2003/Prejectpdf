@@ -51,6 +51,7 @@ export class CategoryComponent {
       files: []
     }
   ];
+cat: any;
 
   openCategory(c: Category) {
     this.selectedCategory = c;
