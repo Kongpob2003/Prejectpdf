@@ -12,12 +12,40 @@
     </button>
   </aside>
   <!-- Content -->
+<!-- Content -->
   <main class="content center-content">
     <div class="calendar-card">
-      <!-- Header -->
+      <!-- Header with Month/Year Selector -->
       <div class="calendar-header">
         <h2>ปฏิทินเอกสาร</h2>
-        <span>{{ monthName }} {{ year }}</span>
+        
+        <div class="month-selector">
+          <button class="nav-btn" (click)="previousMonth()">
+            <span class="material-icons">chevron_left</span>
+          </button>
+
+          <div class="month-year-picker">
+            <select [(ngModel)]="currentMonth" (change)="onMonthChange()">
+              <option *ngFor="let month of monthNames; let i = index" [value]="i">
+                {{ month }}
+              </option>
+            </select>
+
+            <select [(ngModel)]="currentYear" (change)="onMonthChange()">
+              <option *ngFor="let yr of years" [value]="yr">
+                {{ yr + 543 }}
+              </option>
+            </select>
+          </div>
+
+          <button class="nav-btn" (click)="nextMonth()">
+            <span class="material-icons">chevron_right</span>
+          </button>
+
+          <button class="today-btn" (click)="goToToday()">
+            วันนี้
+          </button>
+        </div>
       </div>
 
       <!-- Summary -->
@@ -41,26 +69,42 @@
         </div>
       </div>
 
+      <!-- Calendar Body -->
       <div class="calendar-body">
-      <!-- Calendar -->
-      <div class="calendar-grid">
-        <div class="day-name" *ngFor="let d of days">
-          {{ d }}
-        </div>
+        <!-- Day Names -->
+        <div class="calendar-grid">
+          <div class="day-name" *ngFor="let d of days">
+            {{ d }}
+          </div>
 
-        <div
-          class="day-cell"
-          *ngFor="let day of calendarDays"
-          [class.today]="day.isToday"
-          [class.has-doc]="day.receivedCount > 0"
-        >
-          <span class="date">{{ day.date }}</span>
+          <!-- Calendar Days -->
+          <div
+            class="day-cell"
+            *ngFor="let day of calendarDays"
+            [class.today]="day.isToday"
+            [class.has-doc]="day.documentCount > 0"
+            [class.other-month]="!day.isCurrentMonth"
+            (click)="onDayClick(day)"
+          >
+            <span class="date">{{ day.date }}</span>
 
-          <span class="badge" *ngIf="day.receivedCount > 0">
-            {{ day.receivedCount }}
-          </span>
+            <span class="badge" *ngIf="day.documentCount > 0">
+              {{ day.documentCount }}
+            </span>
+          </div>
         </div>
       </div>
+
+      <!-- Legend -->
+      <div class="calendar-legend">
+        <div class="legend-item">
+          <div class="legend-color today-color"></div>
+          <span>วันนี้</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color has-doc-color"></div>
+          <span>มีเอกสาร</span>
+        </div>
       </div>
     </div>
   </main>
