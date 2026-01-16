@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Constants } from '../../../config/constants';
 import { lastValueFrom } from 'rxjs';
 import { DocumentItemPos } from '../../../model/document_Item_pos';
+import { UserLoginRes } from '../../../model/response';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,35 @@ export class Backend {
     return response;
   }
 
+  // แก้ไขข้อมูลผู้ใช้
+  public async EditUser(body:any,id:Number){
+    const url = this.constants.API_ENDPOINT + 'update/' + id;
+    const response = await lastValueFrom(this.http.put(url,body));
+    return response;
+  }
+
+  // แสดงผู้ใช้ทั้งหมด
+  public async GetUser(){
+    const url = this.constants.API_ENDPOINT + 'professor';
+    const response = await lastValueFrom(this.http.get(url));
+    return response as UserLoginRes[];
+  }
+
+  // ลบผู้ใช้
+  public async DeleteUser(uid:Number){
+    const url = this.constants.API_ENDPOINT + 'delete/' + uid;
+    const response = await lastValueFrom(this.http.delete(url));
+    return response;
+  }
+
+  // เพิ่มผู้ใช้
+  public async AddUser(body:any){
+    const url = this.constants.API_ENDPOINT + 'add';
+    const response = await lastValueFrom(this.http.post(url,body));
+    return response;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
     const url = this.constants.API_ENDPOINT + `document/${documentId}`;
@@ -52,4 +82,7 @@ export class Backend {
     const response = await lastValueFrom(this.http.post(url, body));
     return response;
   }
+
+  //
+
 }
