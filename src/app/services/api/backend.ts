@@ -60,7 +60,20 @@ export class Backend {
     return response;
   }
 
-  
+  // แสดง board ทั้งหมด
+  public async GetBoard(){
+    const url = this.constants.API_ENDPOINT + 'board';
+    const response = await lastValueFrom(this.http.get(url));
+    return response;
+  }
+
+  // add board 
+  public async AddBoard(formData :any){
+    const url = this.constants.API_ENDPOINT + 'board';
+    const response = await lastValueFrom(this.http.post(url,formData));
+    return response;
+  }
+  //
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
