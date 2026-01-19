@@ -5,11 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { UserLocalStorge } from '../../model/response';
+
 import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
+
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { UserLocalStorge } from '../../model/response';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +24,13 @@ import { isPlatformBrowser } from '@angular/common';
 export class HomeComponent {
   user: UserLocalStorge | null = null;
   document: DocumentItemPos[] = [];
-  
+  safeFileUrl: SafeResourceUrl | null = null;
   constructor(
     private router: Router,
     private auth: AuthService,
     private backend: Backend,
     private cdr: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -102,9 +106,14 @@ export class HomeComponent {
   showModal = false;
   selectedFile: any = null;
 
-  openModal(file: any) {
+  openModal(file: DocumentItemPos) {
     this.selectedFile = file;
-    this.showModal = true;
+
+  this.safeFileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    file.file_url
+  );
+
+  this.showModal = true;
   }
 
   closeModal() {

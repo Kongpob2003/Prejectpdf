@@ -134,11 +134,11 @@
 <!-- Preview Modal -->
 <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
-    <h3>{{ selectedFile?.file_name }}</h3>
+    <h3>{{ selectedFile?.file_name }} </h3>
 
     <iframe
       class="pdf-preview"
-      [src]="selectedFile?.file_url"
+      [src]="safeFileUrl"
       width="100%"
       height="400"
     ></iframe>
