@@ -43,12 +43,12 @@
 
   <!-- Header -->
   <div class="folder-header">
-    <button class="back-btn-modern" (click)="backToCategories()">
-  <span class="material-icons">arrow_back</span>
-  หมวดหมู่ทั้งหมด
-</button>
 
-
+    <!-- Back Button -->
+    <button class="back-folder-btn" (click)="backToCategories()">
+      <span class="material-icons">arrow_back</span>
+      หมวดหมู่ทั้งหมด
+    </button>
 
     <div class="folder-info">
       <span class="material-icons folder-big-icon">folder_open</span>
@@ -60,15 +60,12 @@
         </span>
       </div>
     </div>
+
   </div>
 
   <!-- Files -->
   <div class="file-grid" *ngIf="selectedCategory.files.length">
-
-    <div
-      class="file-card"
-      *ngFor="let f of selectedCategory.files"
-    >
+    <div class="file-card" *ngFor="let f of selectedCategory.files">
       <div class="file-icon-box">
         <span class="material-icons">picture_as_pdf</span>
       </div>
@@ -80,7 +77,6 @@
 
       <span class="material-icons open-icon">open_in_new</span>
     </div>
-
   </div>
 
   <!-- Empty -->
@@ -90,4 +86,5 @@
   </div>
 
 </div>
+
 
