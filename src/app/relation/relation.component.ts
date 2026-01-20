@@ -7,7 +7,13 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AnnouncementDialogComponent }
   from '../announcement-dialog/announcement-dialog.component';
 
+import { Backend } from '../services/api/backend';
+import { BoardItemPos } from '../../model/board_Item_pos';
+import { DocumentItemPos } from '../../model/document_Item_pos';
 
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-relation',
   standalone: true,
@@ -22,19 +28,52 @@ import { AnnouncementDialogComponent }
 })
 export class RelationComponent {
 
+  boardData:BoardItemPos[]=[];
+  documents:DocumentItemPos[]=[];
   searchText = '';
+  docMap = new Map<number, any>();
+  announcements = this.boardData;
 
-  announcements = [
-    {
-      title: 'แจ้งกำหนดส่งเอกสาร',
-      detail: 'ขอให้อาจารย์ทุกท่านส่งเอกสารภายในวันที่ 30',
-      fileName: '',
-      date: new Date()
-    }
-  ];
+  constructor(private dialog: MatDialog,
+    private backend:Backend,
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object  // ✅ เพิ่มบรรทัดนี้
+  ) {}
 
-  constructor(private dialog: MatDialog) {}
+  async ngOnInit() {
+  if (isPlatformBrowser(this.platformId)) {
+    await this.loadData();
+  }
+}
+  async loadData(){
+    const [boards, docs] = await Promise.all([
+    this.backend.GetBoard(),
+    this.backend.GetFile()
+  ]);
 
+  this.boardData = boards;
+  this.documents = docs;
+
+  // สร้าง Map: did → document
+  docs.forEach(doc => {
+    this.docMap.set(doc.did, doc);
+  });
+
+  console.log('Boards:', this.boardData);
+  console.log('Docs:', this.documents);
+  }
+  get boardsWithFiles() {
+  return this.boardData.map(board => {
+    const doc = board.did
+      ? this.docMap.get(board.did)
+      : null;
+
+    return {
+      ...board,
+      document: doc || null
+    };
+  });
+}
   openPopup() {
   const dialogRef = this.dialog.open(AnnouncementDialogComponent, {
     width: '700px',
@@ -42,23 +81,14 @@ export class RelationComponent {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-    
   if (!result) return;
-
-  this.announcements.unshift({
-    title: result.title,
-    detail: result.detail,
-    fileName: result.fileName,
-    date: new Date()
-  });
 });
 
 }
 
-
   filteredAnnouncements() {
     return this.announcements.filter(a =>
-      a.title.includes(this.searchText) ||
+      a.harder.includes(this.searchText) ||
       a.detail.includes(this.searchText)
     );
   }

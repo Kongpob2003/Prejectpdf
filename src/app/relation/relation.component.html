@@ -35,23 +35,33 @@
       />
 
       <!-- Announcement List -->
-      <div class="announcement-list">
-        <div
-          class="announcement-card"
-          *ngFor="let a of filteredAnnouncements()"
-        >
-          <h3>{{ a.title }}</h3>
-          <p>{{ a.detail }}</p>
+      <div
+  class="announcement-card"
+  *ngFor="let a of boardsWithFiles"
+>
+  <!-- หัวข้อ -->
+  <h3>{{ a.harder }}</h3>
 
-          <a *ngIf="a.fileName" class="file-link">
-            📎 {{ a.fileName }}
-          </a>
+  <!-- เนื้อหา -->
+  <p>{{ a.detail }}</p>
 
-          <span class="date">
-            {{ a.date | date:'dd/MM/yyyy HH:mm' }}
-          </span>
-        </div>
-      </div>
+  <!-- วันที่ -->
+  <span class="date">
+    {{ a.create_at | date:'dd/MM/yyyy HH:mm' }}
+  </span>
+
+  <!-- ไฟล์ (แสดงเฉพาะมีไฟล์) -->
+  <div *ngIf="a.document" class="file-box">
+    <a
+      [href]="a.document.file_url"
+      target="_blank"
+      class="file-link"
+    >
+      📎 {{ a.document.file_name }}
+    </a>
+  </div>
+</div>
+
 
     </div>
 

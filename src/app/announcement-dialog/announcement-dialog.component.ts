@@ -90,8 +90,9 @@ export class AnnouncementDialogComponent implements OnInit {
   }
 
   async submit() {
-  if (this.form.invalid || !this.selectedFile) {
-    this.snackBar.open('⚠️ กรุณากรอกข้อมูลให้ครบถ้วนและแนบไฟล์', 'ปิด', {
+
+  if (this.form.invalid) {
+    this.snackBar.open('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน', 'ปิด', {
       duration: 3000
     });
     return;
@@ -100,70 +101,68 @@ export class AnnouncementDialogComponent implements OnInit {
   this.isSubmitting = true;
 
   try {
-    /* ==============================
-       1️⃣ Upload file
-    ============================== */
-    const fileFormData = new FormData();
-
-    const correctedFile = new File(
-      [this.selectedFile],
-      this.form.value.fileName,
-      { type: this.selectedFile.type }
-    );
-
-    fileFormData.append('file', correctedFile);
-
-    await this.backend.Upload_File(fileFormData);
+    let documentId: number | null = null;
 
     /* ==============================
-       2️⃣ ดึง document ล่าสุด
+       1️⃣ ถ้ามีไฟล์ → upload
     ============================== */
-    const documents: any[] = await this.backend.GetFile();
+    if (this.selectedFile) {
+      const fileFormData = new FormData();
 
-    if (!documents || documents.length === 0) {
-      throw new Error('ไม่พบข้อมูล document');
+      const correctedFile = new File(
+        [this.selectedFile],
+        this.form.value.fileName || this.selectedFile.name,
+        { type: this.selectedFile.type }
+      );
+
+      fileFormData.append('file', correctedFile);
+
+      await this.backend.Upload_File(fileFormData);
+
+      // ดึง document ล่าสุด
+      const documents: any[] = await this.backend.GetFile();
+
+      if (!documents || documents.length === 0) {
+        throw new Error('ไม่พบข้อมูล document');
+      }
+
+      const latestDocument = documents.reduce((prev, curr) =>
+        curr.did > prev.did ? curr : prev
+      );
+
+      documentId = latestDocument.did;
     }
 
-    // ✅ เอาแถวล่าสุด (id มากสุด)
-    const latestDocument = documents.reduce((prev, curr) =>
-      curr.did > prev.did ? curr : prev
-    );
-
-    const documentId = latestDocument.did;
-
     /* ==============================
-       3️⃣ Create board
+       2️⃣ Create board (มีหรือไม่มี did ก็ได้)
     ============================== */
-    const boardData = {
+    const boardData: any = {
       detail: this.form.value.detail,
-      did: documentId,
       harder: this.form.value.title
     };
 
-    const boardResponse = await this.backend.AddBoard(boardData);
+    // แนบ did เฉพาะกรณีมีไฟล์
+    if (documentId !== null) {
+      boardData.did = documentId;
+    }
+
+    console.log('Board data:', boardData);
+    await this.backend.AddBoard(boardData);
 
     /* ==============================
-       4️⃣ Success
+       3️⃣ Success
     ============================== */
-    this.snackBar.open('✅ อัปโหลดสำเร็จ', 'ปิด', {
+    this.snackBar.open('✅ บันทึกสำเร็จ', 'ปิด', {
       duration: 2500
     });
 
-    // ✅ ส่ง document ล่าสุดกลับไปให้ table update
-    this.dialogRef.close({
-      success: true,
-      document: latestDocument,
-      board: boardResponse
-    });
+    this.dialogRef.close(true);
 
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
-
-    this.snackBar.open(
-      '❌ เกิดข้อผิดพลาดในการอัปโหลด',
-      'ปิด',
-      { duration: 4000 }
-    );
+    this.snackBar.open('❌ เกิดข้อผิดพลาด', 'ปิด', {
+      duration: 4000
+    });
   } finally {
     this.isSubmitting = false;
   }

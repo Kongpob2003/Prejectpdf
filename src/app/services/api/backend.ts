@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from '../../../config/constants';
 import { lastValueFrom } from 'rxjs';
+
+import { BoardItemPos } from '../../../model/board_Item_pos';
 import { DocumentItemPos } from '../../../model/document_Item_pos';
 import { UserLoginRes } from '../../../model/response';
+
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +67,7 @@ export class Backend {
   public async GetBoard(){
     const url = this.constants.API_ENDPOINT + 'board';
     const response = await lastValueFrom(this.http.get(url));
-    return response;
+    return response as BoardItemPos[];
   }
 
   // add board 
@@ -73,7 +76,12 @@ export class Backend {
     const response = await lastValueFrom(this.http.post(url,formData));
     return response;
   }
-  //
+  //แสดงข้อมูล file เดียว
+  public async getDocID(id : any){
+    const url = this.constants.API_ENDPOINT + 'getDoc/' + id;
+    const response = await lastValueFrom(this.http.get(url));
+    return response;
+  }
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
