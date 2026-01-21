@@ -1,5 +1,4 @@
 <div class="home-container">
-
   <!-- Sidebar -->
   <aside class="sidebar minimal">
     <div class="logo-box">
@@ -15,9 +14,7 @@
 
   <!-- Content -->
   <main class="content center-content">
-
     <div class="relation-card">
-
       <!-- Header -->
       <div class="relation-header">
         <h2>📢 ประชาสัมพันธ์</h2>
@@ -27,45 +24,72 @@
       </div>
 
       <!-- Search -->
-      <input
-        class="search-input"
-        type="text"
-        placeholder="ค้นหาประกาศ / ข่าวสาร"
-        [(ngModel)]="searchText"
-      />
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="ค้นหาประกาศ / ข่าวสาร"
+          [(ngModel)]="searchText"
+        />
+        <span 
+          class="clear-icon material-icons" 
+          *ngIf="searchText"
+          (click)="searchText = ''">
+          close
+        </span>
+      </div>
+
+      <!-- Search Results Info -->
+      <div class="search-info" *ngIf="searchText">
+        <span>พบ {{ filteredAnnouncements.length }} รายการ</span>
+      </div>
 
       <!-- Announcement List -->
-      <div
-  class="announcement-card"
-  *ngFor="let a of boardsWithFiles"
->
-  <!-- หัวข้อ -->
-  <h3>{{ a.harder }}</h3>
+      <div class="announcements-container">
+        <!-- ✅ เปลี่ยนจาก boardsWithFiles เป็น filteredAnnouncements -->
+        <div
+          class="announcement-card"
+          *ngFor="let a of filteredAnnouncements"
+        >
+          <!-- หัวข้อ -->
+          <h3 class="announcement-title">{{ a.harder }}</h3>
 
-  <!-- เนื้อหา -->
-  <p>{{ a.detail }}</p>
+          <!-- เนื้อหา -->
+          <p class="announcement-detail">{{ a.detail }}</p>
 
-  <!-- วันที่ -->
-  <span class="date">
-    {{ a.create_at | date:'dd/MM/yyyy HH:mm' }}
-  </span>
+          <!-- วันที่ -->
+          <span class="date">
+            <span class="material-icons">schedule</span>
+            {{ a.create_at | date:'dd/MM/yyyy HH:mm' }}
+          </span>
 
-  <!-- ไฟล์ (แสดงเฉพาะมีไฟล์) -->
-  <div *ngIf="a.document" class="file-box">
-    <a
-      [href]="a.document.file_url"
-      target="_blank"
-      class="file-link"
-    >
-      📎 {{ a.document.file_name }}
-    </a>
-  </div>
-</div>
+          <!-- ไฟล์ (แสดงเฉพาะมีไฟล์) -->
+          <div *ngIf="a.document" class="file-box">
+            <a
+              [href]="a.document.file_url"
+              target="_blank"
+              class="file-link"
+            >
+              <span class="material-icons">picture_as_pdf</span>
+              {{ a.document.file_name }}
+            </a>
+          </div>
+        </div>
 
-
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="filteredAnnouncements.length === 0">
+          <span class="material-icons">search_off</span>
+          <h3>ไม่พบประกาศที่ค้นหา</h3>
+          <p *ngIf="searchText">
+            ลองค้นหาด้วยคำอื่น หรือ 
+            <a (click)="searchText = ''" class="link-clear">ล้างการค้นหา</a>
+          </p>
+          <p *ngIf="!searchText">
+            ยังไม่มีประกาศในระบบ คลิก "เพิ่มประกาศ" เพื่อเริ่มต้น
+          </p>
+        </div>
+      </div>
     </div>
-
   </main>
 </div>
-
-
