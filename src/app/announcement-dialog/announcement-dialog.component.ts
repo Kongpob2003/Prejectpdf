@@ -155,9 +155,9 @@ export class AnnouncementDialogComponent implements OnInit {
     this.snackBar.open('✅ บันทึกสำเร็จ', 'ปิด', {
       duration: 2500
     });
-
+    
     this.dialogRef.close(true);
-
+    
   } catch (error) {
     console.error(error);
     this.snackBar.open('❌ เกิดข้อผิดพลาด', 'ปิด', {
@@ -165,7 +165,7 @@ export class AnnouncementDialogComponent implements OnInit {
     });
   } finally {
     this.isSubmitting = false;
+    this.cdr.detectChanges();
   }
 }
-
 }

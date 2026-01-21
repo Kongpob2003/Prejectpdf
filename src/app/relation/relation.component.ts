@@ -58,9 +58,10 @@ export class RelationComponent {
   docs.forEach(doc => {
     this.docMap.set(doc.did, doc);
   });
-
+  
   console.log('Boards:', this.boardData);
   console.log('Docs:', this.documents);
+  this.cdr.detectChanges();
   }
   get boardsWithFiles() {
   return this.boardData.map(board => {
@@ -81,16 +82,33 @@ export class RelationComponent {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-  if (!result) return;
+    if (result === true) {
+    this.loadData(); // ปล่อยให้ Promise ทำงานเอง
+  }
 });
-
 }
 
-  filteredAnnouncements() {
-    return this.announcements.filter(a =>
-      a.harder.includes(this.searchText) ||
-      a.detail.includes(this.searchText)
-    );
+  // ✅ ฟังก์ชันค้นหาที่ใช้งานได้
+  get filteredAnnouncements() {
+    // ถ้าไม่มีคำค้นหา ให้แสดงทั้งหมด
+    if (!this.searchText || this.searchText.trim() === '') {
+      return this.boardsWithFiles;
+    }
+
+    const searchLower = this.searchText.toLowerCase().trim();
+
+    return this.boardsWithFiles.filter(a => {
+      // ค้นหาในหัวข้อ
+      const harderMatch = a.harder?.toLowerCase().includes(searchLower) || false;
+      
+      // ค้นหาในเนื้อหา
+      const detailMatch = a.detail?.toLowerCase().includes(searchLower) || false;
+      
+      // ค้นหาในชื่อไฟล์
+      const fileNameMatch = a.document?.file_name?.toLowerCase().includes(searchLower) || false;
+
+      return harderMatch || detailMatch || fileNameMatch;
+    });
   }
 
   
