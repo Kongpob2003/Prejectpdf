@@ -79,6 +79,14 @@ export class Backend {
     const response = await lastValueFrom(this.http.post(url,formData));
     return response;
   }
+
+  // ลบประกาศ (board)
+public async DeleteBoard(bid: number) {
+  const url = this.constants.API_ENDPOINT + 'board/' + bid;
+  const response = await lastValueFrom(this.http.delete(url));
+  return response;
+}
+
   //แสดงข้อมูล file เดียว
   public async getDocID(id : any){
     const url = this.constants.API_ENDPOINT + 'getDoc/' + id;

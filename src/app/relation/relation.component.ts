@@ -111,5 +111,32 @@ export class RelationComponent {
     });
   }
 
+  async deleteAnnouncement(a: any) {
+  const confirmDelete = confirm(
+    `คุณต้องการลบประกาศ "${a.harder}" ใช่หรือไม่?`
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    // ถ้ามีไฟล์แนบ → ลบไฟล์ก่อน (ถ้าระบบต้องการ)
+    if (a.document?.did) {
+      await this.backend.DeleteFile(a.document.did);
+    }
+
+    // ลบประกาศ
+    await this.backend.DeleteBoard(a.bid);
+
+    // โหลดข้อมูลใหม่
+    await this.loadData();
+
+    alert('ลบประกาศเรียบร้อยแล้ว');
+  } catch (error) {
+    console.error(error);
+    alert('เกิดข้อผิดพลาดในการลบประกาศ');
+  }
+}
+
+
   
 }

@@ -52,6 +52,14 @@
           class="announcement-card"
           *ngFor="let a of filteredAnnouncements"
         >
+        <!-- ปุ่มลบ -->
+  <button
+    class="delete-btn"
+    (click)="deleteAnnouncement(a)"
+    title="ลบประกาศ"
+  >
+    <span class="material-icons">delete</span>
+  </button>
           <!-- หัวข้อ -->
           <h3 class="announcement-title">{{ a.harder }}</h3>
 
