@@ -92,14 +92,14 @@
 <!-- SEND TEACHER MODAL -->
 <div class="modal-backdrop" *ngIf="showSendTeacher" (click)="closeSendTeacher()">
   <div class="modal-box" (click)="$event.stopPropagation()">
-    <h3>เลือกหมวดหมู่เอกสาร</h3>
+    <h3>เลือกหมวดหมู่เอกสาร (เลือกได้หลายหมวด)</h3>
 
 <div class="category-grid">
   <div
     class="category-card"
     *ngFor="let c of categories"
-    (click)="selectedCategory = c"
-    [class.selected]="selectedCategory === c"
+    (click)="toggleCategory(c)"
+    [class.selected]="selectedCategories.includes(c)"
   >
     <span class="material-icons category-icon">
       {{ c === 'วิจัย' ? 'science'
@@ -111,6 +111,14 @@
     <div class="category-name">{{ c }}</div>
   </div>
 </div>
+
+<!-- ✅ วางตรงนี้ -->
+<div class="selected-category-preview" *ngIf="selectedCategories.length">
+  <span *ngFor="let c of selectedCategories" class="category-badge">
+    {{ c }}
+  </span>
+</div>
+
     <h3>เลือกอาจารย์</h3>
 
     <div class="teacher-grid">
@@ -129,11 +137,12 @@
       <button class="btn-cancel" (click)="closeSendTeacher()">ยกเลิก</button>
       <button
   class="btn-submit"
-  [disabled]="selectedTeachers.length === 0 || !selectedCategory"
+  [disabled]="selectedTeachers.length === 0 || selectedCategories.length === 0"
   (click)="sendToTeacher()"
 >
   ส่งเอกสาร
 </button>
+
     </div>
   </div>
 </div>

@@ -12,7 +12,7 @@ import { UserLoginRes } from '../../../model/response';
   providedIn: 'root',
 })
 export class Backend {
-  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
+  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string[]) {
     throw new Error('Method not implemented.');
   }
   constructor(private constants: Constants, private http: HttpClient) {}
