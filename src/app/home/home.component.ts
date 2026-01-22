@@ -54,6 +54,7 @@ export class HomeComponent {
   // SEND TEACHER
   // ======================
   teachers: string[] = ['อาจารย์ A', 'อาจารย์ B', 'อาจารย์ C'];
+  person: UserLocalStorge[] = [];
   selectedTeachers: string[] = [];
 
 
@@ -82,6 +83,7 @@ selectedCategory: string = '';
 
   async loadDocuments() {
     this.document = await this.backend.GetFile();
+    this.person = await this.backend.GetUser();
     this.cdr.detectChanges();
   }
 

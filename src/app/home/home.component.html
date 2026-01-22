@@ -116,12 +116,12 @@
     <div class="teacher-grid">
       <div
         class="teacher-card"
-        *ngFor="let t of teachers"
-        (click)="toggleTeacher(t)"
-        [class.selected]="selectedTeachers.includes(t)"
+        *ngFor="let t of person"
+        (click)="toggleTeacher(t.username)"
+        [class.selected]="selectedTeachers.includes(t.username)"
       >
         <span class="material-icons">person</span>
-        {{ t }}
+        {{ t.username }}
       </div>
     </div>
 
