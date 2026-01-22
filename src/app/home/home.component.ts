@@ -57,9 +57,9 @@ export class HomeComponent {
   selectedTeachers: string[] = [];
 
 
-  // ===== CATEGORY =====
+  // ===== CATEGORY (MULTI) =====
 categories: string[] = ['วิจัย', 'งบประมาณ', 'กิจกรรม', 'ทั่วไป'];
-selectedCategory: string = '';
+selectedCategories: string[] = [];
 
   constructor(
     private router: Router,
@@ -209,10 +209,10 @@ selectedCategory: string = '';
   // SEND TEACHER
   // ======================
   openSendTeacher() {
-    this.showSendTeacher = true;
-    this.selectedTeachers = [];
-    this.selectedCategory = '';
-  }
+  this.showSendTeacher = true;
+  this.selectedTeachers = [];
+  this.selectedCategories = [];
+}
 
   closeSendTeacher() {
     this.showSendTeacher = false;
@@ -226,16 +226,31 @@ selectedCategory: string = '';
   }
 
   async sendToTeacher() {
-    if (!this.selectedFile) return;
-
-    await this.backend.SendToTeacher(
-      this.selectedFile.did,
-      this.selectedTeachers,
-      this.selectedCategory // 👈 เพิ่มหมวดหมู่
-    );
-
-    this.closeSendTeacher();
-    this.closeModal();
-    await this.loadDocuments();
+  if (!this.selectedFile) return;
+  if (this.selectedCategories.length === 0) {
+    alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด');
+    return;
   }
+
+  await this.backend.SendToTeacher(
+    this.selectedFile.did,
+    this.selectedTeachers,
+    this.selectedCategories // 👈 ส่งเป็น array
+  );
+
+  this.closeSendTeacher();
+  this.closeModal();
+  await this.loadDocuments();
+}
+
+
+toggleCategory(category: string) {
+  const index = this.selectedCategories.indexOf(category);
+  if (index === -1) {
+    this.selectedCategories.push(category);
+  } else {
+    this.selectedCategories.splice(index, 1);
+  }
+}
+
 }
