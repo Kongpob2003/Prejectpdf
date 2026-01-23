@@ -234,11 +234,11 @@ selectedCategories: string[] = [];
     return;
   }
 
-  await this.backend.SendToTeacher(
-    this.selectedFile.did,
-    this.selectedTeachers,
-    this.selectedCategories // 👈 ส่งเป็น array
-  );
+  // await this.backend.SendToTeacher(
+  //   this.selectedFile.did,
+  //   this.selectedTeachers,
+  //   this.selectedCategories // 👈 ส่งเป็น array
+  // );
 
   this.closeSendTeacher();
   this.closeModal();

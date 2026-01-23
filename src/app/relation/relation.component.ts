@@ -48,7 +48,7 @@ export class RelationComponent {
   async loadData(){
     const [boards, docs] = await Promise.all([
     this.backend.GetBoard(),
-    this.backend.GetFile()
+    this.backend.GetFileBoard()
   ]);
 
   this.boardData = boards;
@@ -120,12 +120,19 @@ export class RelationComponent {
 
   try {
     // ถ้ามีไฟล์แนบ → ลบไฟล์ก่อน (ถ้าระบบต้องการ)
+     console.log(a.document.did);
+     
+    // ลบประกาศ
+      await this.backend.DeleteBoard(a.bid);
+
+
     if (a.document?.did) {
       await this.backend.DeleteFile(a.document.did);
     }
 
-    // ลบประกาศ
-    await this.backend.DeleteBoard(a.bid);
+    console.log(a.bid);
+
+    
 
     // โหลดข้อมูลใหม่
     await this.loadData();

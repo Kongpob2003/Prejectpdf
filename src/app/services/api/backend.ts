@@ -12,7 +12,7 @@ import { UserLoginRes } from '../../../model/response';
   providedIn: 'root',
 })
 export class Backend {
-  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string[]) {
+  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
     throw new Error('Method not implemented.');
   }
   constructor(private constants: Constants, private http: HttpClient) {}
@@ -24,8 +24,15 @@ export class Backend {
     return response;
   }
 
-  // ดึงรายการไฟล์ทั้งหมด
+  // ดึงรายการไฟล์ทั้งหมด + ไม่มี board
   public async GetFile() {
+    const url = this.constants.API_ENDPOINT + 'document/noBoard';
+    const response = await lastValueFrom(this.http.get(url));
+    return response as DocumentItemPos[];
+  }
+
+  // ดึงรายการไฟล์ทั้งหมด
+  public async GetFileBoard() {
     const url = this.constants.API_ENDPOINT + 'document/getAll';
     const response = await lastValueFrom(this.http.get(url));
     return response as DocumentItemPos[];
@@ -80,19 +87,21 @@ export class Backend {
     return response;
   }
 
-  // ลบประกาศ (board)
-public async DeleteBoard(bid: number) {
-  const url = this.constants.API_ENDPOINT + 'board/' + bid;
-  const response = await lastValueFrom(this.http.delete(url));
-  return response;
-}
-
+  // delete board
+  public async DeleteBoard(id :any){
+    const url = this.constants.API_ENDPOINT + 'board/' + id;
+    const response = await lastValueFrom(this.http.delete(url));
+    return response;
+  };
+  
   //แสดงข้อมูล file เดียว
   public async getDocID(id : any){
     const url = this.constants.API_ENDPOINT + 'getDoc/' + id;
     const response = await lastValueFrom(this.http.get(url));
     return response;
   }
+
+  
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
