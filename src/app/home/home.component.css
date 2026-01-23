@@ -159,6 +159,8 @@
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s;
+  position: relative;
+  z-index: 99999 !important;
 }
 
 .upload-btn:hover {
@@ -286,6 +288,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  pointer-events: none;
 }
 
 .modal-box {
@@ -294,6 +297,7 @@
   max-width: 90%;
   border-radius: 14px;
   padding: 20px;
+  pointer-events: auto;
 }
 
 .pdf-preview {
@@ -309,6 +313,7 @@
 ===================== */
 .upload-backdrop {
   position: fixed;
+  pointer-events: none;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
   display: flex;
@@ -329,6 +334,7 @@
   padding: 22px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   animation: scaleUp 0.2s ease-in-out;
+  pointer-events: auto;
 }
 
 .upload-modal h3 {
@@ -572,4 +578,78 @@
   font-size: 14px;
   font-weight: 600;
   color: #1f2937;
+}
+
+/* ===== Subject Input ===== */
+.subject-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.subject-input:focus {
+  outline: none;
+  border-color: #1A285F;
+}
+
+/* ===== Section Header ===== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 8px;
+}
+
+.section-actions button {
+  background: #e5e7eb;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.section-actions button.clear {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* =====================
+   User Info (Top Right)
+===================== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.user-icon {
+  font-size: 34px;
+  color: #1A285F;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
 }

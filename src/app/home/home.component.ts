@@ -17,50 +17,53 @@ import { UserLocalStorge } from '../../model/response';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  // ======================
-  // USER
-  // ======================
+
+  /* ======================
+     USER
+  ====================== */
+  displayRole = 'user';
   user: UserLocalStorge | null = null;
 
-  // ======================
-  // DATA
-  // ======================
+  /* ======================
+     DATA
+  ====================== */
   document: DocumentItemPos[] = [];
   selectedFile: DocumentItemPos | null = null;
   safeFileUrl: SafeResourceUrl | null = null;
 
-  // ======================
-  // SEARCH / TAB
-  // ======================
+  /* ======================
+     SEARCH / TAB
+  ====================== */
   searchText = '';
   activeTab: 'all' | 'sent' | 'unsent' = 'all';
 
-  // ======================
-  // MODAL STATES
-  // ======================
+  /* ======================
+     MODAL STATES
+  ====================== */
   showModal = false;
   showUpload = false;
   showSendTeacher = false;
 
-  // ======================
-  // UPLOAD
-  // ======================
+  /* ======================
+     UPLOAD
+  ====================== */
   uploadTitle = '';
   uploadFile: File | null = null;
   uploadFileName = '';
   uploadSuccess = false;
 
-  // ======================
-  // SEND TEACHER
-  // ======================
-  teachers: string[] = ['อาจารย์ A', 'อาจารย์ B', 'อาจารย์ C'];
+  /* ======================
+     SEND TEACHER
+  ====================== */
   person: UserLocalStorge[] = [];
   selectedTeachers: string[] = [];
 
-
-  // ===== CATEGORY (MULTI) =====
-categories: string[] = ['วิจัย', 'งบประมาณ', 'กิจกรรม', 'ทั่วไป'];
-selectedCategories: string[] = [];
+  /* ======================
+     CATEGORY (MULTI)
+  ====================== */
+  categories: string[] = ['วิจัย', 'งบประมาณ', 'กิจกรรม', 'ทั่วไป'];
+  selectedCategories: string[] = [];
+  sendSubject = '';
 
   constructor(
     private router: Router,
@@ -71,9 +74,9 @@ selectedCategories: string[] = [];
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  // ======================
-  // LIFECYCLE
-  // ======================
+  /* ======================
+     LIFECYCLE
+  ====================== */
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
@@ -87,9 +90,9 @@ selectedCategories: string[] = [];
     this.cdr.detectChanges();
   }
 
-  // ======================
-  // NAVIGATION
-  // ======================
+  /* ======================
+     NAVIGATION
+  ====================== */
   goProfile() { this.router.navigate(['/profile']); }
   goCalender() { this.router.navigate(['/calender']); }
   goAdddelete() { this.router.navigate(['/adddeleteuser']); }
@@ -103,9 +106,9 @@ selectedCategories: string[] = [];
     this.router.navigate(['/login']);
   }
 
-  // ======================
-  // FILTER
-  // ======================
+  /* ======================
+     FILTER
+  ====================== */
   get filteredFiles() {
     return this.document.filter(file => {
       const matchSearch =
@@ -120,9 +123,9 @@ selectedCategories: string[] = [];
     });
   }
 
-  // ======================
-  // PREVIEW MODAL
-  // ======================
+  /* ======================
+     PREVIEW MODAL
+  ====================== */
   openModal(file: DocumentItemPos) {
     this.selectedFile = file;
     this.safeFileUrl =
@@ -133,11 +136,12 @@ selectedCategories: string[] = [];
   closeModal() {
     this.showModal = false;
     this.selectedFile = null;
+    this.safeFileUrl = null;
   }
 
-  // ======================
-  // DELETE FILE
-  // ======================
+  /* ======================
+     DELETE FILE
+  ====================== */
   async deleteFile(event: Event, file: DocumentItemPos) {
     event.stopPropagation();
     if (!confirm('คุณต้องการลบไฟล์นี้หรือไม่?')) return;
@@ -146,10 +150,20 @@ selectedCategories: string[] = [];
     await this.loadDocuments();
   }
 
-  // ======================
-  // UPLOAD
-  // ======================
+  /* ======================
+     UPLOAD
+  ====================== */
+  closeAllModals() {
+  this.showModal = false;
+  this.showSendTeacher = false;
+  this.showUpload = false;
+}
+
   openUpload() {
+    console.log('UPLOAD CLICKED');
+    this.showModal = false;
+    this.showSendTeacher = false;
+this.closeAllModals();
     this.showUpload = true;
     this.uploadFile = null;
     this.uploadFileName = '';
@@ -161,11 +175,11 @@ selectedCategories: string[] = [];
   }
 
   onFileSelected(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
 
-    this.uploadFile = file;
-    this.uploadFileName = this.decodeFileName(file.name);
+    this.uploadFile = input.files[0];
+    this.uploadFileName = this.decodeFileName(this.uploadFile.name);
     this.uploadTitle = this.uploadFileName.replace(/\.[^/.]+$/, '');
   }
 
@@ -207,52 +221,98 @@ selectedCategories: string[] = [];
     setTimeout(() => (this.uploadSuccess = false), 2000);
   }
 
-  // ======================
-  // SEND TEACHER
-  // ======================
+  /* ======================
+     SEND TEACHER
+  ====================== */
   openSendTeacher() {
-  this.showSendTeacher = true;
-  this.selectedTeachers = [];
-  this.selectedCategories = [];
-}
+    this.showModal = false;
+    this.showUpload = false;
+
+    this.showSendTeacher = true;
+    this.selectedTeachers = [];
+    this.selectedCategories = [];
+    this.sendSubject = '';
+  }
 
   closeSendTeacher() {
     this.showSendTeacher = false;
   }
 
-  toggleTeacher(t: string) {
-    const index = this.selectedTeachers.indexOf(t);
+  toggleTeacher(username: string) {
+    const index = this.selectedTeachers.indexOf(username);
     index === -1
-      ? this.selectedTeachers.push(t)
+      ? this.selectedTeachers.push(username)
       : this.selectedTeachers.splice(index, 1);
   }
 
+  toggleCategory(category: string) {
+    const index = this.selectedCategories.indexOf(category);
+    index === -1
+      ? this.selectedCategories.push(category)
+      : this.selectedCategories.splice(index, 1);
+  }
+
   async sendToTeacher() {
-  if (!this.selectedFile) return;
-  if (this.selectedCategories.length === 0) {
-    alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด');
-    return;
+    if (!this.selectedFile) return;
+
+    if (!this.sendSubject.trim()) {
+      alert('กรุณากรอกหัวเรื่อง');
+      return;
+    }
+
+    if (this.selectedTeachers.length === 0) {
+      alert('กรุณาเลือกอาจารย์อย่างน้อย 1 คน');
+      return;
+    }
+
+    if (this.selectedCategories.length === 0) {
+      alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด');
+      return;
+    }
+
+    // UI mock
+    this.selectedFile.statue = '1';
+
+    // backend (เปิดใช้ทีหลัง)
+    // await this.backend.SendToTeacher(
+    //   this.selectedFile.did,
+    //   this.sendSubject,
+    //   this.selectedTeachers,
+    //   this.selectedCategories
+    // );
+
+    this.closeSendTeacher();
+    this.closeModal();
+    await this.loadDocuments();
   }
 
-  // await this.backend.SendToTeacher(
-  //   this.selectedFile.did,
-  //   this.selectedTeachers,
-  //   this.selectedCategories // 👈 ส่งเป็น array
-  // );
-
-  this.closeSendTeacher();
-  this.closeModal();
-  await this.loadDocuments();
-}
-
-
-toggleCategory(category: string) {
-  const index = this.selectedCategories.indexOf(category);
-  if (index === -1) {
-    this.selectedCategories.push(category);
-  } else {
-    this.selectedCategories.splice(index, 1);
+  /* ======================
+     SELECT ALL
+  ====================== */
+  selectAllTeachers() {
+    this.selectedTeachers = this.person.map(p => p.username);
   }
-}
 
+  clearAllTeachers() {
+    this.selectedTeachers = [];
+  }
+
+  selectAllCategories() {
+    this.selectedCategories = [...this.categories];
+  }
+
+  clearAllCategories() {
+    this.selectedCategories = [];
+  }
+
+  /* ======================
+     BACKDROP
+  ====================== */
+  onBackdropClick(event: MouseEvent, type: 'upload' | 'send' | 'preview') {
+    if (event.target !== event.currentTarget) return;
+
+    if (type === 'upload') this.closeUpload();
+    if (type === 'send') this.closeSendTeacher();
+    if (type === 'preview') this.closeModal();
+  }
 }
