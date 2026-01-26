@@ -60,12 +60,12 @@ export class AdddeleteuserComponent implements OnInit {
     //   return;
     // }
 
-    // // ตรวจสอบเบอร์โทร (ต้องเป็นตัวเลข 10 หลัก)
-    // const phonePattern = /^[0-9]{10}$/;
-    // if (!phonePattern.test(this.newUser.phone)) {
-    //   alert('เบอร์โทรต้องเป็นตัวเลข 10 หลัก');
-    //   return;
-    // }
+    // ตรวจสอบเบอร์โทร (ต้องเป็นตัวเลข 10 หลัก)
+    const phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(this.newUser.phone)) {
+      alert('เบอร์โทรต้องเป็นตัวเลข 10 หลัก');
+      return;
+    }
 
     try {
       const response = await this.backend.AddUser(this.newUser);
@@ -140,4 +140,20 @@ export class AdddeleteuserComponent implements OnInit {
     if (strength === 'แข็งแรง') return 'strong';
     return '';
   }
+
+  phoneError = false;
+
+// บังคับให้พิมพ์ได้เฉพาะตัวเลข
+onPhoneInput(event: Event) {
+  const input = event.target as HTMLInputElement;
+
+  // ตัดอักษรที่ไม่ใช่ตัวเลขออก
+  input.value = input.value.replace(/[^0-9]/g, '');
+
+  this.newUser.phone = input.value;
+
+  // เช็คว่าครบ 10 หลักไหม
+  this.phoneError = this.newUser.phone.length !== 10;
+}
+
 }
