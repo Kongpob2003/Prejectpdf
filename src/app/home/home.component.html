@@ -141,22 +141,12 @@
     <div class="category-grid">
       <div
         class="category-card"
-        *ngFor="let c of categories"
-        (click)="toggleCategory(c)"
-        [class.selected]="selectedCategories.includes(c)"
+        *ngFor="let c of category"
+        (click)="toggleCategory(c.category_id)"
+        [class.selected]="selectedCategories.includes(c.category_id)"
       >
-        <span class="material-icons category-icon">
-          {{
-            c === 'วิจัย'
-              ? 'science'
-              : c === 'งบประมาณ'
-                ? 'account_balance'
-                : c === 'กิจกรรม'
-                  ? 'event'
-                  : 'folder'
-          }}
-        </span>
-        <div class="category-name">{{ c }}</div>
+
+        <div class="category-name">{{ c.Name }}</div>
       </div>
     </div>
 
@@ -173,8 +163,8 @@
       <div
         class="teacher-card"
         *ngFor="let t of person"
-        (click)="toggleTeacher(t.username)"
-        [class.selected]="selectedTeachers.includes(t.username)"
+        (click)="toggleTeacher(t.uid)"
+        [class.selected]="selectedTeachers.includes(t.uid)"
       >
         <span class="material-icons">person</span>
         {{ t.username }}

@@ -8,6 +8,8 @@ import { AuthService } from '../services/auth.service';
 import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
+import { CategoryItemPos } from '../../model/category_Item_pos';
+
 
 @Component({
   selector: 'app-home',
@@ -56,13 +58,14 @@ export class HomeComponent {
      SEND TEACHER
   ====================== */
   person: UserLocalStorge[] = [];
-  selectedTeachers: string[] = [];
+  selectedTeachers: any[] = [];
 
   /* ======================
      CATEGORY (MULTI)
   ====================== */
   categories: string[] = ['วิจัย', 'งบประมาณ', 'กิจกรรม', 'ทั่วไป'];
-  selectedCategories: string[] = [];
+   category: CategoryItemPos[] = [];
+  selectedCategories: any[] = [];
   sendSubject = '';
 
   constructor(
@@ -87,6 +90,8 @@ export class HomeComponent {
   async loadDocuments() {
     this.document = await this.backend.GetFile();
     this.person = await this.backend.GetUser();
+    const cat = await this.backend.getCategory();
+    this.category = cat as CategoryItemPos[];
     this.cdr.detectChanges();
   }
 
@@ -224,6 +229,7 @@ this.closeAllModals();
   /* ======================
      SEND TEACHER
   ====================== */
+  
   openSendTeacher() {
     this.showModal = false;
     this.showUpload = false;
@@ -238,19 +244,22 @@ this.closeAllModals();
     this.showSendTeacher = false;
   }
 
-  toggleTeacher(username: string) {
-    const index = this.selectedTeachers.indexOf(username);
+  toggleTeacher(t: any) {
+    const index = this.selectedTeachers.indexOf(t);
     index === -1
-      ? this.selectedTeachers.push(username)
+      ? this.selectedTeachers.push(t)
       : this.selectedTeachers.splice(index, 1);
   }
 
-  toggleCategory(category: string) {
-    const index = this.selectedCategories.indexOf(category);
-    index === -1
-      ? this.selectedCategories.push(category)
-      : this.selectedCategories.splice(index, 1);
+  toggleCategory(category: any) {
+  const index = this.selectedCategories.indexOf(category);
+  if (index === -1) {
+    this.selectedCategories.push(category);
+  } else {
+    this.selectedCategories.splice(index, 1);
   }
+}
+
 
   async sendToTeacher() {
     if (!this.selectedFile) return;
@@ -269,18 +278,19 @@ this.closeAllModals();
       alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด');
       return;
     }
-
-    // UI mock
-    this.selectedFile.statue = '1';
-
-    // backend (เปิดใช้ทีหลัง)
-    // await this.backend.SendToTeacher(
-    //   this.selectedFile.did,
-    //   this.sendSubject,
-    //   this.selectedTeachers,
-    //   this.selectedCategories
-    // );
-
+    
+    const payload = {
+      document_id: this.selectedFile.did,      // ✅ ถูกแล้ว
+      teacher_ids: this.selectedTeachers,      // number[]
+      category_ids: this.selectedCategories,    // number[]
+      text: this.sendSubject
+    };
+    console.log('Payload:', payload);
+    
+    const response = await this.backend.sendTeacher(payload);
+    console.log('Send response:', response);
+    alert('ส่งเอกสารสำเร็จ');
+    
     this.closeSendTeacher();
     this.closeModal();
     await this.loadDocuments();
@@ -290,7 +300,7 @@ this.closeAllModals();
      SELECT ALL
   ====================== */
   selectAllTeachers() {
-    this.selectedTeachers = this.person.map(p => p.username);
+    this.selectedTeachers = this.person.map(p => p.uid);
   }
 
   clearAllTeachers() {
@@ -298,7 +308,7 @@ this.closeAllModals();
   }
 
   selectAllCategories() {
-    this.selectedCategories = [...this.categories];
+    this.selectedCategories = this.category.map(c => c.category_id);
   }
 
   clearAllCategories() {

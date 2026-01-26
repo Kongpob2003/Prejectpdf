@@ -101,7 +101,19 @@ export class Backend {
     return response;
   }
 
+   //แสดงข้อมูล category
+  public async getCategory(){
+    const url = this.constants.API_ENDPOINT + 'folder/' ; 
+    const response = await lastValueFrom(this.http.get(url));
+    return response;
+  }
   
+  //ส่งข้อมูลเอกสาร
+  public async sendTeacher(body:any){
+    const url = this.constants.API_ENDPOINT + 'folder/sendToTeachers';
+    const response = await lastValueFrom(this.http.post(url,body));
+    return response;
+  }
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
