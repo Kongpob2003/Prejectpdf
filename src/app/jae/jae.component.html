@@ -23,71 +23,65 @@
       <div class="folder-grid">
         <div
           class="folder-card"
-          *ngFor="let t of teachers"
-          (click)="openTeacher(t)"
+          *ngFor="let t of teachers "
+          (click)="openTeacher(t.uid)"
         >
           <span class="material-icons folder-icon">folder</span>
-          <div class="folder-name">{{ t.name }}</div>
+          <div class="folder-name">{{ t.username }}1</div>
         </div>
       </div>
     </div>
 
     <!-- ===== File View ===== -->
-<div *ngIf="selectedTeacher as teacher">
+    <div *ngIf="selectedTeacher as teacher">
 
-  <div class="header-row">
-    <button class="back-link" (click)="backToFolders()">
-      ← รายชื่ออาจารย์
-    </button>
+      <div class="header-row">
+        <button class="back-link" (click)="backToFolders()">
+          ← รายชื่ออาจารย์
+        </button>
 
-    <h2>{{ teacher.name }}</h2>
+        <h2>{{ teacher.name }}</h2>
+      </div>
 
-    <!-- ปุ่มเพิ่มปี (ขวาบน) -->
-    <button class="add-year-btn" (click)="addYear()">
-      ➕ ปีการศึกษา
-    </button>
-  </div>
+      <!-- ปี -->
+      <div class="year-tabs">
+        <!-- <button
+          *ngFor="let y of teacher.years"
+          [class.active]="selectedYear === y"
+          (click)="selectYear(y)"
+        >
+          ปี {{ y.year }}
+        </button> -->
+      </div>
 
-  <!-- ปี -->
-  <div class="year-tabs">
-    <button
-      *ngFor="let y of teacher.years"
-      [class.active]="selectedYear === y"
-      (click)="selectedYear = y; selectedTerm = y.terms[0]"
-    >
-      ปี {{ y.year }}
-    </button>
-  </div>
+      <!-- เทอม -->
+      <div class="year-tabs" *ngIf="selectedYear">
+        <button
+          *ngFor="let t of selectedYear.terms"
+          [class.active]="selectedTerm === t"
+          (click)="selectedTerm = t"
+        >
+          เทอม {{ t.term }}
+        </button>
+      </div>
 
-  <!-- เทอม -->
-  <div class="year-tabs" *ngIf="selectedYear as y">
-    <button
-      *ngFor="let t of y.terms"
-      [class.active]="selectedTerm === t"
-      (click)="selectedTerm = t"
-    >
-      เทอม {{ t.term }}
-    </button>
-  </div>
+      <!-- ไฟล์ -->
+      <div *ngIf="selectedTerm">
+        <div
+          class="file-item"
+          *ngFor="let f of selectedTerm.files"
+          (click)="openPreview(f)"
+        >
+          <span class="material-icons">picture_as_pdf</span>
+          {{ f.name }}
+        </div>
 
-  <!-- ไฟล์ -->
-  <div *ngIf="selectedTerm as term">
-    <div
-      class="file-item"
-      *ngFor="let f of term.files"
-      (click)="openPreview(f)"
-    >
-      <span class="material-icons">picture_as_pdf</span>
-      {{ f.name }}
+        <p *ngIf="selectedTerm.files.length === 0">
+          ไม่มีเอกสารในเทอมนี้
+        </p>
+      </div>
+
     </div>
 
-    <p *ngIf="term.files.length === 0">
-      ไม่มีเอกสารในเทอมนี้
-    </p>
-  </div>
-
+  </main>
 </div>
-
-
-
-   

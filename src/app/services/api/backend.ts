@@ -121,6 +121,18 @@ export class Backend {
     const response = await lastValueFrom(this.http.get(url));
     return response;
   }
+
+  //แสดง file ของ user 
+  public async FileUser(uid : number){
+    const url = this.constants.API_ENDPOINT + 'document/home/' + uid ;
+    const response = await lastValueFrom(this.http.get(url));
+    return response;
+  }
+
+
+
+
+
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
