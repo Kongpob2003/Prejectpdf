@@ -23,16 +23,16 @@
       <div class="category-grid">
         <div
           class="category-card"
-          *ngFor="let c of categories"
-          (click)="openCategory(c)"
+          *ngFor="let category of categoriesWithFiles"
+          (click)="openCategory(category)"
         >
           <span class="material-icons category-icon">folder</span>
 
-          <div class="category-name">{{ c.name }}</div>
-          <div class="category-desc">{{ c.description }}</div>
+          <div class="category-name">{{ category.category_name }}</div>
+          <!-- <div class="category-desc">{{ c.description }}</div> -->
 
           <div class="category-count">
-            {{ c.files.length }} ไฟล์
+            {{ categories.length }} ไฟล์
           </div>
         </div>
       </div>
@@ -53,8 +53,8 @@
     <div class="folder-info">
       <span class="material-icons folder-big-icon">folder_open</span>
       <div>
-        <h2>{{ selectedCategory.name }}</h2>
-        <p>{{ selectedCategory.description }}</p>
+        <h2>{{ selectedCategory.category_name }}</h2>
+        <!-- <p>{{ selectedCategory.description }}</p> -->
         <span class="folder-count">
           {{ selectedCategory.files.length }} ไฟล์
         </span>
@@ -65,14 +65,14 @@
 
   <!-- Files -->
   <div class="file-grid" *ngIf="selectedCategory.files.length">
-    <div class="file-card" *ngFor="let f of selectedCategory.files">
+    <div class="file-card" *ngFor="let f of selectedCategory.files" (click)="openFile(f)">
       <div class="file-icon-box">
         <span class="material-icons">picture_as_pdf</span>
       </div>
 
       <div class="file-detail">
-        <div class="file-name">{{ f.name }}</div>
-        <div class="file-size">{{ f.size }}</div>
+        <div class="file-name">{{ f.file_name }}</div>
+        <div class="file-size">{{ f.semester }}</div>
       </div>
 
       <span class="material-icons open-icon">open_in_new</span>

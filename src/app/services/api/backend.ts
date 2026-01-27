@@ -115,6 +115,12 @@ export class Backend {
     return response;
   }
   
+  //แสดงเอกสารและหมวดหมูทั้งหมด
+  public async GetFilesByCategory(cid : number){
+    const url = this.constants.API_ENDPOINT + 'folder/' + cid;
+    const response = await lastValueFrom(this.http.get(url));
+    return response;
+  }
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
