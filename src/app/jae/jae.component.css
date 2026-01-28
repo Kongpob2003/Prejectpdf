@@ -185,3 +185,11 @@
   transform: translateY(-2px);
 }
 
+.pdf-preview {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+

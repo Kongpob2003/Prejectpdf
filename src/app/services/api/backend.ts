@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 import { BoardItemPos } from '../../../model/board_Item_pos';
 import { DocumentItemPos } from '../../../model/document_Item_pos';
 import { UserLoginRes } from '../../../model/response';
+import { FolderItemPos } from '../../../model/folder_Item_pos';
 
 
 @Injectable({
@@ -126,11 +127,22 @@ export class Backend {
   public async FileUser(uid : number){
     const url = this.constants.API_ENDPOINT + 'document/home/' + uid ;
     const response = await lastValueFrom(this.http.get(url));
-    return response;
+    return response as FolderItemPos[];
   }
 
+  //แสดง file ของ user เอกสารเทอม 1 
+  public async FileUserTerm1(uid : number){
+    const url = this.constants.API_ENDPOINT + 'document/term1/' + uid;
+    const response = await lastValueFrom(this.http.get(url));
+    return response as FolderItemPos[];
+  }
 
-
+  //แสดง file ของ user เอกสารเทอม 1 
+  public async FileUserTerm2(uid : number){
+    const url = this.constants.API_ENDPOINT + 'document/term2/' + uid;
+    const response = await lastValueFrom(this.http.get(url));
+    return response as FolderItemPos[];
+  }
 
 
   ///////////////////////////////////////////////////////////////////////////
