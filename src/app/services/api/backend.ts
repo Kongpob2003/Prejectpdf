@@ -7,15 +7,15 @@ import { BoardItemPos } from '../../../model/board_Item_pos';
 import { DocumentItemPos } from '../../../model/document_Item_pos';
 import { UserLoginRes } from '../../../model/response';
 import { FolderItemPos } from '../../../model/folder_Item_pos';
-
+import { QualityItemPos } from '../../../model/quality_Item_pos';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Backend {
-  // SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
-  //   throw new Error('Method not implemented.');
-  // }
+  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private constants: Constants, private http: HttpClient) {}
 
   // Login
@@ -144,6 +144,33 @@ export class Backend {
     return response as FolderItemPos[];
   }
 
+  //แสดง folder ของประกันสังคมทั้งหมด
+  public async getQuailty(){
+    const url = this.constants.API_ENDPOINT + 'document/quality';
+    const response = await lastValueFrom(this.http.get(url));
+    return response as QualityItemPos[];
+  }
+
+  //สร้าง folder ของประกันสังคมใหม่
+  public async AddQuality(name : any){
+    const url = this.constants.API_ENDPOINT + 'document/Addquality';
+    const response = await lastValueFrom(this.http.post(url,name));
+    return response;
+  }
+
+  //แสดง file ของประกันสังคมนั้นๆ
+  public async getQualityFiles(qid: number){
+    const url = this.constants.API_ENDPOINT + 'document/qualityFiles/' + qid;
+    const response = await lastValueFrom(this.http.get(url));
+    return response as DocumentItemPos[];
+  }
+
+  //upload file ของ folder ประกันสังคมนั้น
+  public async AddQualityDocument(body: { qid: number, did: number }) {
+  const url = this.constants.API_ENDPOINT + 'document/quality'; // ตรวจสอบ path ให้ตรงกับ router.post("/quality") ใน document.ts
+  const response = await lastValueFrom(this.http.post(url, body));
+  return response;
+}
 
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
