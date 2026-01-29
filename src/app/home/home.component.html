@@ -112,6 +112,14 @@
       >
         ส่งให้อาจารย์
       </button>
+       <!-- ✨ แก้ไขการส่ง -->
+  <button
+    class="btn-submit edit"
+    *ngIf="selectedFile?.statue === '1'"
+    (click)="openEditSendTeacher()"
+  >
+    แก้ไขการส่ง
+  </button>
     </div>
   </div>
 
@@ -121,7 +129,9 @@
     *ngIf="showSendTeacher"
     (click)="$event.stopPropagation()"
   >
-    <h3>หัวเรื่องเอกสาร</h3>
+    <h3>
+  {{ isEditMode ? 'แก้ไขการส่งเอกสาร' : 'หัวเรื่องเอกสาร' }}
+</h3>
     <input
       type="text"
       class="subject-input"
@@ -174,16 +184,16 @@
     <div class="upload-actions">
       <button class="btn-cancel" (click)="closeAllModals()">ยกเลิก</button>
       <button
-        class="btn-submit"
-        [disabled]="
-          !sendSubject ||
-          selectedTeachers.length === 0 ||
-          selectedCategories.length === 0
-        "
-        (click)="sendToTeacher()"
-      >
-        ส่งเอกสาร
-      </button>
+  class="btn-submit"
+  [disabled]="
+    !sendSubject ||
+    selectedTeachers.length === 0 ||
+    selectedCategories.length === 0
+  "
+  (click)="isEditMode ? updateSendTeacher() : sendToTeacher()"
+>
+  {{ isEditMode ? 'บันทึกการแก้ไข' : 'ส่งเอกสาร' }}
+</button>
     </div>
   </div>
 

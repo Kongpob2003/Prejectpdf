@@ -13,9 +13,9 @@ import { FolderItemPos } from '../../../model/folder_Item_pos';
   providedIn: 'root',
 })
 export class Backend {
-  SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
-    throw new Error('Method not implemented.');
-  }
+  // SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
+  //   throw new Error('Method not implemented.');
+  // }
   constructor(private constants: Constants, private http: HttpClient) {}
 
   // Login

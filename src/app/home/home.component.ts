@@ -10,7 +10,6 @@ import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -19,6 +18,11 @@ import { CategoryItemPos } from '../../model/category_Item_pos';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+
+  /* ======================
+     MODE
+  ====================== */
+  isEditMode = false;
 
   /* ======================
      USER
@@ -58,14 +62,13 @@ export class HomeComponent {
      SEND TEACHER
   ====================== */
   person: UserLocalStorge[] = [];
-  selectedTeachers: any[] = [];
+  selectedTeachers: number[] = [];
 
   /* ======================
-     CATEGORY (MULTI)
+     CATEGORY
   ====================== */
-  categories: string[] = ['วิจัย', 'งบประมาณ', 'กิจกรรม', 'ทั่วไป'];
-   category: CategoryItemPos[] = [];
-  selectedCategories: any[] = [];
+  category: CategoryItemPos[] = [];
+  selectedCategories: number[] = [];
   sendSubject = '';
 
   constructor(
@@ -90,8 +93,7 @@ export class HomeComponent {
   async loadDocuments() {
     this.document = await this.backend.GetFile();
     this.person = await this.backend.GetUser();
-    const cat = await this.backend.getCategory();
-    this.category = cat as CategoryItemPos[];
+    this.category = (await this.backend.getCategory()) as CategoryItemPos[];
     this.cdr.detectChanges();
   }
 
@@ -144,13 +146,18 @@ export class HomeComponent {
     this.safeFileUrl = null;
   }
 
+  closeAllModals() {
+    this.showModal = false;
+    this.showSendTeacher = false;
+    this.showUpload = false;
+  }
+
   /* ======================
      DELETE FILE
   ====================== */
   async deleteFile(event: Event, file: DocumentItemPos) {
     event.stopPropagation();
     if (!confirm('คุณต้องการลบไฟล์นี้หรือไม่?')) return;
-
     await this.backend.DeleteFile(file.did);
     await this.loadDocuments();
   }
@@ -158,147 +165,98 @@ export class HomeComponent {
   /* ======================
      UPLOAD
   ====================== */
-  closeAllModals() {
-  this.showModal = false;
-  this.showSendTeacher = false;
-  this.showUpload = false;
-}
-
   openUpload() {
-    console.log('UPLOAD CLICKED');
-    this.showModal = false;
-    this.showSendTeacher = false;
-this.closeAllModals();
+    this.closeAllModals();
     this.showUpload = true;
     this.uploadFile = null;
     this.uploadFileName = '';
     this.uploadTitle = '';
   }
 
-  closeUpload() {
-    this.showUpload = false;
-  }
-
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) return;
+    if (!input.files?.length) return;
 
     this.uploadFile = input.files[0];
-    this.uploadFileName = this.decodeFileName(this.uploadFile.name);
+    this.uploadFileName = this.uploadFile.name;
     this.uploadTitle = this.uploadFileName.replace(/\.[^/.]+$/, '');
   }
 
-  private decodeFileName(filename: string): string {
-    try {
-      if (filename.includes('Ã') || filename.includes('à')) {
-        const bytes = new Uint8Array(
-          Array.from(filename).map(c => c.charCodeAt(0) & 0xff)
-        );
-        return new TextDecoder('utf-8').decode(bytes);
-      }
-      return filename;
-    } catch {
-      return filename;
-    }
-  }
-
   async submitUpload() {
-    if (!this.uploadFile) {
-      alert('กรุณาเลือกไฟล์');
-      return;
-    }
-
-    const correctedFile = new File(
-      [this.uploadFile],
-      this.uploadFileName,
-      { type: this.uploadFile.type }
-    );
+    if (!this.uploadFile) return;
 
     const formData = new FormData();
-    formData.append('file', correctedFile);
-
+    formData.append('file', this.uploadFile);
     await this.backend.Upload_File(formData);
 
     this.uploadSuccess = true;
-    this.closeUpload();
+    this.closeAllModals();
     await this.loadDocuments();
-
     setTimeout(() => (this.uploadSuccess = false), 2000);
   }
 
   /* ======================
-     SEND TEACHER
+     SEND / EDIT TEACHER
   ====================== */
-  
   openSendTeacher() {
+    this.isEditMode = false;
     this.showModal = false;
-    this.showUpload = false;
-
     this.showSendTeacher = true;
     this.selectedTeachers = [];
     this.selectedCategories = [];
     this.sendSubject = '';
   }
 
-  closeSendTeacher() {
-    this.showSendTeacher = false;
-  }
+  openEditSendTeacher() {
+    if (!this.selectedFile) return;
 
-  toggleTeacher(t: any) {
-    const index = this.selectedTeachers.indexOf(t);
-    index === -1
-      ? this.selectedTeachers.push(t)
-      : this.selectedTeachers.splice(index, 1);
-  }
+    this.isEditMode = true;
+    this.showModal = false;
+    this.showSendTeacher = true;
 
-  toggleCategory(category: any) {
-  const index = this.selectedCategories.indexOf(category);
-  if (index === -1) {
-    this.selectedCategories.push(category);
-  } else {
-    this.selectedCategories.splice(index, 1);
+    this.sendSubject = this.selectedFile.text || '';
+    this.selectedTeachers = this.selectedFile.teacher_ids
+      ? [...this.selectedFile.teacher_ids]
+      : [];
+    this.selectedCategories = this.selectedFile.category_ids
+      ? [...this.selectedFile.category_ids]
+      : [];
   }
-}
-
 
   async sendToTeacher() {
     if (!this.selectedFile) return;
 
-    if (!this.sendSubject.trim()) {
-      alert('กรุณากรอกหัวเรื่อง');
-      return;
-    }
-
-    if (this.selectedTeachers.length === 0) {
-      alert('กรุณาเลือกอาจารย์อย่างน้อย 1 คน');
-      return;
-    }
-
-    if (this.selectedCategories.length === 0) {
-      alert('กรุณาเลือกหมวดหมู่อย่างน้อย 1 หมวด');
-      return;
-    }
-    
     const payload = {
-      document_id: this.selectedFile.did,      // ✅ ถูกแล้ว
-      teacher_ids: this.selectedTeachers,      // number[]
-      category_ids: this.selectedCategories,    // number[]
-      text: this.sendSubject
+      document_id: this.selectedFile.did,
+      teacher_ids: this.selectedTeachers,
+      category_ids: this.selectedCategories,
+      text: this.sendSubject,
     };
-    console.log('Payload:', payload);
-    
-    const response = await this.backend.sendTeacher(payload);
-    console.log('Send response:', response);
+
+    await this.backend.sendTeacher(payload);
     alert('ส่งเอกสารสำเร็จ');
-    
-    this.closeSendTeacher();
-    this.closeModal();
+    this.closeAllModals();
     await this.loadDocuments();
   }
 
+  updateSendTeacher() {
+    alert('บันทึกการแก้ไขแล้ว (UI เท่านั้น)');
+    this.closeAllModals();
+  }
+
   /* ======================
-     SELECT ALL
+     SELECT
   ====================== */
+  toggleTeacher(uid: number) {
+    const i = this.selectedTeachers.indexOf(uid);
+    i === -1 ? this.selectedTeachers.push(uid) : this.selectedTeachers.splice(i, 1);
+  }
+
+  toggleCategory(cid: number) {
+    const i = this.selectedCategories.indexOf(cid);
+    i === -1 ? this.selectedCategories.push(cid) : this.selectedCategories.splice(i, 1);
+  }
+
   selectAllTeachers() {
     this.selectedTeachers = this.person.map(p => p.uid);
   }
@@ -313,16 +271,5 @@ this.closeAllModals();
 
   clearAllCategories() {
     this.selectedCategories = [];
-  }
-
-  /* ======================
-     BACKDROP
-  ====================== */
-  onBackdropClick(event: MouseEvent, type: 'upload' | 'send' | 'preview') {
-    if (event.target !== event.currentTarget) return;
-
-    if (type === 'upload') this.closeUpload();
-    if (type === 'send') this.closeSendTeacher();
-    if (type === 'preview') this.closeModal();
   }
 }
