@@ -1,0 +1,110 @@
+<div class="home-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo logo-box">
+      <span class="material-icons logo-icon">picture_as_pdf</span>
+      <span class="logo-text">MyPDF</span>
+    </div>
+
+    <ul>
+      <li class="active">
+        <span class="material-icons">home</span>หน้าหลัก
+      </li>
+      <li (click)="goUserprofile()">
+        <span class="material-icons">person</span>ข้อมูลส่วนตัว
+      </li>
+      <li (click)="goCalender()">
+        <span class="material-icons">calendar_month</span>ปฏิทิน
+      </li>
+      <li (click)="goRelation()">
+        <span class="material-icons">campaign</span>ประชาสัมพันธ์
+      </li>
+      <li (click)="goJae()">
+        <span class="material-icons">description</span>JAE
+      </li>
+      <li (click)="goQualityassurance()">
+        <span class="material-icons">verified</span>ประกันคุณภาพ
+      </li>
+      <li class="logout" (click)="logout()">
+        <span class="material-icons">logout</span>ออกจากระบบ
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+    <!-- Top bar -->
+    <div class="top-bar">
+      <div class="search-box">
+        <span class="material-icons search-icon">search</span>
+        <input
+          type="text"
+          placeholder="ค้นหาชื่อไฟล์"
+          [(ngModel)]="searchText"
+        />
+      </div>
+
+      <div class="user-info" *ngIf="user">
+        <span class="material-icons user-icon">account_circle</span>
+        <div class="user-text">
+          <div class="user-name">{{ user.username }}</div>
+          <div class="user-role">{{ displayRole }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="summary-row">
+  <!-- เอกสารทั้งหมด -->
+  <div class="summary-card">
+    <span class="material-icons summary-icon">description</span>
+    <div class="summary-text">
+      <p>{{ document.length }} ไฟล์</p>
+      <h3>เอกสารทั้งหมด</h3>
+    </div>
+  </div>
+
+  <!-- เอกสารใหม่วันนี้ -->
+  <div class="summary-card today">
+    <span class="material-icons summary-icon">new_releases</span>
+    <div class="summary-text">
+      <p>{{ todayDocuments.length }} ไฟล์</p>
+      <h3>เอกสารใหม่วันนี้</h3>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Files -->
+    <div class="files-box">
+      <div class="file-grid">
+        <div
+          class="file-card"
+          *ngFor="let file of filteredFiles"
+          (click)="openModal(file)"
+        >
+          <span class="material-icons file-icon">picture_as_pdf</span>
+          <div class="file-name">{{ file.file_name }}</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <h3>{{ selectedFile?.file_name }}</h3>
+
+    <iframe
+      *ngIf="safeFileUrl"
+      class="pdf-preview"
+      [src]="safeFileUrl"
+    ></iframe>
+
+    <div class="upload-actions">
+      <button class="btn-cancel" (click)="closeModal()">ปิด</button>
+    </div>
+  </div>
+</div>

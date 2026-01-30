@@ -53,5 +53,15 @@ export const routes: Routes = [
     path: 'relation',
     loadComponent: () =>
       import('./relation/relation.component').then(m => m.RelationComponent)
+  },
+   {
+    path: 'userhome',
+    loadComponent: () =>
+      import('./userhome/userhome.component').then(m => m.UserHomeComponent)
+  },
+  {
+    path: 'userprofile',
+    loadComponent: () =>
+      import('./userprofile/userprofile.component').then(m => m.UserprofileComponent)
   }
 ];

@@ -1,0 +1,705 @@
+/* =====================
+   Layout
+===================== */
+.home-container {
+  display: flex;
+  height: 100vh;
+  background: #f2f2f2;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+/* =====================
+   Sidebar
+===================== */
+.sidebar {
+  width: 260px;
+  background: #1A285F;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.logout {
+  margin-top: 20px;
+  color: #ffb3b3;
+}
+
+.material-icons {
+  font-size: 22px;
+}
+
+/* =====================
+   Content
+===================== */
+.content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}
+
+/* =====================
+   Top bar
+===================== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  width: 320px;
+  padding: 10px 14px 10px 40px;
+  border-radius: 12px;
+  border: none;
+  background: #D9D9D9;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-info .material-icons {
+  font-size: 28px;
+  color: #1A285F;
+}
+
+/* =====================
+   Divider
+===================== */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: #ddd;
+  margin: 16px 0 24px;
+}
+
+/* =====================
+   Summary
+===================== */
+.summary-row {
+  display: flex;
+  gap: 20px;
+  width: 50%;
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  flex: 1;                     /* 👈 สำคัญมาก */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #FFA726;
+  color: #000;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.summary-card.today {
+  background: #e3f2fd;
+  border-left: 6px solid #1A285F;
+}
+
+.summary-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #FFA726;
+  color: #000;
+  padding: 20px;
+  border-radius: 14px;
+  min-width: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.summary-icon {
+  font-size: 42px;
+}
+
+.summary-text p {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.summary-text p {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* =====================
+   Buttons
+===================== */
+.upload-btn {
+  background: #1A285F;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 99999 !important;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* =====================
+   Tabs
+===================== */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
+}
+
+/* =====================
+   Files Grid
+===================== */
+.files-box {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  width: 95%;
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* =====================
+   File Card
+===================== */
+.file-card {
+  position: relative;
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: 0.2s;
+}
+
+.file-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+.file-icon {
+  font-size: 48px;
+  color: #e53935;
+  margin-bottom: 10px;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+/* =====================
+   Status Badge
+===================== */
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.status-badge.sent {
+  background: #c8e6c9;
+  color: #256029;
+}
+
+.status-badge.unsent {
+  background: #ffcdd2;
+  color: #b71c1c;
+}
+
+/* =====================
+   Delete Icon
+===================== */
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: red;
+}
+
+/* =====================
+   Modal
+===================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.modal-box {
+  background: white;
+  width: 600px;
+  max-width: 90%;
+  border-radius: 14px;
+  padding: 20px;
+  pointer-events: auto;
+}
+
+.pdf-preview {
+  width: 100%;
+  height: 300px;
+  border: none;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+/* =====================
+   Upload Popup Overlay
+===================== */
+.upload-backdrop {
+  position: fixed;
+  pointer-events: none;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* =====================
+   Upload Popup Box
+===================== */
+.upload-modal {
+  background: #ffffff;
+  width: 420px;
+  max-width: 92%;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: scaleUp 0.2s ease-in-out;
+  pointer-events: auto;
+}
+
+.upload-modal h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A285F;
+}
+
+/* =====================
+   Upload Form
+===================== */
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Label */
+.upload-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Text input */
+.upload-form input[type="text"] {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 14px;
+}
+
+.upload-form input[type="text"]:focus {
+  border-color: #1A285F;
+}
+
+/* =====================
+   File Upload
+===================== */
+.file-upload {
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #666;
+}
+
+.file-upload:hover {
+  border-color: #1A285F;
+  background: #f5f7ff;
+}
+
+.file-upload .material-icons {
+  font-size: 36px;
+  color: #e53935;
+  margin-bottom: 6px;
+}
+
+.file-name-preview {
+  font-size: 13px;
+  color: #333;
+  margin-top: 6px;
+}
+
+
+
+/* =====================
+   Popup Buttons
+===================== */
+.upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-cancel {
+  background: #eee;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-submit {
+  background: #1A285F;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =====================
+   Animations
+===================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.teacher-card {
+  border: 2px solid #ddd;
+  padding: 14px;
+  text-align: center;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.teacher-card.selected {
+  background: #1A285F;
+  color: white;
+  border-color: #1A285F;
+}
+
+.sidebar li.active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* =====================
+   Logo
+===================== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 28px;   /* เว้นจากเมนู */
+  margin-top: -6px;      /* ขยับขึ้นด้านบน */
+}
+
+.logo-icon {
+  font-size: 38px;
+  color: #ff5252;
+  animation: float 3s ease-in-out infinite;        /* สีแดง PDF */
+}
+
+.logo-box {
+  animation: slideFade 0.6s ease-out;
+  cursor: pointer;
+}
+
+.logo-box:hover {
+  transform: scale(1.05);
+}
+
+
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.success-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 9999;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+/* ===== Category ===== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 14px;
+  margin: 12px 0 20px;
+}
+
+.category-card {
+  background: #f9fafb;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.category-card.selected {
+  border-color: #4f46e5;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+}
+
+.category-icon {
+  font-size: 36px;
+  color: #4f46e5;
+  margin-bottom: 6px;
+}
+
+.category-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* ===== Subject Input ===== */
+.subject-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.subject-input:focus {
+  outline: none;
+  border-color: #1A285F;
+}
+
+/* ===== Section Header ===== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 8px;
+}
+
+.section-actions button {
+  background: #e5e7eb;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.section-actions button.clear {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* =====================
+   User Info (Top Right)
+===================== */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.user-icon {
+  font-size: 34px;
+  color: #1A285F;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+}
+
+/* ใช้ CSS หลักจาก admin ได้ทั้งหมด */
+
+/* ===== Today Box ===== */
+.today-box {
+  background: #e3f2fd;
+  border-left: 6px solid #1A285F;
+  padding: 18px 22px;
+  border-radius: 14px;
+  min-width: 260px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.today-box h3 {
+  margin: 0;
+  font-size: 15px;
+  color: #1A285F;
+}
+
+.today-box p {
+  margin-top: 6px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ===== File Card (User View Only) ===== */
+.file-card {
+  cursor: pointer;
+}
+
+.file-card:hover {
+  transform: translateY(-3px);
+}
