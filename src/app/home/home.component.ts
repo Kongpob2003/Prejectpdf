@@ -27,7 +27,6 @@ export class HomeComponent {
   /* ======================
      USER
   ====================== */
-  displayRole = 'user';
   user: UserLocalStorge | null = null;
 
   /* ======================
