@@ -1,6 +1,5 @@
 export interface DocumentItemPos {
     category_ids: any;
-    
     text: string;
     teacher_ids: any;
     did:       number;
