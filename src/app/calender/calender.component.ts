@@ -25,7 +25,8 @@ interface CalendarDay {
 })
 export class CalenderComponent implements OnInit {
   role: 'admin' | 'user' = 'user';
-  
+  // ✅ เพิ่มตัวแปรนี้เพื่อเก็บลิงก์ที่จะไป
+  homeLink: string = '/home';
   // ข้อมูลปฏิทิน
   currentMonth: number = new Date().getMonth(); // 0-11
   currentYear: number = new Date().getFullYear();
@@ -57,6 +58,13 @@ export class CalenderComponent implements OnInit {
     const user = await this.auth.getUser();
     this.role = user?.type === 'admin' ? 'admin' : 'user';
     
+    // ✅ กำหนดลิงก์ตาม Role
+    if (this.role === 'admin') {
+      this.homeLink = '/home';      // ถ้าเป็น Admin ไป /home
+    } else {
+      this.homeLink = '/userhome';  // ถ้าเป็น User ไป /userhome
+    }
+
     // โหลดข้อมูลเอกสาร
     await this.loadDocuments();
     

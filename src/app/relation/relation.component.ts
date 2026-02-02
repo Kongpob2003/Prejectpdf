@@ -10,6 +10,7 @@ import { AnnouncementDialogComponent }
 import { Backend } from '../services/api/backend';
 import { BoardItemPos } from '../../model/board_Item_pos';
 import { DocumentItemPos } from '../../model/document_Item_pos';
+import { AuthService } from '../services/auth.service';
 
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -32,16 +33,25 @@ export class RelationComponent {
   documents:DocumentItemPos[]=[];
   searchText = '';
   docMap = new Map<number, any>();
+  homeLink: string = '/home';
   announcements = this.boardData;
 
   constructor(private dialog: MatDialog,
     private backend:Backend,
     private cdr: ChangeDetectorRef,
+    private auth: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object  // ✅ เพิ่มบรรทัดนี้
   ) {}
 
   async ngOnInit() {
   if (isPlatformBrowser(this.platformId)) {
+    const user = await this.auth.getUser();
+      const role = user?.type === 'admin' ? 'admin' : 'user';
+      if (role === 'admin') {
+        this.homeLink = '/home';
+      } else {
+        this.homeLink = '/userhome';
+      }
     await this.loadData();
   }
 }
@@ -49,8 +59,10 @@ export class RelationComponent {
     const [boards, docs] = await Promise.all([
     this.backend.GetBoard(),
     this.backend.GetFileBoard()
-  ]);
 
+    
+  ]);
+  
   this.boardData = boards;
   this.documents = docs;
 
@@ -61,6 +73,7 @@ export class RelationComponent {
   
   console.log('Boards:', this.boardData);
   console.log('Docs:', this.documents);
+  
   this.cdr.detectChanges();
   }
   get boardsWithFiles() {
@@ -74,6 +87,7 @@ export class RelationComponent {
       document: doc || null
     };
   });
+  
 }
   openPopup() {
   const dialogRef = this.dialog.open(AnnouncementDialogComponent, {

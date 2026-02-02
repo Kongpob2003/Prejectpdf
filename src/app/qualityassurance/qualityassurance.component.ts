@@ -38,7 +38,7 @@ export class QualityassuranceComponent {
   selectedFolder: Folder | null = null;
 
   newFolderName = '';
-  
+  homeLink: string = '/home';
   constructor(
     private auth: AuthService,
     private backend: Backend,
@@ -50,6 +50,14 @@ export class QualityassuranceComponent {
   /// แสดงข้อมูลทั้งหมด ///
   async ngOnInit(){
     if (isPlatformBrowser(this.platformId)) {
+      
+      const user = await this.auth.getUser();
+      const role = user?.type === 'admin' ? 'admin' : 'user';
+      if (role === 'admin') {
+        this.homeLink = '/home';
+      } else {
+        this.homeLink = '/userhome';
+      }
       await this.loadQuality();
     }
   }

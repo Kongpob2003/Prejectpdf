@@ -6,6 +6,7 @@ import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dia
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserLocalStorge } from '../../model/response';
 import { Backend } from '../services/api/backend';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-jae',
@@ -21,7 +22,7 @@ export class JaeComponent implements OnInit {
   groupedFiles: { year: string; files: any[] }[] = [];
   selectedYearFiles: any[] = []; // ไฟล์ที่แสดงผลปัจจุบัน
   activeYear: string = '';
-  
+  homeLink : string = "/home";
   // เพิ่มตัวแปรสำหรับเช็คสถานะเทอม (0=ทั้งหมด, 1=เทอม1, 2=เทอม2)
   activeTerm: number = 0; 
   // เก็บไฟล์ตั้งต้นของปีนั้นๆ ไว้เวลากดปุ่ม "ทั้งหมด" จะได้ไม่ต้องโหลดใหม่
@@ -32,11 +33,19 @@ export class JaeComponent implements OnInit {
     private backend: Backend,
     private cdr: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
+    private auth: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
+      const user = await this.auth.getUser();
+      const role = user?.type === 'admin' ? 'admin' : 'user';
+      if (role === 'admin') {
+        this.homeLink = '/home';
+      } else {
+        this.homeLink = '/userhome';
+      }
       await this.loadUsers();
     }
   }

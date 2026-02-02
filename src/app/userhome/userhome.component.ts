@@ -9,6 +9,16 @@ import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 
+
+interface DocUser {
+  did:       number;
+  file_url:  string;
+  title:     string;
+  create_at: Date;
+  uid:       number;
+  file_name: string;
+}
+
 @Component({
   selector: 'app-userhome',
   standalone: true,
@@ -27,8 +37,8 @@ export class UserHomeComponent {
   /* ======================
      DATA
   ====================== */
-  document: DocumentItemPos[] = [];
-  selectedFile: DocumentItemPos | null = null;
+  document: DocUser[] = [];
+  selectedFile: DocUser | null = null;
   safeFileUrl: SafeResourceUrl | null = null;
 
   /* ======================
@@ -56,12 +66,13 @@ export class UserHomeComponent {
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
-      await this.loadDocuments();
+      console.log(this.user?.uid)
+      await this.loadDocuments(this.user?.uid);
     }
   }
 
-  async loadDocuments() {
-    this.document = await this.backend.GetFile();
+  async loadDocuments(uid: any) {
+    this.document = await this.backend.FileUser(uid);
     this.cdr.detectChanges();
   }
 
@@ -92,16 +103,25 @@ export class UserHomeComponent {
      TODAY DOCUMENTS (UI)
   ====================== */
   get todayDocuments() {
-    const today = new Date().toISOString().slice(0, 10);
-    return this.document.filter(d =>
-      (d as any).created_at?.startsWith(today)
-    );
+    const today = new Date();
+    
+    return this.document.filter(d => {
+      // ตรวจสอบว่ามีข้อมูลวันที่หรือไม่ (field ชื่อ create_at ตาม Interface DocUser)
+      if (!d.create_at) return false;
+
+      const docDate = new Date(d.create_at);
+
+      // เปรียบเทียบ วัน/เดือน/ปี ให้ตรงกับวันนี้ปัจจุบัน
+      return docDate.getDate() === today.getDate() &&
+             docDate.getMonth() === today.getMonth() &&
+             docDate.getFullYear() === today.getFullYear();
+    });
   }
 
   /* ======================
      PREVIEW
   ====================== */
-  openModal(file: DocumentItemPos) {
+  openModal(file: DocUser) {
     this.selectedFile = file;
     this.safeFileUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(file.file_url);
