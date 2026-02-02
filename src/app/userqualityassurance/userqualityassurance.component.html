@@ -1,0 +1,80 @@
+<div class="home-container">
+  <!-- Sidebar -->
+  <aside class="sidebar minimal">
+    <div class="logo-box">
+      <span class="material-icons logo-icon">picture_as_pdf</span>
+      <span class="logo-text">My PDF</span>
+    </div>
+
+    <button class="back-btn" routerLink="/userhome">
+      <span class="material-icons">arrow_back</span>
+      กลับหน้าหลัก
+    </button>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+    <!-- ===== Folder View ===== -->
+    <div *ngIf="!selectedFolder">
+      <h2>📁 ประกันคุณภาพ</h2>
+
+      <div class="create-row">
+        <input type="text" placeholder="ชื่อโฟลเดอร์" [(ngModel)]="newFolderName" />
+        <button class="btn" (click)="createFolder()">➕ สร้างโฟลเดอร์</button>
+      </div>
+
+      <div class="folder-grid">
+        <div class="folder-card" *ngFor="let f of folders" (click)="openFolder(f)">
+          <span class="material-icons folder-icon">folder</span>
+          <div class="folder-name">{{ f.name }}</div>
+        </div>
+      </div>
+
+      <p *ngIf="folders.length === 0" class="empty-text">ยังไม่มีโฟลเดอร์</p>
+    </div>
+
+    <!-- ===== File View ===== -->
+<div *ngIf="selectedFolder" class="file-view">
+
+  <!-- Header -->
+  <div class="folder-header">
+    <div class="folder-title">
+      <button class="back-link" (click)="backToFolders()">←</button>
+      <h2>{{ selectedFolder.name }}</h2>
+    </div>
+  </div>
+
+  <label class="upload-box">
+  <span class="material-icons upload-icon">
+    cloud_upload
+  </span>
+
+  <div class="upload-text">
+    เพิ่มไฟล์จากเครื่อง
+  </div>
+
+  <div class="upload-sub">
+    รองรับ PDF / DOC / DOCX
+  </div>
+
+  <input
+    type="file"
+    (change)="onFileSelected($event)"
+    accept=".pdf,.doc,.docx"
+  >
+</label>
+
+
+  <!-- File list -->
+  <div class="file-list" *ngIf="selectedFolder.files.length > 0">
+    <div class="file-item" *ngFor="let file of selectedFolder.files">
+      <span class="material-icons">description</span>
+      <div class="file-name">{{ file.name }}</div>
+    </div>
+  </div>
+
+  <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
+    ยังไม่มีไฟล์ในโฟลเดอร์นี้
+  </p>
+
+</div>

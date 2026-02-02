@@ -63,5 +63,26 @@ export const routes: Routes = [
     path: 'userprofile',
     loadComponent: () =>
       import('./userprofile/userprofile.component').then(m => m.UserprofileComponent)
-  }
+  },
+  {
+    path: 'usercalender',
+    loadComponent: () =>
+      import('./usercalender/usercalender.component').then(m => m.UserCalenderComponent)
+  },
+  {
+    path: 'userrelation',
+    loadComponent: () =>
+      import('./userrelation/userrelation.component').then(m => m.UserRelationComponent)
+  },
+  {
+    path: 'userjae',
+    loadComponent: () =>
+      import('./userjae/userjae.component').then(m => m.UserjaeComponent)
+  },
+  {
+    path: 'userqualityassurance',
+    loadComponent: () =>
+      import('./userqualityassurance/userqualityassurance.component').then(m => m.UserQualityassuranceComponent)
+  },
+  
 ];

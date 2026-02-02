@@ -1,0 +1,67 @@
+<div class="home-container">
+  <aside class="sidebar minimal">
+    <div class="logo-box">
+      <span class="material-icons logo-icon">picture_as_pdf</span>
+      <span class="logo-text">My PDF</span>
+    </div>
+    <button class="back-btn" routerLink="/userhome">
+      <span class="material-icons">arrow_back</span>
+      กลับหน้าหลัก
+    </button>
+  </aside>
+
+  <main class="content">
+    <div *ngIf="!selectedTeacher">
+      <h2>📂 เอกสาร JAE</h2>
+      <div class="folder-grid">
+        <div class="folder-card" *ngFor="let t of teachers" (click)="openTeacher(t)">
+          <span class="material-icons folder-icon">folder</span>
+          <div class="folder-name">{{ t.username }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedTeacher">
+      <div class="header-row">
+        <button class="back-link" (click)="backToFolders()">← รายชื่ออาจารย์</button>
+        <h2>{{ selectedTeacher.username }}</h2>
+      </div>
+
+      <div class="year-tabs" *ngIf="groupedFiles.length > 0">
+        <button *ngFor="let group of groupedFiles" 
+                [class.active]="activeYear === group.year" 
+                (click)="selectYear(group)">
+          ปี {{ group.year }}
+        </button>
+      </div>
+
+      <div class="term-tabs" *ngIf="activeYear">
+        <button [class.active-term]="activeTerm === 0" (click)="resetToAllFiles()">
+          ทั้งหมด
+        </button>
+        <button [class.active-term]="activeTerm === 1" (click)="loadTerm(1)">
+          เทอม 1
+        </button>
+        <button [class.active-term]="activeTerm === 2" (click)="loadTerm(2)">
+          เทอม 2
+        </button>
+      </div>
+
+      <div class="file-list-container">
+        <div class="file-item" *ngFor="let f of selectedYearFiles" (click)="openPreview(f)">
+          <div class="file-info">
+            <span class="material-icons">picture_as_pdf</span>
+            <div class="text-content">
+              <span class="file-name">{{ f.file_name }}</span>
+              <small class="file-date">{{ f.create_at | date:'dd/MM/yyyy HH:mm' }}</small>
+            </div>
+          </div>
+        </div>
+
+        <p *ngIf="selectedYearFiles.length === 0" class="empty-msg">
+          ไม่พบเอกสารในหมวดนี้
+        </p>
+      </div>
+    </div>
+  </main>
+</div>

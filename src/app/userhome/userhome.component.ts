@@ -80,10 +80,10 @@ export class UserHomeComponent {
      NAVIGATION
   ====================== */
   goUserprofile() { this.router.navigate(['/userprofile']); }
-  goCalender() { this.router.navigate(['/calender']); }
-  goRelation() { this.router.navigate(['/relation']); }
-  goJae() { this.router.navigate(['/jae']); }
-  goQualityassurance() { this.router.navigate(['/qualityassurance']); }
+  goUsercalender() { this.router.navigate(['/usercalender']); }
+  goUserrelation() { this.router.navigate(['/userrelation']); }
+  goUserJae() { this.router.navigate(['/userjae']); }
+  goUserQualityassurance() { this.router.navigate(['/userqualityassurance']); }
 
   logout() {
     this.auth.logout();
