@@ -13,126 +13,57 @@ import { UserLoginRes } from '../../model/response';
   styleUrls: ['./adddeleteuser.component.css']
 })
 export class AdddeleteuserComponent implements OnInit {
-  
+
   activeTab: 'add' | 'delete' = 'add';
   users: UserLoginRes[] = [];
-  
-  // ข้อมูลสำหรับเพิ่มผู้ใช้
+
   newUser = {
     username: '',
     email: '',
     password: '',
     phone: '',
-    type: 'user' // เปลี่ยนจาก role เป็น type ให้ตรงกับ backend
+    type: 'user'
   };
 
-  constructor(private backend: Backend, private cdr: ChangeDetectorRef) {}
+  emailError = false;
+  passwordError = false;
+  phoneError = false;
+
+  constructor(
+    private backend: Backend,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   async ngOnInit() {
     await this.loadUsers();
   }
 
-  // โหลดรายการผู้ใช้
   async loadUsers() {
-    try {
-      this.users = await this.backend.GetUser();
-      console.log('Users loaded:', this.users);
-      // ✅ บังคับให้ Angular ตรวจสอบการเปลี่ยนแปลง
-      this.cdr.detectChanges();
-    } catch (error) {
-      console.error('Error loading users:', error);
-      alert('ไม่สามารถโหลดข้อมูลผู้ใช้ได้');
-    }
+    this.users = await this.backend.GetUser();
+    this.cdr.detectChanges();
   }
 
-  // เพิ่มผู้ใช้
-  async addUser() {
-    // ตรวจสอบข้อมูล
-    if (!this.newUser.username || !this.newUser.email || !this.newUser.password || !this.newUser.phone) {
-      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
-      return;
-    }
+  /* ================= EMAIL ================= */
+  onEmailInput(event: Event) {
+    const input = event.target as HTMLInputElement;
 
-    // ตรวจสอบรูปแบบอีเมล
-    // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailPattern.test(this.newUser.email)) {
-    //   alert('รูปแบบอีเมลไม่ถูกต้อง');
-    //   return;
-    // }
+    // อนุญาตเฉพาะอังกฤษ
+    input.value = input.value.replace(/[^a-zA-Z0-9._@]/g, '');
+    this.newUser.email = input.value;
 
-    // ตรวจสอบเบอร์โทร (ต้องเป็นตัวเลข 10 หลัก)
-    const phonePattern = /^[0-9]{10}$/;
-    if (!phonePattern.test(this.newUser.phone)) {
-      alert('เบอร์โทรต้องเป็นตัวเลข 10 หลัก');
-      return;
-    }
-
-    try {
-      const response = await this.backend.AddUser(this.newUser);
-      console.log('Add user response:', response);
-      
-      alert('เพิ่มผู้ใช้สำเร็จ');
-      
-      // รีเซ็ตฟอร์ม
-      this.newUser = {
-        username: '',
-        email: '',
-        password: '',
-        phone: '',
-        type: 'user'
-      };
-      
-      // โหลดข้อมูลใหม่
-      await this.loadUsers();
-      
-    } catch (error: any) {
-      console.error('Error adding user:', error);
-      if (error.status === 409) {
-        alert('อีเมลหรือชื่อผู้ใช้นี้มีอยู่ในระบบแล้ว');
-      } else {
-        alert('เกิดข้อผิดพลาดในการเพิ่มผู้ใช้');
-      }
-    }
+    const gmailPattern = /^[a-zA-Z0-9._]+@gmail\.com$/;
+    this.emailError = !gmailPattern.test(this.newUser.email);
   }
 
-  // ลบผู้ใช้
-  async deleteUser(uid: number) {
-    if (!confirm('คุณต้องการลบผู้ใช้นี้ใช่หรือไม่?')) {
-      return;
-    }
-
-    try {
-      // 1. ลบจาก backend
-      await this.backend.DeleteUser(uid);
-      console.log('User deleted successfully');
-      
-      // 2. ✅ ลบจาก array โดยสร้าง array ใหม่ (เพื่อให้ Angular ตรวจจับได้)
-      this.users = this.users.filter(user => user.uid !== uid);
-      
-      // 3. ✅ บังคับให้ Angular re-render
-      this.cdr.detectChanges();
-      
-      // 4. แสดงข้อความสำเร็จ
-      alert('ลบผู้ใช้สำเร็จ');
-      
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      alert('เกิดข้อผิดพลาดในการลบผู้ใช้');
-      // ถ้าเกิด error ให้โหลดข้อมูลใหม่จาก backend
-      await this.loadUsers();
-    }
-  }
-
-  // ฟังก์ชันเสริม: ตรวจสอบความแข็งแรงของรหัสผ่าน
+  /* ================= PASSWORD ================= */
   getPasswordStrength(): string {
-    const password = this.newUser.password;
-    if (password.length === 0) return '';
-    if (password.length < 6) return 'อ่อนแอ';
-    if (password.length < 10) return 'ปานกลาง';
+    const len = this.newUser.password.length;
+    if (len === 0) return '';
+    if (len < 6) return 'อ่อนแอ';
+    if (len < 10) return 'ปานกลาง';
     return 'แข็งแรง';
   }
 
-  // ฟังก์ชันเสริม: แสดงสีตามความแข็งแรงของรหัสผ่าน
   getPasswordStrengthClass(): string {
     const strength = this.getPasswordStrength();
     if (strength === 'อ่อนแอ') return 'weak';
@@ -141,19 +72,62 @@ export class AdddeleteuserComponent implements OnInit {
     return '';
   }
 
-  phoneError = false;
+  /* ================= PHONE ================= */
+  onPhoneInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    this.newUser.phone = input.value;
+    this.phoneError = this.newUser.phone.length !== 10;
+  }
 
-// บังคับให้พิมพ์ได้เฉพาะตัวเลข
-onPhoneInput(event: Event) {
-  const input = event.target as HTMLInputElement;
+  /* ================= ADD USER ================= */
+  async addUser() {
+    if (!this.newUser.username || !this.newUser.email || !this.newUser.password || !this.newUser.phone) {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+      return;
+    }
 
-  // ตัดอักษรที่ไม่ใช่ตัวเลขออก
-  input.value = input.value.replace(/[^0-9]/g, '');
+    // password >= 4
+    this.passwordError = this.newUser.password.length < 4;
+    if (this.passwordError) {
+      alert('รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร');
+      return;
+    }
 
-  this.newUser.phone = input.value;
+    // gmail only
+    const gmailPattern = /^[a-zA-Z0-9._]+@gmail\.com$/;
+    this.emailError = !gmailPattern.test(this.newUser.email);
+    if (this.emailError) {
+      alert('อีเมลต้องเป็น @gmail.com เท่านั้น');
+      return;
+    }
 
-  // เช็คว่าครบ 10 หลักไหม
-  this.phoneError = this.newUser.phone.length !== 10;
-}
+    // phone
+    if (this.phoneError) {
+      alert('เบอร์โทรต้องเป็นตัวเลข 10 หลัก');
+      return;
+    }
 
+    await this.backend.AddUser(this.newUser);
+    alert('เพิ่มผู้ใช้สำเร็จ');
+
+    this.newUser = {
+      username: '',
+      email: '',
+      password: '',
+      phone: '',
+      type: 'user'
+    };
+
+    await this.loadUsers();
+  }
+
+  /* ================= DELETE ================= */
+  async deleteUser(uid: number) {
+    if (!confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?')) return;
+    await this.backend.DeleteUser(uid);
+    this.users = this.users.filter(u => u.uid !== uid);
+    this.cdr.detectChanges();
+    alert('ลบผู้ใช้สำเร็จ');
+  }
 }

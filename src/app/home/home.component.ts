@@ -22,7 +22,7 @@ export class HomeComponent {
   /* ======================
      MODE
   ====================== */
-  isEditMode = false;
+  isViewMode = false;
 
   /* ======================
      USER
@@ -58,14 +58,10 @@ export class HomeComponent {
   uploadSuccess = false;
 
   /* ======================
-     SEND TEACHER
+     SEND / VIEW
   ====================== */
   person: UserLocalStorge[] = [];
   selectedTeachers: number[] = [];
-
-  /* ======================
-     CATEGORY
-  ====================== */
   category: CategoryItemPos[] = [];
   selectedCategories: number[] = [];
   sendSubject = '';
@@ -79,9 +75,6 @@ export class HomeComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  /* ======================
-     LIFECYCLE
-  ====================== */
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
@@ -92,12 +85,19 @@ export class HomeComponent {
   async loadDocuments() {
     this.document = await this.backend.GetFile();
     this.person = await this.backend.GetUser();
-    this.category = (await this.backend.getCategory()) as CategoryItemPos[];
+    const catRes = await this.backend.getCategory();
+
+  // 👇 บังคับ UI ให้มองว่าเป็น array
+  this.category = Array.isArray((catRes as any).data)
+    ? (catRes as any).data
+    : Array.isArray(catRes)
+      ? (catRes as CategoryItemPos[])
+      : [];
     this.cdr.detectChanges();
   }
 
   /* ======================
-     NAVIGATION
+     NAV
   ====================== */
   goProfile() { this.router.navigate(['/profile']); }
   goCalender() { this.router.navigate(['/calender']); }
@@ -130,7 +130,7 @@ export class HomeComponent {
   }
 
   /* ======================
-     PREVIEW MODAL
+     PREVIEW
   ====================== */
   openModal(file: DocumentItemPos) {
     this.selectedFile = file;
@@ -139,20 +139,15 @@ export class HomeComponent {
     this.showModal = true;
   }
 
-  closeModal() {
-    this.showModal = false;
-    this.selectedFile = null;
-    this.safeFileUrl = null;
-  }
-
   closeAllModals() {
     this.showModal = false;
     this.showSendTeacher = false;
     this.showUpload = false;
+    this.isViewMode = false;
   }
 
   /* ======================
-     DELETE FILE
+     DELETE
   ====================== */
   async deleteFile(event: Event, file: DocumentItemPos) {
     event.stopPropagation();
@@ -175,7 +170,6 @@ export class HomeComponent {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
-
     this.uploadFile = input.files[0];
     this.uploadFileName = this.uploadFile.name;
     this.uploadTitle = this.uploadFileName.replace(/\.[^/.]+$/, '');
@@ -183,7 +177,6 @@ export class HomeComponent {
 
   async submitUpload() {
     if (!this.uploadFile) return;
-
     const formData = new FormData();
     formData.append('file', this.uploadFile);
     await this.backend.Upload_File(formData);
@@ -195,21 +188,21 @@ export class HomeComponent {
   }
 
   /* ======================
-     SEND / EDIT TEACHER
+     SEND / VIEW
   ====================== */
   openSendTeacher() {
-    this.isEditMode = false;
+    this.isViewMode = false;
     this.showModal = false;
     this.showSendTeacher = true;
+    this.sendSubject = '';
     this.selectedTeachers = [];
     this.selectedCategories = [];
-    this.sendSubject = '';
   }
 
-  openEditSendTeacher() {
+  openViewSendTeacher() {
     if (!this.selectedFile) return;
 
-    this.isEditMode = true;
+    this.isViewMode = true;
     this.showModal = false;
     this.showSendTeacher = true;
 
@@ -238,37 +231,20 @@ export class HomeComponent {
     await this.loadDocuments();
   }
 
-  updateSendTeacher() {
-    alert('บันทึกการแก้ไขแล้ว (UI เท่านั้น)');
-    this.closeAllModals();
-  }
-
   /* ======================
      SELECT
   ====================== */
   toggleTeacher(uid: number) {
     const i = this.selectedTeachers.indexOf(uid);
-    i === -1 ? this.selectedTeachers.push(uid) : this.selectedTeachers.splice(i, 1);
+    i === -1
+      ? this.selectedTeachers.push(uid)
+      : this.selectedTeachers.splice(i, 1);
   }
 
   toggleCategory(cid: number) {
     const i = this.selectedCategories.indexOf(cid);
-    i === -1 ? this.selectedCategories.push(cid) : this.selectedCategories.splice(i, 1);
-  }
-
-  selectAllTeachers() {
-    this.selectedTeachers = this.person.map(p => p.uid);
-  }
-
-  clearAllTeachers() {
-    this.selectedTeachers = [];
-  }
-
-  selectAllCategories() {
-    this.selectedCategories = this.category.map(c => c.category_id);
-  }
-
-  clearAllCategories() {
-    this.selectedCategories = [];
+    i === -1
+      ? this.selectedCategories.push(cid)
+      : this.selectedCategories.splice(i, 1);
   }
 }
