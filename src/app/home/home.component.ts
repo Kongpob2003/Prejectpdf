@@ -18,11 +18,15 @@ import { CategoryItemPos } from '../../model/category_Item_pos';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+openViewDetail(arg0: DocumentItemPos|null) {
+throw new Error('Method not implemented.');
+}
 
   /* ======================
      MODE
   ====================== */
   isViewMode = false;
+  isEditMode = false;
 
   /* ======================
      USER
@@ -247,4 +251,22 @@ export class HomeComponent {
       ? this.selectedCategories.push(cid)
       : this.selectedCategories.splice(i, 1);
   }
+
+  selectAllCategories() {
+  this.selectedCategories = this.category.map(c => c.category_id);
+}
+
+clearAllCategories() {
+  this.selectedCategories = [];
+}
+
+selectAllTeachers() {
+  this.selectedTeachers = this.person.map(p => p.uid);
+}
+
+clearAllTeachers() {
+  this.selectedTeachers = [];
+}
+
+
 }
