@@ -9,6 +9,12 @@ import { UserLoginRes } from '../../../model/response';
 import { FolderItemPos } from '../../../model/folder_Item_pos';
 import { QualityItemPos } from '../../../model/quality_Item_pos';
 
+export interface SendDetailsResponse {
+  title: string;
+  teacher_ids: number[];
+  category_ids: number[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +22,7 @@ export class Backend {
   SendToTeacher(did: any, selectedTeachers: string[], selectedCategory: string) {
     throw new Error('Method not implemented.');
   }
+  
   constructor(private constants: Constants, private http: HttpClient) {}
 
   // Login
@@ -171,7 +178,20 @@ export class Backend {
   const response = await lastValueFrom(this.http.post(url, body));
   return response;
 }
+//แสดงตัวเรื่องของ file
+public async getDocTitle(did: number) {
+  const url = this.constants.API_ENDPOINT + 'document/getDocTitle/' + did;
+  // รับค่าเป็น Object { title: string }
+  const response = await lastValueFrom(this.http.get<{ title: string }>(url)); 
+  return response;
+}
 
+// แสดงข้อมูลที่เลือก
+public async getSendDetails(did: number) {
+  const url = this.constants.API_ENDPOINT + 'document/getSendDetails/' + did;
+  const response = await lastValueFrom(this.http.get<SendDetailsResponse>(url));
+  return response;
+}
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {

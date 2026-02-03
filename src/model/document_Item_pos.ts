@@ -8,4 +8,5 @@ export interface DocumentItemPos {
     semester:  string;
     create_at: Date;
     file_name: string;
+    title?: string;
 }

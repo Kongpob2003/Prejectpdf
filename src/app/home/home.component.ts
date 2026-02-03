@@ -136,10 +136,26 @@ throw new Error('Method not implemented.');
   /* ======================
      PREVIEW
   ====================== */
-  openModal(file: DocumentItemPos) {
+  async openModal(file: DocumentItemPos) {
     this.selectedFile = file;
     this.safeFileUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(file.file_url);
+      // ✅ เพิ่มส่วนดึง Title ตรงนี้
+  try {
+    // เรียก API ดึง Title โดยส่ง did ไป
+    const res = await this.backend.getDocTitle(file.did);
+    
+    // ถ้ามี title ส่งกลับมา ให้บันทึกลงใน selectedFile.title
+    if (res && res.title) {
+      this.selectedFile.title = res.title; 
+    } else {
+       // ถ้าไม่มี ให้เป็นค่าว่างหรือ undefined (เพื่อไม่ให้แสดงของเก่าค้าง)
+       this.selectedFile.title = undefined;
+    }
+  } catch (error) {
+    console.error('Error fetching title:', error);
+    this.selectedFile.title = undefined;
+  }
     this.showModal = true;
   }
 
@@ -157,6 +173,7 @@ throw new Error('Method not implemented.');
     event.stopPropagation();
     if (!confirm('คุณต้องการลบไฟล์นี้หรือไม่?')) return;
     await this.backend.DeleteFile(file.did);
+    alert('ลบเอกสารสำเร็จ');
     await this.loadDocuments();
   }
 
@@ -203,20 +220,30 @@ throw new Error('Method not implemented.');
     this.selectedCategories = [];
   }
 
-  openViewSendTeacher() {
+ async openViewSendTeacher() {
     if (!this.selectedFile) return;
 
-    this.isViewMode = true;
-    this.showModal = false;
-    this.showSendTeacher = true;
+    try {
+      // 1. เรียก API ดึงข้อมูลรายละเอียดการส่ง (ต้องมีฟังก์ชันนี้ใน Backend Service ตามขั้นตอนก่อนหน้า)
+      // รับค่า: title, teacher_ids, category_ids
+      const details: any = await this.backend.getSendDetails(this.selectedFile.did);
+      
+      console.log('ข้อมูลที่ดึงมาได้:', details);
 
-    this.sendSubject = this.selectedFile.text || '';
-    this.selectedTeachers = this.selectedFile.teacher_ids
-      ? [...this.selectedFile.teacher_ids]
-      : [];
-    this.selectedCategories = this.selectedFile.category_ids
-      ? [...this.selectedFile.category_ids]
-      : [];
+      // 2. นำข้อมูลมาใส่ตัวแปรเพื่อให้ HTML แสดงผล
+      this.sendSubject = details.title || '';                 // หัวข้อ
+      this.selectedTeachers = details.teacher_ids || [];      // ไฮไลท์อาจารย์
+      this.selectedCategories = details.category_ids || [];   // ไฮไลท์หมวดหมู่
+
+      // 3. ตั้งค่าโหมดแสดงผล (View Mode)
+      this.isViewMode = true;       // ปิดการแก้ไข
+      this.showModal = false;       // ปิด Modal Preview อันเล็ก
+      this.showSendTeacher = true;  // เปิด Modal รายละเอียดอันใหญ่
+
+    } catch (error) {
+      console.error('Error loading send details:', error);
+      alert('ไม่สามารถดึงข้อมูลรายละเอียดการส่งได้');
+    }
   }
 
   async sendToTeacher() {
