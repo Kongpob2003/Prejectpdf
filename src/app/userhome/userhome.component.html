@@ -1,5 +1,5 @@
 <div class="home-container">
-  <!-- Sidebar -->
+  <!-- ================= Sidebar ================= -->
   <aside class="sidebar">
     <div class="logo logo-box">
       <span class="material-icons logo-icon">picture_as_pdf</span>
@@ -31,9 +31,9 @@
     </ul>
   </aside>
 
-  <!-- Content -->
+  <!-- ================= Content ================= -->
   <main class="content">
-    <!-- Top bar -->
+    <!-- ===== Top Bar ===== -->
     <div class="top-bar">
       <div class="search-box">
         <span class="material-icons search-icon">search</span>
@@ -55,9 +55,14 @@
 
     <div class="divider"></div>
 
-    <div class="summary-row">
+   <!-- ===== Summary ===== -->
+<div class="summary-row">
   <!-- เอกสารทั้งหมด -->
-  <div class="summary-card">
+  <div
+    class="summary-card"
+    [class.active]="viewMode === 'all'"
+    (click)="showAll()"
+  >
     <span class="material-icons summary-icon">description</span>
     <div class="summary-text">
       <p>{{ document.length }} ไฟล์</p>
@@ -66,7 +71,11 @@
   </div>
 
   <!-- เอกสารใหม่วันนี้ -->
-  <div class="summary-card today">
+  <div
+    class="summary-card today"
+    [class.active]="viewMode === 'today'"
+    (click)="showToday()"
+  >
     <span class="material-icons summary-icon">new_releases</span>
     <div class="summary-text">
       <p>{{ todayDocuments.length }} ไฟล์</p>
@@ -75,24 +84,22 @@
   </div>
 </div>
 
-
-    <!-- Files -->
-    <div class="files-box">
-      <div class="file-grid">
-        <div
-          class="file-card"
-          *ngFor="let file of filteredFiles"
-          (click)="openModal(file)"
-        >
-          <span class="material-icons file-icon">picture_as_pdf</span>
-          <div class="file-name">{{ file.file_name }}</div>
-        </div>
-      </div>
+<!-- ===== Files ===== -->
+<div class="files-box">
+  <div class="file-grid">
+    <div
+      class="file-card"
+      *ngFor="let file of filteredFilesBySearch"
+      (click)="openModal(file)"
+    >
+      <span class="material-icons file-icon">picture_as_pdf</span>
+      <div class="file-name">{{ file.file_name }}</div>
     </div>
-  </main>
+  </div>
 </div>
 
-<!-- Preview Modal -->
+
+<!-- ================= Preview Modal ================= -->
 <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
     <h3>{{ selectedFile?.file_name }}</h3>

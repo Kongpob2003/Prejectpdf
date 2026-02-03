@@ -6,16 +6,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { AuthService } from '../services/auth.service';
 import { Backend } from '../services/api/backend';
-import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 
-
 interface DocUser {
-  did:       number;
-  file_url:  string;
-  title:     string;
+  did: number;
+  file_url: string;
+  title: string;
   create_at: Date;
-  uid:       number;
+  uid: number;
   file_name: string;
 }
 
@@ -42,9 +40,10 @@ export class UserHomeComponent {
   safeFileUrl: SafeResourceUrl | null = null;
 
   /* ======================
-     SEARCH / TAB
+     SEARCH / FILTER
   ====================== */
   searchText = '';
+  viewMode: 'all' | 'today' = 'all';   // ⭐ สำคัญ
 
   /* ======================
      MODAL
@@ -66,7 +65,6 @@ export class UserHomeComponent {
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
-      console.log(this.user?.uid)
       await this.loadDocuments(this.user?.uid);
     }
   }
@@ -91,31 +89,43 @@ export class UserHomeComponent {
   }
 
   /* ======================
-     FILTER
-  ====================== */
-  get filteredFiles() {
-    return this.document.filter(file =>
-      file.file_name.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-  }
-
-  /* ======================
-     TODAY DOCUMENTS (UI)
+     TODAY DOCUMENTS
   ====================== */
   get todayDocuments() {
     const today = new Date();
-    
+
     return this.document.filter(d => {
-      // ตรวจสอบว่ามีข้อมูลวันที่หรือไม่ (field ชื่อ create_at ตาม Interface DocUser)
       if (!d.create_at) return false;
-
       const docDate = new Date(d.create_at);
-
-      // เปรียบเทียบ วัน/เดือน/ปี ให้ตรงกับวันนี้ปัจจุบัน
-      return docDate.getDate() === today.getDate() &&
-             docDate.getMonth() === today.getMonth() &&
-             docDate.getFullYear() === today.getFullYear();
+      return (
+        docDate.getDate() === today.getDate() &&
+        docDate.getMonth() === today.getMonth() &&
+        docDate.getFullYear() === today.getFullYear()
+      );
     });
+  }
+
+  /* ======================
+     CLICK SUMMARY
+  ====================== */
+  showAll() {
+    this.viewMode = 'all';
+  }
+
+  showToday() {
+    this.viewMode = 'today';
+  }
+
+  /* ======================
+     FINAL FILTER (HTML ใช้ตัวนี้)
+  ====================== */
+  get filteredFilesBySearch() {
+    const source =
+      this.viewMode === 'today' ? this.todayDocuments : this.document;
+
+    return source.filter(file =>
+      file.file_name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
   /* ======================

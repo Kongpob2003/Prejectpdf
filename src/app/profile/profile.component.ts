@@ -13,31 +13,43 @@ import { Backend } from '../services/api/backend';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule   // ✅ สำคัญมาก
-  ],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
+
   user: UserLoginRes | null = null;
-  constructor(private router: Router,
+
+  profile = {
+    username: '',
+    email: '',
+    password: '',
+    phone: ''
+  };
+
+  isEditing = false;
+
+  // ===== VALIDATION FLAGS =====
+  emailError = false;
+  passwordError = false;
+  phoneError = false;
+
+  constructor(
+    private router: Router,
     private auth: AuthService,
     private backend: Backend,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  
-
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
-      console.log('HOME USER:', this.user);
+      console.log('PROFILE USER:', this.user);
     }
-    if (this.user){
+
+    if (this.user) {
       this.profile = {
         username: this.user.username,
         email: this.user.email,
@@ -46,59 +58,58 @@ export class ProfileComponent {
       };
     }
   }
-    profile = {
-        username: '',
-        email: '',
-        password: '',
-        phone: ''
-      };
-
-  isEditing = false;
 
   editProfile() {
     this.isEditing = true;
   }
 
   async saveProfile() {
-  if (!this.user) return;
+    if (!this.user) return;
 
-  const payload = {
-    uid: this.user.uid,          // สำคัญมาก
-    username: this.profile.username,
-    email: this.profile.email,
-    password: this.profile.password,
-    phone: this.profile.phone
-  };
+    // ===== VALIDATION =====
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
-  try {
-    const res = await this.backend.EditUser(payload,payload.uid);
+    this.emailError = !emailRegex.test(this.profile.email);
+    this.passwordError = this.profile.password.length < 4;
+    this.phoneError = !/^\d{10}$/.test(this.profile.phone);
 
-    // ✅ อัปเดต user ใน localStorage
-    this.user = {
-      ...this.user,
-      ...this.profile
+    // ❌ ถ้าไม่ผ่าน ไม่ยิง backend
+    if (this.emailError || this.passwordError || this.phoneError) {
+      alert('กรุณากรอกข้อมูลให้ถูกต้อง');
+      return;
+    }
+
+    const payload = {
+      uid: this.user.uid,
+      username: this.profile.username,
+      email: this.profile.email,
+      password: this.profile.password,
+      phone: this.profile.phone
     };
 
-    this.auth.setUser(this.user);
+    try {
+      // ✅ เชื่อม backend จริง
+      await this.backend.EditUser(payload, payload.uid);
 
-    this.isEditing = false;
-    alert('บันทึกข้อมูลเรียบร้อย');
-    this.cdr.detectChanges();
-  } catch (err) {
-    console.error(err);
-    alert('บันทึกข้อมูลไม่สำเร็จ');
+      // ✅ sync user ฝั่ง frontend
+      this.user = { ...this.user, ...this.profile };
+      this.auth.setUser(this.user);
+
+      this.isEditing = false;
+      alert('บันทึกข้อมูลเรียบร้อย');
+      this.cdr.detectChanges();
+
+    } catch (err) {
+      console.error(err);
+      alert('บันทึกข้อมูลไม่สำเร็จ');
+    }
   }
-}
-
-
-
-
 
   logout() {
-      this.router.navigate(['/login']);
-  }
-  goHome() {
-      this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 }
