@@ -67,10 +67,22 @@
 
   <!-- File list -->
   <div class="file-list" *ngIf="selectedFolder.files.length > 0">
-    <div class="file-item" *ngFor="let file of selectedFolder.files">
-      <span class="material-icons">description</span>
-      <div class="file-name">{{ file.name }}</div>
+    
+    <div 
+      class="file-item clickable" 
+      *ngFor="let file of selectedFolder.files" 
+      (click)="openFile(file)"
+    >
+      <span class="material-icons file-icon-color">description</span>
+      
+      <div class="text-content">
+        <div class="file-name">{{ file.name }}</div>
+        <small *ngIf="!file.url" style="color: orange;">(รออัปโหลด)</small>
+      </div>
+
+      <span class="material-icons open-icon" *ngIf="file.url">open_in_new</span>
     </div>
+
   </div>
 
   <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
