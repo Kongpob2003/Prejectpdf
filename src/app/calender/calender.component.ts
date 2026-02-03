@@ -70,6 +70,8 @@ export class CalenderComponent implements OnInit {
     
     // สร้างปฏิทิน
     this.generateCalendar();
+
+    this.cdr.detectChanges();
   }
 
   // โหลดข้อมูลเอกสารทั้งหมด
@@ -134,6 +136,8 @@ export class CalenderComponent implements OnInit {
       const date = new Date(this.currentYear, this.currentMonth + 1, day);
       this.calendarDays.push(this.createCalendarDay(date, false));
     }
+
+    this.cdr.detectChanges();
   }
 
   // สร้างวันในปฏิทิน

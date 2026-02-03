@@ -268,3 +268,26 @@
   color: #333;
   word-break: break-word;
 }
+
+/* เพิ่ม CSS นี้เข้าไป */
+.file-item.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* ดันไอคอน open ไปขวาสุด */
+}
+
+.file-item.clickable:hover {
+  background-color: #f0f7ff; /* สีไฮไลท์เมื่อเอาเมาส์ชี้ */
+}
+
+.file-icon-color {
+  color: #d32f2f; /* สีแดงแบบ PDF */
+  margin-right: 10px;
+}
+
+.open-icon {
+  font-size: 18px;
+  color: #999;
+}

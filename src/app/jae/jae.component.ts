@@ -165,7 +165,7 @@ export class JaeComponent implements OnInit {
       maxWidth: '900px',
       data: {
         name: file.file_name,
-        url: file.file_url
+        url: file.file_url,
       }
     });
   }

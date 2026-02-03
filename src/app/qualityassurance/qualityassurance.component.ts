@@ -14,6 +14,7 @@ import { CategoryItemPos } from '../../model/category_Item_pos';
 interface QAFile {
   name: string;
   file?: File; // เก็บไฟล์ไว้ เผื่ออัปโหลดจริง
+  url?: string;
 }
 
 interface Folder {
@@ -169,5 +170,13 @@ export class QualityassuranceComponent {
       input.value = '';
     }
   }
-
+  openFile(file: QAFile) {
+    if (file.url) {
+      // ถ้ามี URL (มาจาก DB) ให้เปิดในแท็บใหม่
+      window.open(file.url, '_blank');
+    } else {
+      // ถ้าไม่มี URL (เพิ่งเลือกจากเครื่อง)
+      alert('ไฟล์นี้ยังไม่ได้อัปโหลด');
+    }
+  }
 }
