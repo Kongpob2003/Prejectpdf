@@ -1,0 +1,50 @@
+<aside class="sidebar" [class.minimal]="mode === 'minimal'">
+
+  <!-- Logo -->
+  <div class="logo-box">
+    <span class="material-icons logo-icon">picture_as_pdf</span>
+    <span class="logo-text">MyPDF</span>
+  </div>
+
+  <!-- ===== FULL MODE ===== -->
+  <ul *ngIf="mode === 'full'">
+    <li class="active" (click)="go('/home')">
+      <span class="material-icons">home</span>หน้าหลัก
+    </li>
+    <li (click)="go('/profile')">
+      <span class="material-icons">person</span>ข้อมูลส่วนตัว
+    </li>
+    <li (click)="go('/calender')">
+      <span class="material-icons">calendar_month</span>ปฏิทิน
+    </li>
+    <li (click)="go('/adddeleteuser')">
+      <span class="material-icons">person_add</span>เพิ่มลดผู้ใช้
+    </li>
+    <li (click)="go('/relation')">
+      <span class="material-icons">campaign</span>ประชาสัมพันธ์
+    </li>
+    <li (click)="go('/jae')">
+      <span class="material-icons">description</span>JAE
+    </li>
+    <li (click)="go('/qualityassurance')">
+      <span class="material-icons">verified</span>ประกันคุณภาพ
+    </li>
+<li (click)="go('/category')">
+      <span class="material-icons">folder_open</span>หมวดหมู่
+    </li>
+    <li class="logout" (click)="logout()">
+      <span class="material-icons">logout</span>ออกจากระบบ
+    </li>
+  </ul>
+
+  <!-- ===== MINIMAL MODE ===== -->
+  <button
+    *ngIf="mode === 'minimal'"
+    class="back-btn"
+    (click)="go('/userhome')"
+  >
+    <span class="material-icons">arrow_back</span>
+    กลับหน้าหลัก
+  </button>
+
+</aside>

@@ -4,6 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Backend } from '../services/api/backend';
 import { CategoryItemPos } from '../../model/category_Item_pos';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 interface DocumentFile {
   did: number;
@@ -23,7 +24,7 @@ interface CategoryWithFiles {
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, AdminsiderbarComponent],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
 })

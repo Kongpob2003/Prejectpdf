@@ -1,28 +1,10 @@
+
 <div class="home-container">
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo logo-box">
-      <span class="material-icons logo-icon">picture_as_pdf</span>
-      <span class="logo-text">MyPDF</span>
-    </div>
-    <ul>
-      <li><span class="material-icons">home</span>หน้าหลัก</li>
-      <li (click)="goProfile()"><span class="material-icons">person</span>ข้อมูลส่วนตัว</li>
-      <li (click)="goCalender()"><span class="material-icons">calendar_month</span>ปฏิทิน</li>
-      <li (click)="goAdddelete()"><span class="material-icons">group_add</span>เพิ่มลดผู้ใช้</li>
-      <li (click)="goRelation()"><span class="material-icons">campaign</span>ประชาสัมพันธ์</li>
-      <li (click)="goJae()"><span class="material-icons">description</span>JAE</li>
-      <li (click)="goQualityassurance()">
-        <span class="material-icons">verified</span>ประกันคุณภาพ
-      </li>
-      <li (click)="goCategory()"><span class="material-icons">category</span>หมวดหมู่</li>
-      <li class="logout" (click)="logout()">
-        <span class="material-icons">logout</span>ออกจากระบบ
-      </li>
-    </ul>
-  </aside>
+ 
   <!-- Toast -->
   <div class="success-toast" *ngIf="uploadSuccess">✅ อัปโหลดเอกสารสำเร็จ</div>
+  <app-adminsidebar [mode]="'full'"></app-adminsidebar>
   <!-- Content -->
   <main class="content">
     <div class="top-bar">

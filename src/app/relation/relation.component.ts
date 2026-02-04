@@ -15,6 +15,7 @@ import { AuthService } from '../services/auth.service';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 @Component({
   selector: 'app-relation',
   standalone: true,
@@ -22,8 +23,9 @@ import { ChangeDetectorRef } from '@angular/core';
     CommonModule,
     FormsModule,
     RouterModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    AdminsiderbarComponent
+],
   templateUrl: './relation.component.html',
   styleUrl: './relation.component.css',
 })

@@ -1,11 +1,4 @@
-/* ===== Sidebar Minimal ===== */
-.sidebar.minimal {
-  width: 220px;
-  background: #1A285F;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-}
+
 
 /* ===== Logo ===== */
 .logo-box {

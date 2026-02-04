@@ -10,6 +10,7 @@ import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 interface QAFile {
   did?: number;
@@ -29,7 +30,7 @@ interface Folder {
 @Component({
   selector: 'app-qualityassurance',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminsiderbarComponent],
   templateUrl: './qualityassurance.component.html',
   styleUrl: './qualityassurance.component.css',
 })

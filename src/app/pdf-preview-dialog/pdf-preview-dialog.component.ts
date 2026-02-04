@@ -6,10 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-pdf-preview-dialog',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule 
-  ],
+  imports: [CommonModule, MatDialogModule],
   template: `
     <div class="dialog-header">
       <h2 mat-dialog-title>{{ data?.file_name || data?.name || 'Preview' }}</h2>
@@ -17,62 +14,72 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
         <span class="material-icons">close</span>
       </button>
     </div>
-
+<button mat-icon-button (click)="toggleFullscreen()">
+  <span class="material-icons">fullscreen</span>
+</button>
     <mat-dialog-content>
       <div class="pdf-container">
-        
         <iframe
           *ngIf="safeUrl"
           [src]="safeUrl"
           width="100%"
           height="100%"
           frameborder="0"
-          style="border: none;">
+          style="border: none;"
+        >
         </iframe>
-        
+
         <div *ngIf="!safeUrl" class="loading-container">
           <p>กำลังโหลดเอกสาร...</p>
-          <small *ngIf="hasError" class="error-text">
-            ไม่พบไฟล์เอกสาร หรือ URL ไม่ถูกต้อง
-          </small>
+          <small *ngIf="hasError" class="error-text"> ไม่พบไฟล์เอกสาร หรือ URL ไม่ถูกต้อง </small>
         </div>
-
       </div>
     </mat-dialog-content>
   `,
-  styles: [`
-    .dialog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 24px;
-      border-bottom: 1px solid #e0e0e0;
-    }
+  styles: [
+    `
+      .pdf-fullscreen-dialog .mat-dialog-container {
+        padding: 0 !important;
+        height: 100vh;
+        max-height: 100vh;
+        width: 100vw;
+        max-width: 100vw;
+        border-radius: 0;
+      }
 
-    .pdf-container {
-      height: 600px;
-      width: 100%;
-    }
+      .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        border-bottom: 1px solid #e0e0e0;
+      }
 
-    .loading-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      flex-direction: column;
-    }
+      .pdf-container {
+        height: 100vh;
+        width: 100vw;
+      }
 
-    .error-text {
-      color: red;
-      margin-top: 8px;
-    }
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-direction: column;
+      }
 
-    mat-dialog-content {
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: hidden;
-    }
-  `]
+      .error-text {
+        color: red;
+        margin-top: 8px;
+      }
+
+      mat-dialog-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden;
+      }
+    `,
+  ],
 })
 export class PdfPreviewDialogComponent {
   safeUrl: SafeResourceUrl | null = null;
@@ -81,7 +88,7 @@ export class PdfPreviewDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private sanitizer: DomSanitizer,
-    private dialogRef: MatDialogRef<PdfPreviewDialogComponent>
+    private dialogRef: MatDialogRef<PdfPreviewDialogComponent>,
   ) {
     // ประมวลผล URL ทันทีใน constructor
     this.processUrl();
@@ -89,7 +96,7 @@ export class PdfPreviewDialogComponent {
 
   processUrl() {
     const rawUrl = this.data?.url || this.data?.file_url;
-    
+
     if (rawUrl) {
       try {
         // ✅ สำคัญ: ต้องใช้ bypassSecurityTrustResourceUrl สำหรับ iframe src
@@ -108,4 +115,13 @@ export class PdfPreviewDialogComponent {
   close() {
     this.dialogRef.close();
   }
+  toggleFullscreen() {
+  const el = document.documentElement;
+  if (!document.fullscreenElement) {
+    el.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
 }
