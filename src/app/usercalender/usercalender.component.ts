@@ -58,16 +58,22 @@ export class UserCalenderComponent implements OnInit {
     this.role = user?.type === 'admin' ? 'admin' : 'user';
     
     // โหลดข้อมูลเอกสาร
-    await this.loadDocuments();
+    // 2. ถ้ามี User ID ให้โหลดเอกสารของคนนั้น
+    if (user && user.uid) {
+      console.log('Current User ID:', user.uid);
+      await this.loadDocuments(user.uid); // ✅ ส่ง UID ไป
+    } else {
+      console.warn('User ID not found');
+    }
     
     // สร้างปฏิทิน
     this.generateCalendar();
   }
 
   // โหลดข้อมูลเอกสารทั้งหมด
-  async loadDocuments() {
+  async loadDocuments(uid : number) {
     try {
-      this.allDocuments = await this.backend.GetFile();
+      this.allDocuments = await this.backend.getReceivedDocuments(uid);
       console.log('Documents loaded:', this.allDocuments);
       
       // คำนวณสถิติ
@@ -126,6 +132,7 @@ export class UserCalenderComponent implements OnInit {
       const date = new Date(this.currentYear, this.currentMonth + 1, day);
       this.calendarDays.push(this.createCalendarDay(date, false));
     }
+    this.cdr.detectChanges();
   }
 
   // สร้างวันในปฏิทิน
