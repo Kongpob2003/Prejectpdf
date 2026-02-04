@@ -10,6 +10,8 @@ import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
 import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
+import { MatDialog } from '@angular/material/dialog';
+import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -77,6 +79,8 @@ throw new Error('Method not implemented.');
     private backend: Backend,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
+    private dialog: MatDialog,
+
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -135,37 +139,24 @@ throw new Error('Method not implemented.');
   }
 
   /* ======================
-     PREVIEW
+     PDF PREVIEW (Dialog)
   ====================== */
-  async openModal(file: DocumentItemPos) {
-    this.selectedFile = file;
-    this.safeFileUrl =
-      this.sanitizer.bypassSecurityTrustResourceUrl(file.file_url);
-      // ✅ เพิ่มส่วนดึง Title ตรงนี้
-  try {
-    // เรียก API ดึง Title โดยส่ง did ไป
-    const res = await this.backend.getDocTitle(file.did);
-    
-    // ถ้ามี title ส่งกลับมา ให้บันทึกลงใน selectedFile.title
-    if (res && res.title) {
-      this.selectedFile.title = res.title; 
-    } else {
-       // ถ้าไม่มี ให้เป็นค่าว่างหรือ undefined (เพื่อไม่ให้แสดงของเก่าค้าง)
-       this.selectedFile.title = undefined;
-    }
-  } catch (error) {
-    console.error('Error fetching title:', error);
-    this.selectedFile.title = undefined;
-  }
-    this.showModal = true;
-  }
+  openPreview(file: DocumentItemPos) {
+  if (!file?.file_url) return;
 
-  closeAllModals() {
-    this.showModal = false;
-    this.showSendTeacher = false;
-    this.showUpload = false;
-    this.isViewMode = false;
-  }
+  this.dialog.open(PdfPreviewDialogComponent, {
+    data: {
+      url: file.file_url,
+      file_name: file.file_name
+    },
+    width: '100vw',
+    height: '100vh',
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    panelClass: 'pdf-preview-dialog',
+    hasBackdrop: true
+  });
+}
 
   /* ======================
      DELETE
@@ -187,6 +178,9 @@ throw new Error('Method not implemented.');
     this.uploadFile = null;
     this.uploadFileName = '';
     this.uploadTitle = '';
+  }
+  closeAllModals() {
+    throw new Error('Method not implemented.');
   }
 
   onFileSelected(event: Event) {
@@ -295,6 +289,7 @@ selectAllTeachers() {
 clearAllTeachers() {
   this.selectedTeachers = [];
 }
+
 
 
 }

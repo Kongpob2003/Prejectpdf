@@ -44,7 +44,7 @@
     <!-- Files -->
     <div class="files-box">
       <div class="file-grid">
-        <div class="file-card" *ngFor="let file of filteredFiles" (click)="openModal(file)">
+        <div class="file-card" *ngFor="let file of filteredFiles" (click)="openPreview(file)">
           <span class="material-icons delete-icon" (click)="deleteFile($event, file)">delete</span>
           <span class="material-icons file-icon">picture_as_pdf</span>
           <div class="file-name">{{ file.file_name }}</div>
