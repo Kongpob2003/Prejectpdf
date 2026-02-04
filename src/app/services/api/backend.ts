@@ -206,6 +206,13 @@ public async deleteQualityDocument(did: number) {
   const response = await lastValueFrom(this.http.delete(url));
   return response;
 }
+
+//แสดงปฏิทินของเฉพาะ user
+public async getReceivedDocuments(uid: number) {
+  const url = this.constants.API_ENDPOINT + 'document/received/' + uid;
+  const response = await lastValueFrom(this.http.get<any[]>(url));
+  return response;
+}
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {
@@ -226,7 +233,7 @@ public async deleteQualityDocument(did: number) {
     const url = this.constants.API_ENDPOINT + `document/docSend/${userId}`;
     const body = { file_id: fileId };
     const response = await lastValueFrom(this.http.post(url, body));
-    return response;
+    return response as DocumentItemPos[];
   }
 
   

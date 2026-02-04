@@ -35,6 +35,9 @@
           <small class="error" *ngIf="emailError">
             ต้องเป็นภาษาอังกฤษ และลงท้ายด้วย @gmail.com
           </small>
+          <small class="error" *ngIf="emailDuplicateError" style="color: red;">
+            ⚠️ อีเมลนี้ถูกใช้งานโดยบัญชีอื่นแล้ว
+          </small>
         </div>
 
         <!-- Password -->
