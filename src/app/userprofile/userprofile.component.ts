@@ -9,11 +9,12 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { UserLoginRes } from '../../model/response';
 import { Backend } from '../services/api/backend';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-userprofile',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './userprofile.component.html',
   styleUrls: ['./userprofile.component.css']
 })

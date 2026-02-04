@@ -1,12 +1,4 @@
-/* ===== Sidebar Minimal (Profile / Calendar) ===== */
-.sidebar.minimal {
-  width: 220px;
-  background: #1A285F;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
+
 
 /* ===== Logo ===== */
 .logo-box {
@@ -153,11 +145,19 @@
   gap: 16px;
 }
 
+/* กล่องรวมประกาศ */
+.announcements-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;              /* 👈 ระยะห่างระหว่างประกาศ */
+  margin-top: 20px;
+}
+
 .announcement-card {
-  border: 1px solid #ddd;
+  background: #ffffff;
   border-radius: 14px;
-  padding: 18px;
-  transition: 0.2s;
+  padding: 20px 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   position: relative;
 }
 
@@ -168,6 +168,35 @@
 
 .announcement-card:hover {
   box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* หัวข้อ */
+.announcement-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* เนื้อหา */
+.announcement-detail {
+  margin: 0 0 12px;
+  color: #444;
+  line-height: 1.6;
+}
+
+/* วันที่ */
+.date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* ไฟล์แนบ */
+.file-box {
+  margin-top: 10px;
 }
 
 .file-link {

@@ -1,35 +1,7 @@
+
 <div class="home-container">
   <!-- ================= Sidebar ================= -->
-  <aside class="sidebar">
-    <div class="logo logo-box">
-      <span class="material-icons logo-icon">picture_as_pdf</span>
-      <span class="logo-text">MyPDF</span>
-    </div>
-
-    <ul>
-      <li class="active">
-        <span class="material-icons">home</span>หน้าหลัก
-      </li>
-      <li (click)="goUserprofile()">
-        <span class="material-icons">person</span>ข้อมูลส่วนตัว
-      </li>
-      <li (click)="goUsercalender()">
-        <span class="material-icons">calendar_month</span>ปฏิทิน
-      </li>
-      <li (click)="goUserrelation()">
-        <span class="material-icons">campaign</span>ประชาสัมพันธ์
-      </li>
-      <li (click)="goUserJae()">
-        <span class="material-icons">description</span>JAE
-      </li>
-      <li (click)="goUserQualityassurance()">
-        <span class="material-icons">verified</span>ประกันคุณภาพ
-      </li>
-      <li class="logout" (click)="logout()">
-        <span class="material-icons">logout</span>ออกจากระบบ
-      </li>
-    </ul>
-  </aside>
+ <app-sidebar [mode]="'full'"></app-sidebar>
 
   <!-- ================= Content ================= -->
   <main class="content">

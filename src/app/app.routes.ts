@@ -84,5 +84,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./userqualityassurance/userqualityassurance.component').then(m => m.UserQualityassuranceComponent)
   },
+  {
+    path: 'sidebar',
+    loadComponent: () =>
+      import('./sidebar/sidebar.component').then(m => m.SidebarComponent)
+  },
   
 ];

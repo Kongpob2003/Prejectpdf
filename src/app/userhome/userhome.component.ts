@@ -7,6 +7,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AuthService } from '../services/auth.service';
 import { Backend } from '../services/api/backend';
 import { UserLocalStorge } from '../../model/response';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+
 
 interface DocUser {
   did: number;
@@ -20,7 +22,7 @@ interface DocUser {
 @Component({
   selector: 'app-userhome',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './userhome.component.html',
   styleUrls: ['./userhome.component.css'],
 })

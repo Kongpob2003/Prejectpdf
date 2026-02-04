@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { AuthService } from '../services/auth.service';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 interface CalendarDay {
   date: number;
   month: number; // 0-11
@@ -18,7 +19,7 @@ interface CalendarDay {
 @Component({
   selector: 'app-calender',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './usercalender.component.html',
   styleUrls: ['./usercalender.component.css']
 })

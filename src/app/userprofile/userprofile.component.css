@@ -15,41 +15,7 @@
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* ===== Sidebar ===== */
-.sidebar {
-  width: 260px;
-  background: #1A285F;
-  color: white;
-  padding: 20px;
-}
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  cursor: pointer;
-  border-radius: 8px;
-  transition: 0.2s;
-}
-
-.sidebar li:hover {
-  background: rgba(255,255,255,0.15);
-}
-
-.sidebar li.active {
-  background: rgba(255,255,255,0.25);
-}
-
-.logout {
-  margin-top: 20px;
-  color: #ffb3b3;
-}
 
 /* ===== Content ===== */
 .content {
