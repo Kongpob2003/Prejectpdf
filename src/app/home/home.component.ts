@@ -9,11 +9,12 @@ import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminsiderbarComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })

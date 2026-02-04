@@ -7,11 +7,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserLocalStorge } from '../../model/response';
 import { Backend } from '../services/api/backend';
 import { AuthService } from '../services/auth.service';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 @Component({
   selector: 'app-jae',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatDialogModule],
+  imports: [CommonModule, RouterModule, MatDialogModule, AdminsiderbarComponent],
   templateUrl: './jae.component.html',
   styleUrl: './jae.component.css',
 })

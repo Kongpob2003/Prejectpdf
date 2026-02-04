@@ -3,13 +3,13 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-adminsidebar',
   standalone: true,
   imports: [CommonModule], // ✅ ต้องมี
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  templateUrl: './adminsiderbar.component.html',
+  styleUrls: ['./adminsiderbar.component.css']
 })
-export class SidebarComponent {
+export class AdminsiderbarComponent {
 
   @Input() mode: 'full' | 'minimal' = 'full';
 

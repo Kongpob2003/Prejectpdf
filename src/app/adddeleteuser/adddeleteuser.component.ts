@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Backend } from '../services/api/backend';
 import { UserLoginRes } from '../../model/response';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 @Component({
   selector: 'app-adddeleteuser',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminsiderbarComponent],
   templateUrl: './adddeleteuser.component.html',
   styleUrls: ['./adddeleteuser.component.css']
 })

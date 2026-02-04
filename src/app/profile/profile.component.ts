@@ -9,11 +9,12 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { UserLoginRes } from '../../model/response';
 import { Backend } from '../services/api/backend';
+import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, AdminsiderbarComponent],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
