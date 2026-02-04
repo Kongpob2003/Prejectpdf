@@ -1,16 +1,6 @@
 <div class="home-container">
   <!-- Sidebar -->
-  <aside class="sidebar minimal">
-    <div class="logo-box">
-      <span class="material-icons logo-icon">picture_as_pdf</span>
-      <span class="logo-text">My PDF</span>
-    </div>
-
-    <button class="back-btn" routerLink="/userhome">
-      <span class="material-icons">arrow_back</span>
-      กลับหน้าหลัก
-    </button>
-  </aside>
+  <app-sidebar [mode]="'full'"></app-sidebar>
 
   <!-- Content -->
   <main class="content center-content">
@@ -52,14 +42,7 @@
           class="announcement-card"
           *ngFor="let a of filteredAnnouncements"
         >
-        <!-- ปุ่มลบ -->
-  <button
-    class="delete-btn"
-    (click)="deleteAnnouncement(a)"
-    title="ลบประกาศ"
-  >
-    <span class="material-icons">delete</span>
-  </button>
+
           <!-- หัวข้อ -->
           <h3 class="announcement-title">{{ a.harder }}</h3>
 

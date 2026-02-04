@@ -6,11 +6,12 @@ import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dia
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserLocalStorge } from '../../model/response';
 import { Backend } from '../services/api/backend';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-userjae',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatDialogModule],
+  imports: [CommonModule, RouterModule, MatDialogModule, SidebarComponent],
   templateUrl: './userjae.component.html',
   styleUrl: './userjae.component.css',
 })

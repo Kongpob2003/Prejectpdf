@@ -10,6 +10,7 @@ import { Backend } from '../services/api/backend';
 import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 interface QAFile {
   name: string;
@@ -27,7 +28,7 @@ interface Folder {
 @Component({
   selector: 'app-userqualityassurance',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, SidebarComponent],
   templateUrl: './userqualityassurance.component.html',
   styleUrl: './userqualityassurance.component.css',
 })

@@ -14,6 +14,7 @@ import { DocumentItemPos } from '../../model/document_Item_pos';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 @Component({
   selector: 'app-relation',
   standalone: true,
@@ -21,8 +22,9 @@ import { ChangeDetectorRef } from '@angular/core';
     CommonModule,
     FormsModule,
     RouterModule,
-    MatDialogModule
-  ],
+    MatDialogModule,
+    SidebarComponent
+],
   templateUrl: './userrelation.component.html',
   styleUrl: './userrelation.component.css',
 })

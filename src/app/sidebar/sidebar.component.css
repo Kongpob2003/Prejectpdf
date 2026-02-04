@@ -1,0 +1,88 @@
+.sidebar {
+  width: 260px;
+  background: #1A285F;
+  color: white;
+  padding: 20px;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* ===== Logo ===== */
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  cursor: pointer;
+}
+
+.logo-icon {
+  font-size: 38px;
+  color: #ff5252;
+  animation: float 3s ease-in-out infinite;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ===== Menu ===== */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.sidebar li.active {
+  background: rgba(255,255,255,0.25);
+}
+
+.logout {
+  margin-top: 20px;
+  color: #ffb3b3;
+}
+
+/* ===== Minimal Mode ===== */
+.sidebar.minimal {
+  width: 260px; /* ❗ ใช้ขนาดเดียวกัน */
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ===== Animation ===== */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
