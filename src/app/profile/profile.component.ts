@@ -29,7 +29,7 @@ export class ProfileComponent {
   };
 
   isEditing = false;
-
+  emailDuplicateError = false;
   // ===== VALIDATION FLAGS =====
   emailError = false;
   passwordError = false;
@@ -65,7 +65,8 @@ export class ProfileComponent {
 
   async saveProfile() {
     if (!this.user) return;
-
+    // Reset error ซ้ำก่อนเช็ค
+    this.emailDuplicateError = false;
     // ===== VALIDATION =====
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
@@ -99,12 +100,23 @@ export class ProfileComponent {
       alert('บันทึกข้อมูลเรียบร้อย');
       this.cdr.detectChanges();
 
-    } catch (err) {
+    } catch (err : any) {
       console.error(err);
-      alert('บันทึกข้อมูลไม่สำเร็จ');
+      // ✅ ดักจับ Error 409 (Email ซ้ำ)
+      if (err.status === 409) {
+        this.emailDuplicateError = true; // สั่งโชว์ตัวแดง
+        alert('❌ ไม่สามารถบันทึกได้: อีเมลนี้มีผู้ใช้งานแล้ว');
+      } else {
+        alert('❌ บันทึกข้อมูลไม่สำเร็จ');
+      }
+      this.cdr.detectChanges();
+      
     }
   }
-
+  // เพิ่มฟังก์ชัน reset error เมื่อพิมพ์ใหม่
+  onEmailInput() {
+    this.emailDuplicateError = false;
+  }
   logout() {
     this.router.navigate(['/login']);
   }

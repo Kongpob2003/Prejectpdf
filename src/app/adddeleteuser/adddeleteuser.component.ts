@@ -108,18 +108,35 @@ export class AdddeleteuserComponent implements OnInit {
       return;
     }
 
-    await this.backend.AddUser(this.newUser);
-    alert('เพิ่มผู้ใช้สำเร็จ');
+    try {
+      // ✅ เรียก backend
+      await this.backend.AddUser(this.newUser);
+      
+      // ✅ ถ้าสำเร็จ
+      alert('เพิ่มผู้ใช้สำเร็จ');
 
-    this.newUser = {
-      username: '',
-      email: '',
-      password: '',
-      phone: '',
-      type: 'user'
-    };
+      // Reset Form
+      this.newUser = {
+        username: '',
+        email: '',
+        password: '',
+        phone: '',
+        type: 'user'
+      };
 
-    await this.loadUsers();
+      await this.loadUsers();
+
+    } catch (error: any) {
+      console.error(error);
+
+      // ✅ ดักจับ Error Email ซ้ำ
+      // (ตรวจสอบ status หรือ error message ตามที่ Backend ส่งมา)
+      if (error.status === 409 || error.error?.message === 'Email already exists') {
+        alert('❌ ไม่สามารถเพิ่มได้: อีเมลนี้มีผู้ใช้งานแล้ว');
+      } else {
+        alert('❌ เกิดข้อผิดพลาดในการเพิ่มผู้ใช้');
+      }
+    }
   }
 
   /* ================= DELETE ================= */

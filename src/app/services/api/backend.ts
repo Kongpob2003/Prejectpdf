@@ -192,6 +192,20 @@ public async getSendDetails(did: number) {
   const response = await lastValueFrom(this.http.get<SendDetailsResponse>(url));
   return response;
 }
+
+// ลบโฟลเดอร์ประกันคุณภาพ
+public async deleteQuality(qid: number) {
+  const url = this.constants.API_ENDPOINT + 'document/quality/' + qid; // ต้องตรงกับ router
+  const response = await lastValueFrom(this.http.delete(url));
+  return response;
+}
+
+// ลบไฟล์ออกจากโฟลเดอร์
+public async deleteQualityDocument(did: number) {
+  const url = this.constants.API_ENDPOINT + 'document/qualityFile/' + did;
+  const response = await lastValueFrom(this.http.delete(url));
+  return response;
+}
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {

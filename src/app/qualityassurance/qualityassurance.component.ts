@@ -12,6 +12,7 @@ import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
 
 interface QAFile {
+  did?: number;
   name: string;
   file?: File; // เก็บไฟล์ไว้ เผื่ออัปโหลดจริง
   url?: string;
@@ -97,6 +98,7 @@ export class QualityassuranceComponent {
 
         // Map ข้อมูลจาก Database (file_name, file_url) เข้า Interface QAFile (name, url)
         this.selectedFolder.files = files.map((f: any) => ({
+          did: f.did,
           name: f.file_name,  // ชื่อไฟล์จาก DB
           url: f.file_url,    // URL ไฟล์จาก DB
           file: undefined     // ไม่ใช่ไฟล์อัปโหลดใหม่ เลยเป็น undefined
@@ -111,6 +113,50 @@ export class QualityassuranceComponent {
       }
     }
   }
+
+  // 3. ฟังก์ชันลบโฟลเดอร์
+  async deleteFolder(event: Event, folder: Folder) {
+    event.stopPropagation(); // ป้องกันไม่ให้มันไปกดเปิดโฟลเดอร์
+    
+    if (!confirm(`คุณต้องการลบโฟลเดอร์ "${folder.name}" และข้อมูลข้างในทั้งหมดใช่หรือไม่?`)) {
+      return;
+    }
+
+    try {
+      if (folder.id) {
+        await this.backend.deleteQuality(folder.id);
+        await this.loadQuality(); // โหลดข้อมูลใหม่
+        alert('ลบโฟลเดอร์เรียบร้อย');
+      }
+    } catch (error) {
+      console.error('Delete folder error:', error);
+      alert('ไม่สามารถลบโฟลเดอร์ได้');
+    }
+  }
+
+  // 4. ฟังก์ชันลบไฟล์
+  async deleteFile(event: Event, file: QAFile) {
+    event.stopPropagation(); // ป้องกันไม่ให้กดเปิดไฟล์
+
+    if (!confirm(`คุณต้องการลบไฟล์ "${file.name}" ออกจากโฟลเดอร์นี้ใช่หรือไม่?`)) {
+      return;
+    }
+
+    try {
+      // ต้องมีทั้ง folder id และ file id
+      if (this.selectedFolder && file.did) {
+        await this.backend.deleteQualityDocument(file.did);
+        
+        // รีเฟรชเฉพาะหน้าไฟล์
+        await this.openFolder(this.selectedFolder);
+        alert('ลบไฟล์เรียบร้อย');
+      }
+    } catch (error) {
+      console.error('Delete file error:', error);
+      alert('ไม่สามารถลบไฟล์ได้');
+    }
+  }
+
 
   backToFolders() {
     this.selectedFolder = null;

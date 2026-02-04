@@ -25,6 +25,15 @@
 
       <div class="folder-grid">
         <div class="folder-card" *ngFor="let f of folders" (click)="openFolder(f)">
+
+          <span 
+      class="material-icons delete-btn folder-delete" 
+      (click)="deleteFolder($event, f)"
+      title="ลบโฟลเดอร์"
+    >
+      delete
+    </span>
+    
           <span class="material-icons folder-icon">folder</span>
           <div class="folder-name">{{ f.name }}</div>
         </div>
@@ -79,11 +88,18 @@
         <div class="file-name">{{ file.name }}</div>
         <small *ngIf="!file.url" style="color: orange;">(รออัปโหลด)</small>
       </div>
+      <span 
+         class="material-icons delete-btn file-delete" 
+         *ngIf="file.url"
+         (click)="deleteFile($event, file)"
+         title="ลบไฟล์"
+       >
+         delete
+       </span>
+      <span cl  ass="material-icons open-icon" *ngIf="file.url">open_in_new</span>
+    </div>    
 
-      <span class="material-icons open-icon" *ngIf="file.url">open_in_new</span>
-    </div>
-
-  </div>
+  </div>  
 
   <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
     ยังไม่มีไฟล์ในโฟลเดอร์นี้
