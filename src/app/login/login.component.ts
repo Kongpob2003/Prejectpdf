@@ -58,7 +58,7 @@ export class LoginComponent {
       }
     } catch (error) {
       console.error(error);
-      alert('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้');
+      alert('ข้อมูลไม่ถูกต้อง');
     }
   }
  

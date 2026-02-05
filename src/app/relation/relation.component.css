@@ -149,6 +149,7 @@
   border: 1px solid #ddd;
   border-radius: 14px;
   padding: 18px;
+  margin-bottom:  1em;
   transition: 0.2s;
   position: relative;
 }
