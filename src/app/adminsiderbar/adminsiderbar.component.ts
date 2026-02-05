@@ -19,6 +19,10 @@ export class AdminsiderbarComponent {
     this.router.navigate([path]);
   }
 
+  isActive(path: string): boolean {
+    return this.router.url.startsWith(path);
+  }
+
   logout() {
     this.router.navigate(['/login']);
   }

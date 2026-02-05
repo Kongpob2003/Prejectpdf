@@ -94,5 +94,10 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./adminsiderbar/adminsiderbar.component').then(m => m.AdminsiderbarComponent)
   },
+   {
+    path: 'review',
+    loadComponent: () =>
+      import('./review/review.component').then(m => m.Review)
+  },
   
 ];

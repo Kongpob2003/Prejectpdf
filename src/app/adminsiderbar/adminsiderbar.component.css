@@ -32,25 +32,47 @@
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
+  padding: 12px 14px;
   cursor: pointer;
   font-size: 16px;
-  border-radius: 8px;
-  transition: 0.2s;
+  border-radius: 10px;
+  transition: 0.25s;
+  color: rgba(255,255,255,0.8);
 }
 
 .sidebar li:hover {
   background: rgba(255,255,255,0.15);
+  color: #fff;
 }
 
+/* ✅ ACTIVE */
 .sidebar li.active {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.28);
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+}
+
+/* แถบซ้ายแบบ Google Drive */
+.sidebar li.active::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  width: 4px;
+  height: 24px;
+  background: #ff5252;
+  border-radius: 4px;
+}
+
+.sidebar li.active .material-icons {
+  color: #ff5252;
 }
 
 .logout {
@@ -60,7 +82,7 @@
 
 /* ===== Minimal Mode ===== */
 .sidebar.minimal {
-  width: 260px; /* ❗ ใช้ขนาดเดียวกัน */
+  width: 260px;
 }
 
 .back-btn {

@@ -1,10 +1,6 @@
-import { Component, Inject, ElementRef } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogModule,
-  MatDialogRef
-} from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -21,8 +17,7 @@ export class PdfPreviewDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private sanitizer: DomSanitizer,
-    private dialogRef: MatDialogRef<PdfPreviewDialogComponent>,
-    private elementRef: ElementRef
+    private dialogRef: MatDialogRef<PdfPreviewDialogComponent>
   ) {
     this.processUrl();
   }
@@ -30,13 +25,16 @@ export class PdfPreviewDialogComponent {
   processUrl() {
     const rawUrl = this.data?.url || this.data?.file_url;
 
-    if (!rawUrl || typeof rawUrl !== 'string') {
+    if (rawUrl) {
+      try {
+        this.safeUrl =
+          this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+      } catch {
+        this.hasError = true;
+      }
+    } else {
       this.hasError = true;
-      return;
     }
-
-    this.safeUrl =
-      this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
   }
 
   close() {
@@ -44,10 +42,10 @@ export class PdfPreviewDialogComponent {
   }
 
   toggleFullscreen() {
-    const el = this.elementRef.nativeElement as HTMLElement;
+    const el = document.documentElement;
 
     if (!document.fullscreenElement) {
-      el.requestFullscreen?.();
+      el.requestFullscreen();
     } else {
       document.exitFullscreen();
     }

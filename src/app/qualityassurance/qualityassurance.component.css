@@ -21,22 +21,9 @@
   letter-spacing: 0.5px;
 }
 
-/* ===== Back Button ===== */
-.back-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  border: none;
-  padding: 10px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-}
 
-.back-btn:hover {
-  background: rgba(255,255,255,0.25);
-}
+
+
 
 /* ===== Layout ===== */
 .home-container {
@@ -56,8 +43,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 40px; /* ใช้ค่าเดียวกันทุกหน้า */
 }
+
 
 .back-link {
   background: none;
