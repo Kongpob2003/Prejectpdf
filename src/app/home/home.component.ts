@@ -10,9 +10,6 @@ import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
 import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
-import { MatDialog } from '@angular/material/dialog';
-import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dialog.component';
-
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -35,8 +32,7 @@ throw new Error('Method not implemented.');
      USER
   ====================== */
   user: UserLocalStorge | null = null;
-
-  /* ======================
+/* ======================
      DATA
   ====================== */
   document: DocumentItemPos[] = [];
@@ -63,8 +59,7 @@ throw new Error('Method not implemented.');
   uploadFile: File | null = null;
   uploadFileName = '';
   uploadSuccess = false;
-
-  /* ======================
+/* ======================
      SEND / VIEW
   ====================== */
   person: UserLocalStorge[] = [];
@@ -75,13 +70,11 @@ throw new Error('Method not implemented.');
 
   constructor(
     private router: Router,
-    private auth: AuthService,
+ private auth: AuthService,
     private backend: Backend,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
-    private dialog: MatDialog,
-
-    @Inject(PLATFORM_ID) private platformId: Object
+@Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async ngOnInit() {
@@ -104,8 +97,7 @@ throw new Error('Method not implemented.');
       : [];
     this.cdr.detectChanges();
   }
-
-  /* ======================
+/* ======================
      NAV
   ====================== */
   goProfile() { this.router.navigate(['/profile']); }
@@ -124,7 +116,7 @@ throw new Error('Method not implemented.');
   /* ======================
      FILTER
   ====================== */
-  get filteredFiles() {
+ get filteredFiles() {
     return this.document.filter(file => {
       const matchSearch =
         file.file_name.toLowerCase().includes(this.searchText.toLowerCase());
@@ -138,27 +130,38 @@ throw new Error('Method not implemented.');
     });
   }
 
-  /* ======================
-     PDF PREVIEW (Dialog)
-  ====================== */
-  openPreview(file: DocumentItemPos) {
-  if (!file?.file_url) return;
 
-  this.dialog.open(PdfPreviewDialogComponent, {
-    data: {
-      url: file.file_url,
-      file_name: file.file_name
-    },
-    width: '100vw',
-    height: '100vh',
-    maxWidth: '100vw',
-    maxHeight: '100vh',
-    panelClass: 'pdf-preview-dialog',
-    hasBackdrop: true
-  });
-}
+    
+async openModal(file: DocumentItemPos) {
+    this.selectedFile = file;
+    this.safeFileUrl =
+      this.sanitizer.bypassSecurityTrustResourceUrl(file.file_url);
+      // ✅ เพิ่มส่วนดึง Title ตรงนี้
+  try {
+    // เรียก API ดึง Title โดยส่ง did ไป
+    const res = await this.backend.getDocTitle(file.did);
+    
+    // ถ้ามี title ส่งกลับมา ให้บันทึกลงใน selectedFile.title
+    if (res && res.title) {
+      this.selectedFile.title = res.title; 
+    } else {
+     
+       this.selectedFile.title = undefined;
+    }
+  } catch (error) {
+    console.error('Error fetching title:', error);
+    this.selectedFile.title = undefined;
+  }
+    this.showModal = true;
+  }
 
-  /* ======================
+  closeAllModals() {
+    this.showModal = false;
+    this.showSendTeacher = false;
+    this.showUpload = false;
+    this.isViewMode = false;
+  }
+ /* ======================
      DELETE
   ====================== */
   async deleteFile(event: Event, file: DocumentItemPos) {
@@ -179,11 +182,7 @@ throw new Error('Method not implemented.');
     this.uploadFileName = '';
     this.uploadTitle = '';
   }
-  closeAllModals() {
-    throw new Error('Method not implemented.');
-  }
-
-  onFileSelected(event: Event) {
+onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
     this.uploadFile = input.files[0];
@@ -205,7 +204,7 @@ throw new Error('Method not implemented.');
 
   /* ======================
      SEND / VIEW
-  ====================== */
+ ====================== */
   openSendTeacher() {
     this.isViewMode = false;
     this.showModal = false;
@@ -224,8 +223,7 @@ throw new Error('Method not implemented.');
       const details: any = await this.backend.getSendDetails(this.selectedFile.did);
       
       console.log('ข้อมูลที่ดึงมาได้:', details);
-
-      // 2. นำข้อมูลมาใส่ตัวแปรเพื่อให้ HTML แสดงผล
+ // 2. นำข้อมูลมาใส่ตัวแปรเพื่อให้ HTML แสดงผล
       this.sendSubject = details.title || '';                 // หัวข้อ
       this.selectedTeachers = details.teacher_ids || [];      // ไฮไลท์อาจารย์
       this.selectedCategories = details.category_ids || [];   // ไฮไลท์หมวดหมู่
@@ -245,7 +243,7 @@ throw new Error('Method not implemented.');
     if (!this.selectedFile) return;
 
     const payload = {
-      document_id: this.selectedFile.did,
+document_id: this.selectedFile.did,
       teacher_ids: this.selectedTeachers,
       category_ids: this.selectedCategories,
       text: this.sendSubject,
@@ -265,7 +263,7 @@ throw new Error('Method not implemented.');
     i === -1
       ? this.selectedTeachers.push(uid)
       : this.selectedTeachers.splice(i, 1);
-  }
+}
 
   toggleCategory(cid: number) {
     const i = this.selectedCategories.indexOf(cid);
@@ -285,11 +283,7 @@ clearAllCategories() {
 selectAllTeachers() {
   this.selectedTeachers = this.person.map(p => p.uid);
 }
-
 clearAllTeachers() {
   this.selectedTeachers = [];
 }
-
-
-
 }

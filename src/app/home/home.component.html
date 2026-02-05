@@ -1,7 +1,6 @@
-
 <div class="home-container">
   <!-- Sidebar -->
- 
+
   <!-- Toast -->
   <div class="success-toast" *ngIf="uploadSuccess">✅ อัปโหลดเอกสารสำเร็จ</div>
   <app-adminsidebar [mode]="'full'"></app-adminsidebar>
@@ -44,7 +43,7 @@
     <!-- Files -->
     <div class="files-box">
       <div class="file-grid">
-        <div class="file-card" *ngFor="let file of filteredFiles" (click)="openPreview(file)">
+        <div class="file-card" *ngFor="let file of filteredFiles" (click)="openModal(file)">
           <span class="material-icons delete-icon" (click)="deleteFile($event, file)">delete</span>
           <span class="material-icons file-icon">picture_as_pdf</span>
           <div class="file-name">{{ file.file_name }}</div>
@@ -64,8 +63,8 @@
   <!-- ================= PREVIEW MODAL ================= -->
   <div class="modal-box" *ngIf="showModal" (click)="$event.stopPropagation()">
     <h3>{{ selectedFile?.file_name }}</h3>
-    <h3 *ngIf="selectedFile?.title" style="color: #42464b; margin-top: 5px;">
-        {{ selectedFile?.title }}
+    <h3 *ngIf="selectedFile?.title" style="color: #42464b; margin-top: 5px">
+      {{ selectedFile?.title }}
     </h3>
     <iframe *ngIf="safeFileUrl" class="pdf-preview" [src]="safeFileUrl"></iframe>
     <div class="upload-actions">
@@ -75,12 +74,12 @@
       </button>
       <!-- ✨ แก้ไขการส่ง -->
       <button
-  class="btn-submit"
-  *ngIf="selectedFile?.statue === '1'"
-  (click)="openViewSendTeacher()"
->
-  ดูรายละเอียด
-</button>
+        class="btn-submit"
+        *ngIf="selectedFile?.statue === '1'"
+        (click)="openViewSendTeacher()"
+      >
+        ดูรายละเอียด
+      </button>
     </div>
   </div>
   <!-- ================= SEND TEACHER MODAL ================= -->
@@ -132,19 +131,19 @@
       </div>
     </div>
     <div class="upload-actions">
-  <button class="btn-cancel" (click)="closeAllModals()">ปิด</button>
+      <button class="btn-cancel" (click)="closeAllModals()">ปิด</button>
 
-  <button
-    class="btn-submit"
-    *ngIf="!isViewMode"
-    [disabled]="
-      !sendSubject || selectedTeachers.length === 0 || selectedCategories.length === 0
-    "
-    (click)="sendToTeacher()"
-  >
-    ส่งเอกสาร
-  </button>
-</div>
+      <button
+        class="btn-submit"
+        *ngIf="!isViewMode"
+        [disabled]="
+          !sendSubject || selectedTeachers.length === 0 || selectedCategories.length === 0
+        "
+        (click)="sendToTeacher()"
+      >
+        ส่งเอกสาร
+      </button>
+    </div>
   </div>
   <!-- ================= UPLOAD MODAL ================= -->
   <div class="upload-modal" *ngIf="showUpload" (click)="$event.stopPropagation()">
