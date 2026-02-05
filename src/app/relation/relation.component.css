@@ -157,9 +157,14 @@
   background: #ffffff;
   border-radius: 14px;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   padding: 18px;
   margin-bottom:  1em;
   transition: 0.2s;
+=======
+  padding: 20px 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+>>>>>>> Stashed changes
 =======
   padding: 20px 22px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
