@@ -10,6 +10,7 @@ import { DocumentItemPos } from '../../model/document_Item_pos';
 import { UserLocalStorge } from '../../model/response';
 import { CategoryItemPos } from '../../model/category_Item_pos';
 import { AdminsiderbarComponent } from "../adminsiderbar/adminsiderbar.component";
+import { PdfPreviewDialogComponent } from '../pdf-preview-dialog/pdf-preview-dialog.component';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -287,3 +288,5 @@ clearAllTeachers() {
   this.selectedTeachers = [];
 }
 }
+
+

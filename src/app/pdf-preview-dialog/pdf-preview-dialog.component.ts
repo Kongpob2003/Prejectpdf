@@ -1,58 +1,76 @@
-
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+
+import * as pdfjsLib from 'pdfjs-dist';
+
+(pdfjsLib as any).GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
 @Component({
   selector: 'app-pdf-preview-dialog',
   standalone: true,
   imports: [CommonModule, MatDialogModule],
-   
-    
- templateUrl: './pdf-preview-dialog.component.html',
-  styleUrls: ['./pdf-preview-dialog.component.css']
+  templateUrl: './pdf-preview-dialog.component.html',
+  styleUrls: ['./pdf-preview-dialog.component.css'],
 })
-export class PdfPreviewDialogComponent {
-  safeUrl: SafeResourceUrl | null = null;
-  hasError = false;
+export class PdfPreviewDialogComponent implements AfterViewInit {
+  @ViewChild('pdfCanvas', { static: false })
+  canvasRef!: ElementRef<HTMLCanvasElement>;
+
+  pdfDoc: any;
+  page: any;
+  scale = 1.2;
+  isFullscreen = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private sanitizer: DomSanitizer,
     private dialogRef: MatDialogRef<PdfPreviewDialogComponent>,
-) {
-    // ประมวลผล URL ทันทีใน constructor
-    this.processUrl();
+  ) {}
+
+  async ngAfterViewInit() {
+    const loadingTask = pdfjsLib.getDocument(this.data?.url || this.data?.file_url);
+    this.pdfDoc = await loadingTask.promise;
+    this.page = await this.pdfDoc.getPage(1);
+    this.render();
   }
 
-  processUrl() {
-    const rawUrl = this.data?.url || this.data?.file_url;
+  render() {
+    const viewport = this.page.getViewport({ scale: this.scale });
+    const canvas = this.canvasRef.nativeElement;
+    const context = canvas.getContext('2d')!;
 
-    if (rawUrl) {
-      try {
-        // ✅ สำคัญ: ต้องใช้ bypassSecurityTrustResourceUrl สำหรับ iframe src
-        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
-        console.log('PDF URL loaded:', rawUrl);
-      } catch (error) {
-        console.error('Error sanitizing URL:', error);
-        this.hasError = true;
-      }
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    this.page.render({ canvasContext: context, viewport });
+  }
+
+  zoomIn() {
+    this.scale += 0.2;
+    this.render();
+  }
+
+  zoomOut() {
+    if (this.scale > 0.4) {
+      this.scale -= 0.2;
+      this.render();
+    }
+  }
+
+  toggleFullscreen() {
+    this.isFullscreen = !this.isFullscreen;
+
+    if (this.isFullscreen) {
+      this.dialogRef.updateSize('100vw', '100vh');
+      this.dialogRef.addPanelClass('pdf-fullscreen-dialog');
     } else {
-      console.warn('No URL found in data:', this.data);
-this.hasError = true;
-}
-}
+      this.dialogRef.updateSize('80vw', '80vh');
+      this.dialogRef.removePanelClass('pdf-fullscreen-dialog');
+    }
+  }
 
   close() {
     this.dialogRef.close();
   }
- toggleFullscreen() {
-  const el = document.documentElement;
-  if (!document.fullscreenElement) {
-    el.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-}
 }
