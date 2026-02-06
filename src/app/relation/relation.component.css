@@ -156,7 +156,11 @@
 .announcement-card {
   background: #ffffff;
   border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  position: relative;
 }
+
 .announcement-card h3 {
   margin: 0 0 6px;
   color: #1A285F;
