@@ -156,9 +156,14 @@
 .announcement-card {
   background: #ffffff;
   border-radius: 14px;
+<<<<<<< HEAD
   padding: 20px 22px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   position: relative;
+=======
+  padding: 1em;
+  border: 1px solid #dcdcdc;
+>>>>>>> ad23954ff840a7d6d94304789a897bb93cc5a68b
 }
 
 .announcement-card h3 {
@@ -200,17 +205,20 @@
 }
 
 .file-link {
-  display: inline-block;
+  /* ✅ เปลี่ยนจาก inline-block เป็น inline-flex หรือ flex */
+  display: inline-flex; 
+  
+  /* ✅ คำสั่งนี้จะจัดของข้างในให้อยู่กึ่งกลางแนวตั้ง (แกน Y) */
+  align-items: center; 
+  
+  /* เพิ่มระยะห่างระหว่างไอคอนกับตัวหนังสือ */
+  gap: 5px; 
+
+  /* ค่าเดิมของคุณ */
   margin-top: 6px;
   color: #1A285F;
   font-size: 14px;
-}
-
-.date {
-  display: block;
-  margin-top: 8px;
-  font-size: 12px;
-  color: #777;
+  text-decoration: none; /* แนะนำ: เอาเส้นใต้ลิงก์ออกเพื่อความสวยงาม */
 }
 
 .custom-dialog .mat-mdc-dialog-container {

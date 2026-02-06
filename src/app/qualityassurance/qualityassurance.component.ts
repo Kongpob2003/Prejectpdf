@@ -82,6 +82,7 @@ export class QualityassuranceComponent {
     const body = { name: this.newFolderName };
     await this.backend.AddQuality(body);
     await this.loadQuality();
+    alert('สร้างโฟลเดอร์เรียบร้อย');
     this.newFolderName = '';
     this.cdr.detectChanges();
   }
