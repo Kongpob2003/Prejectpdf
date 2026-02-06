@@ -2,7 +2,7 @@
    Layout
 ===================== */
 .home-container {
-  display: flex;
+  display: block;
   height: 100vh;
   background: #f2f2f2;
   font-family: "Segoe UI", system-ui, sans-serif;
@@ -17,9 +17,11 @@
    Content
 ===================== */
 .content {
+  margin-left: 300px;
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  transition: margin-left 0.3s ease;
 }
 
 /* =====================
@@ -113,6 +115,31 @@
   font-size: 20px;
   font-weight: 700;
 }
+
+.file-item {
+  position: relative;
+}
+
+.file-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  transition: 0.2s;
+}
+
+.file-item:hover::after {
+  border-color: #1A285F;
+}
+
+.empty-text {
+  text-align: center;
+  padding: 40px 0;
+  font-size: 15px;
+  color: #999;
+}
+
 
 /* =====================
    Buttons

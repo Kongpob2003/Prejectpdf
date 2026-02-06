@@ -67,6 +67,7 @@
 
 /* ===== Layout ===== */
 .content {
+  margin-left: 300px;
   flex: 1;
   overflow-y: auto;
 }

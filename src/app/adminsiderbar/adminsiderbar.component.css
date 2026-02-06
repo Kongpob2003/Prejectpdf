@@ -1,14 +1,37 @@
+/* =====================
+   Sidebar Layout
+===================== */
 .sidebar {
+  position: fixed;          /* ⭐ ทำให้ไม่เลื่อนตามหน้า */
+  top: 0;
+  left: 0;
+
   width: 260px;
+  height: 500vh;
+
   background: #1A285F;
   color: white;
   padding: 20px;
+
   display: flex;
-  height: 100vh;
   flex-direction: column;
+
+  z-index: 1000;
+  overflow-y: auto;         /* ⭐ sidebar เลื่อนเองได้ */
 }
 
-/* ===== Logo ===== */
+/* ซ่อน scrollbar แต่ยัง scroll ได้ (optional) */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+
+/* =====================
+   Logo
+===================== */
 .logo-box {
   display: flex;
   align-items: center;
@@ -28,7 +51,9 @@
   font-weight: 700;
 }
 
-/* ===== Menu ===== */
+/* =====================
+   Menu
+===================== */
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -41,10 +66,10 @@
   gap: 12px;
   padding: 12px 14px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   border-radius: 10px;
   transition: 0.25s;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.85);
 }
 
 .sidebar li:hover {
@@ -52,7 +77,9 @@
   color: #fff;
 }
 
-/* ✅ ACTIVE */
+/* =====================
+   Active Menu
+===================== */
 .sidebar li.active {
   background: rgba(255,255,255,0.28);
   color: #fff;
@@ -75,12 +102,17 @@
   color: #ff5252;
 }
 
+/* =====================
+   Logout
+===================== */
 .logout {
   margin-top: 20px;
   color: #ffb3b3;
 }
 
-/* ===== Minimal Mode ===== */
+/* =====================
+   Minimal Mode
+===================== */
 .sidebar.minimal {
   width: 260px;
 }
@@ -102,9 +134,11 @@
   background: rgba(255,255,255,0.25);
 }
 
-/* ===== Animation ===== */
+/* =====================
+   Animation
+===================== */
 @keyframes float {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
   100% { transform: translateY(0); }
 }

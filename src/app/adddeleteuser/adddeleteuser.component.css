@@ -79,6 +79,7 @@
 }
 
 .content {
+  margin-left: 300px;
   flex: 1;
   display: flex;              /* 🔥 สำคัญ */
   justify-content: center;    /* กลางแนวนอน */
