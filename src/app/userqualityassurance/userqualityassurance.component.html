@@ -1,6 +1,6 @@
 <div class="home-container">
   <!-- Sidebar -->
-<app-sidebar [mode]="'full'"></app-sidebar>
+  <app-sidebar [mode]="'full'"></app-sidebar>
 
   <!-- Content -->
   <main class="content">
@@ -8,63 +8,78 @@
     <div *ngIf="!selectedFolder">
       <h2>📁 ประกันคุณภาพ</h2>
 
-      <div class="create-row">
-        <input type="text" placeholder="ชื่อโฟลเดอร์" [(ngModel)]="newFolderName" />
-        <button class="btn" (click)="createFolder()">➕ สร้างโฟลเดอร์</button>
+      <!-- ✅ เปลี่ยนจากสร้าง เป็นค้นหา -->
+      <div class="search-row">
+        <div class="search-box">
+          
+          <input 
+            type="text" 
+            placeholder="ค้นหาชื่อโฟลเดอร์..." 
+            [(ngModel)]="searchFolderName"
+            (input)="onSearchChange()"
+          />
+          <span 
+            class="material-icons clear-icon" 
+            *ngIf="searchFolderName"
+            (click)="clearSearch()"
+          >
+            close
+          </span>
+        </div>
       </div>
 
+      <!-- แสดงผลการค้นหา -->
       <div class="folder-grid">
-        <div class="folder-card" *ngFor="let f of folders" (click)="openFolder(f)">
+        <div class="folder-card" *ngFor="let f of filteredFolders" (click)="openFolder(f)">
           <span class="material-icons folder-icon">folder</span>
           <div class="folder-name">{{ f.name }}</div>
         </div>
       </div>
 
-      <p *ngIf="folders.length === 0" class="empty-text">ยังไม่มีโฟลเดอร์</p>
+      <!-- ข้อความเมื่อไม่พบ -->
+      <p *ngIf="filteredFolders.length === 0 && searchFolderName" class="empty-text">
+        ไม่พบโฟลเดอร์ที่ตรงกับ "{{ searchFolderName }}"
+      </p>
+      <p *ngIf="folders.length === 0 && !searchFolderName" class="empty-text">
+        ยังไม่มีโฟลเดอร์
+      </p>
     </div>
 
     <!-- ===== File View ===== -->
-<div *ngIf="selectedFolder" class="file-view">
+    <div *ngIf="selectedFolder" class="file-view">
 
-  <!-- Header -->
-  <div class="folder-header">
-    <div class="folder-title">
-      <button class="back-link" (click)="backToFolders()">←</button>
-      <h2>{{ selectedFolder.name }}</h2>
+      <!-- Header -->
+      <div class="folder-header">
+        <div class="folder-title">
+          <button class="back-link" (click)="backToFolders()">←</button>
+          <h2>{{ selectedFolder.name }}</h2>
+        </div>
+      </div>
+
+      <!-- Upload Box -->
+      <label class="upload-box">
+        <span class="material-icons upload-icon">cloud_upload</span>
+        <div class="upload-text">เพิ่มไฟล์จากเครื่อง</div>
+        <div class="upload-sub">รองรับ PDF / DOC / DOCX</div>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept=".pdf,.doc,.docx"
+        >
+      </label>
+
+      <!-- File list -->
+      <div class="file-list" *ngIf="selectedFolder.files.length > 0">
+        <div class="file-item" *ngFor="let file of selectedFolder.files">
+          <span class="material-icons">description</span>
+          <div class="file-name">{{ file.name }}</div>
+        </div>
+      </div>
+
+      <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
+        ยังไม่มีไฟล์ในโฟลเดอร์นี้
+      </p>
+
     </div>
-  </div>
-
-  <label class="upload-box">
-  <span class="material-icons upload-icon">
-    cloud_upload
-  </span>
-
-  <div class="upload-text">
-    เพิ่มไฟล์จากเครื่อง
-  </div>
-
-  <div class="upload-sub">
-    รองรับ PDF / DOC / DOCX
-  </div>
-
-  <input
-    type="file"
-    (change)="onFileSelected($event)"
-    accept=".pdf,.doc,.docx"
-  >
-</label>
-
-
-  <!-- File list -->
-  <div class="file-list" *ngIf="selectedFolder.files.length > 0">
-    <div class="file-item" *ngFor="let file of selectedFolder.files">
-      <span class="material-icons">description</span>
-      <div class="file-name">{{ file.name }}</div>
-    </div>
-  </div>
-
-  <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
-    ยังไม่มีไฟล์ในโฟลเดอร์นี้
-  </p>
-
+  </main>
 </div>
