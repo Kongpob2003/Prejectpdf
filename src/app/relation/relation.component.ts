@@ -128,37 +128,38 @@ export class RelationComponent {
   }
 
   async deleteAnnouncement(a: any) {
-  const confirmDelete = confirm(
-    `คุณต้องการลบประกาศ "${a.harder}" ใช่หรือไม่?`
-  );
+    const confirmDelete = confirm(
+      `คุณต้องการลบประกาศ "${a.harder}" ใช่หรือไม่?`
+    );
 
-  if (!confirmDelete) return;
+    if (!confirmDelete) return;
 
-  try {
-    // ถ้ามีไฟล์แนบ → ลบไฟล์ก่อน (ถ้าระบบต้องการ)
-     console.log(a.document.did);
-     
-    // ลบประกาศ
+    try {
+      // ✅ 1. เช็คก่อนว่ามี document ไหมก่อนจะ log หรือใช้งาน
+      if (a.document && a.document.did) {
+        console.log('Document to delete:', a.document.did);
+      }
+      
+      console.log('Board ID to delete:', a.bid);
+
+      // ✅ 2. ลบประกาศ (Board) ก่อน
       await this.backend.DeleteBoard(a.bid);
 
+      // ✅ 3. ลบไฟล์ (ถ้ามี)
+      // ใช้ Optional Chaining (?.) เพื่อป้องกัน Error ถ้า a.document เป็น null
+      if (a.document?.did) {
+        await this.backend.DeleteFile(a.document.did);
+      }
 
-    if (a.document?.did) {
-      await this.backend.DeleteFile(a.document.did);
+      // โหลดข้อมูลใหม่
+      await this.loadData();
+      alert('ลบประกาศเรียบร้อยแล้ว');
+
+    } catch (error) {
+      console.error('Error deleting announcement:', error);
+      alert('เกิดข้อผิดพลาดในการลบประกาศ');
     }
-
-    console.log(a.bid);
-
-    
-
-    // โหลดข้อมูลใหม่
-    await this.loadData();
-
-    alert('ลบประกาศเรียบร้อยแล้ว');
-  } catch (error) {
-    console.error(error);
-    alert('เกิดข้อผิดพลาดในการลบประกาศ');
   }
-}
 
 
   
