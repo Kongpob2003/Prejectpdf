@@ -2,13 +2,9 @@
   <app-adminsidebar [mode]="'full'"></app-adminsidebar>
 
   <main class="content">
-
     <!-- ===== Folder View ===== -->
     <div *ngIf="!selectedFolder">
-      <h2 class="page-title">
-        <span class="material-icons">folder</span>
-        ประกันคุณภาพ
-      </h2>
+      <h2>📂 ประกันคุณภาพ </h2>
 
       <div class="create-row">
         <input type="text" placeholder="ชื่อโฟลเดอร์" [(ngModel)]="newFolderName" />
@@ -17,10 +13,7 @@
 
       <div class="folder-grid">
         <div class="folder-card" *ngFor="let f of folders" (click)="openFolder(f)">
-          <span
-            class="material-icons folder-delete"
-            (click)="deleteFolder($event, f)"
-          >
+          <span class="material-icons folder-delete" (click)="deleteFolder($event, f)">
             delete
           </span>
 
@@ -29,16 +22,17 @@
         </div>
       </div>
 
-      <p *ngIf="folders.length === 0" class="empty-text">
-        ยังไม่มีโฟลเดอร์
-      </p>
+      <p *ngIf="folders.length === 0" class="empty-text">ยังไม่มีโฟลเดอร์</p>
     </div>
 
     <!-- ===== File View ===== -->
     <div *ngIf="selectedFolder" class="file-view">
-
       <div class="folder-header">
-        <button class="back-link" (click)="backToFolders()">←</button>
+        <button class="back-link" (click)="backToFolders()">
+          <span class="material-icons">arrow_back</span>
+          กลับ
+        </button>
+
         <h2>{{ selectedFolder.name }}</h2>
       </div>
 
@@ -50,35 +44,26 @@
       </label>
 
       <div class="file-list" *ngIf="selectedFolder.files.length > 0">
-        <div
-          class="file-item"
-          *ngFor="let file of selectedFolder.files"
-          (click)="openFile(file)"
-        >
+        <div class="file-item" *ngFor="let file of selectedFolder.files" (click)="openFile(file)">
           <span class="material-icons file-icon-color">description</span>
 
           <div class="text-content">
             <div class="file-name">{{ file.name }}</div>
-            <small *ngIf="!file.url" style="color: orange;">(รออัปโหลด)</small>
+            <small *ngIf="!file.url" style="color: orange">(รออัปโหลด)</small>
           </div>
-<!-- ปุ่มลบเอกสาร -->
-  <span
-    class="material-icons file-delete"
-    title="ลบเอกสาร"
-    (click)="deleteFile($event, file)"
-  >
-    delete
-  </span>
-          <span class="material-icons open-icon" *ngIf="file.url">
-            open_in_new
+          <!-- ปุ่มลบเอกสาร -->
+          <span
+            class="material-icons file-delete"
+            title="ลบเอกสาร"
+            (click)="deleteFile($event, file)"
+          >
+            delete
           </span>
+          <span class="material-icons open-icon" *ngIf="file.url"> open_in_new </span>
         </div>
       </div>
 
-      <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
-        ยังไม่มีไฟล์ในโฟลเดอร์นี้
-      </p>
-
+      <p *ngIf="selectedFolder.files.length === 0" class="empty-text">ยังไม่มีไฟล์ในโฟลเดอร์นี้</p>
     </div>
   </main>
 </div>

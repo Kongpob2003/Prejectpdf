@@ -7,11 +7,15 @@
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* ===== Layout ===== */
+:root {
+  --blue-main: #1A285F;     /* น้ำเงินเข้ม ทางการ */
+  --blue-soft: #3f51b5;    /* น้ำเงินนุ่ม */
+  --blue-light: #e8ecff;   /* พื้นหลังอ่อน */
+}
 .home-container {
   display: flex;
   height: 100vh;
-  background: #f2f2f2;
+  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
@@ -19,6 +23,7 @@
 
 /* ===== Content ===== */
 .content {
+  margin-left: 300px;
   flex: 1;
   padding: 40px;
   overflow-y: auto;

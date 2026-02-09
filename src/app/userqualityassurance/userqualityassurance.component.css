@@ -23,19 +23,28 @@
 
 
 
+  :root {
+  --blue-main: #1A285F;     /* น้ำเงินเข้ม ทางการ */
+  --blue-soft: #3f51b5;    /* น้ำเงินนุ่ม */
+  --blue-light: #e8ecff;   /* พื้นหลังอ่อน */
+}
+
+
 
 
 /* ===== Layout ===== */
 .home-container {
   display: flex;
   height: 100vh;
-  background: #f2f2f2;
+  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 .content {
+   margin-left: 300px;
   flex: 1;
-  padding: 36px;
+  padding: 32px;
+  overflow-y: auto;
 }
 
 /* ===== Header ===== */
@@ -46,14 +55,60 @@
   margin-bottom: 20px;
 }
 
-.back-link {
-  background: none;
-  border: none;
-  color: #1A285F;
-  font-weight: 600;
-  cursor: pointer;
+.page-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 24px;
 }
 
+.page-title .material-icons {
+  font-size: 34px;
+  color: var(--accent);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: linear-gradient(135deg, #f3f6ff, #ffffff);
+  color: #1a285f;
+
+  border: 1px solid #d6dcf5;
+  border-radius: 999px;
+
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-link:hover {
+  background: #1a285f;
+  color: #ffffff;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 18px rgba(26, 40, 95, 0.25);
+}
+
+.back-link:active {
+  transform: translateX(-2px) scale(0.98);
+}
+
+.back-link::before {
+  
+  font-size: 16px;
+  transition: transform 0.25s;
+}
+
+.back-link:hover::before {
+  transform: translateX(-4px);
+}
 /* ===== Create Row ===== */
 .create-row {
   margin: 20px 0;
@@ -82,71 +137,102 @@
   background: #243a8f;
 }
 
-/* ===== Folder Grid ===== */
 .folder-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
 }
 
-/* ===== Folder Card ===== */
 .folder-card {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
+  background: linear-gradient(180deg, #ffffff, #f9fbff);
+  border-radius: 20px;
+  padding: 28px 20px;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: 0.25s;
+  position: relative;
+  box-shadow:
+    0 10px 24px rgba(26, 40, 95, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: 0.3s ease;
+}
+
+.folder-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(26,40,95,0.12),
+    transparent
+  );
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.folder-card:hover::after {
+  opacity: 1;
 }
 
 .folder-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 18px 36px rgba(26, 40, 95, 0.22);
 }
 
 .folder-icon {
-  font-size: 48px;
-  color: #1A285F;
+  font-size: 54px;
+  color: #1a285f;
 }
 
 .folder-name {
-  margin-top: 10px;
-  font-weight: 600;
+  margin-top: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-main);
 }
+
 
 /* ===== File List ===== */
 .file-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 24px;
 }
 
 .file-item {
   background: white;
-  padding: 14px 18px;
-  border-radius: 12px;
+  border-radius: 16px;
+  padding: 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  gap: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transition: 0.25s;
+}
+
+.file-item:hover {
+  transform: translateY(-4px);
+  background: #f3f6ff;
+  box-shadow: 0 12px 26px rgba(26, 40, 95, 0.18);
 }
 
 .file-item .material-icons {
   color: #ff5252;
 }
 
-.empty-text {
-  color: #777;
-  margin-top: 20px;
-}
+
 
 /* ===== File View Container ===== */
 .file-view {
-  background: #f8f9fb;
-  border-radius: 16px;
-  padding: 24px;
-  margin-top: 16px;
+  background: linear-gradient(180deg, #ffffff, #f6f8ff);
+  border-radius: 24px;
+  padding: 28px;
+  margin-top: 20px;
+  box-shadow: 0 14px 30px rgba(26, 40, 95, 0.12);
 }
+
 
 /* ===== Header in Folder ===== */
 .folder-header {
@@ -243,10 +329,11 @@
 }
 
 .file-name {
+  font-size: 15px;
   font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  word-break: break-word;
+  color: var(--text-main);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .search-row {
@@ -294,8 +381,52 @@
 }
 
 .empty-text {
+  margin-top: 48px;
   text-align: center;
-  color: #999;
-  margin-top: 2rem;
   font-size: 16px;
+  color: var(--text-sub);
 }
+
+/* ===== Read only folder ===== */
+.folder-card.readonly {
+  cursor: pointer;
+}
+
+.folder-card.readonly:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 26px rgba(26, 40, 95, 0.18);
+}
+
+/* ===== File view only ===== */
+.file-item.view-only {
+  cursor: pointer;
+}
+
+.file-item.view-only:hover {
+  background: #f4f7ff;
+}
+
+/* ===== Pretty back button ===== */
+.pretty-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--primary), #243a8f);
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pretty-back .material-icons {
+  font-size: 20px;
+}
+
+.pretty-back:hover {
+  transform: translateX(-6px);
+  box-shadow: 0 10px 22px rgba(26, 40, 95, 0.35);
+}
+

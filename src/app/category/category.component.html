@@ -1,11 +1,9 @@
 <div class="home-container">
+  <app-adminsidebar [mode]="'full'"></app-adminsidebar>
 
-<app-adminsidebar [mode]="'full'"></app-adminsidebar>
-
-  <!-- Content -->
   <main class="content">
 
-    <!-- ================= Category View ================= -->
+    <!-- ===== Category View ===== -->
     <div *ngIf="!selectedCategory">
       <h2>📂 หมวดหมู่เอกสาร</h2>
 
@@ -17,63 +15,65 @@
         >
           <span class="material-icons category-icon">folder</span>
 
-          <div class="category-name">{{ category.category_name }}</div>
-          <!-- <div class="category-desc">{{ c.description }}</div> -->
-
-          <div class="category-count">
-            {{ category.files.length }} ไฟล์
+          <div class="category-text">
+            <div class="category-name">
+              {{ category.category_name }}
+            </div>
+            <div class="category-count">
+              {{ category.files.length }} ไฟล์
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ================= File View ================= -->
-<div *ngIf="selectedCategory" class="folder-view">
+    <!-- ===== File View ===== -->
+    <div *ngIf="selectedCategory" class="folder-view">
 
-  <!-- Header -->
-  <div class="folder-header">
+      <div class="folder-header">
+        <button class="back-folder-btn" (click)="backToCategories()">
+          <span class="material-icons">arrow_back</span>
+          หมวดหมู่ทั้งหมด
+        </button>
 
-    <!-- Back Button -->
-    <button class="back-folder-btn" (click)="backToCategories()">
-      <span class="material-icons">arrow_back</span>
-      หมวดหมู่ทั้งหมด
-    </button>
+        <div class="folder-info">
+          <span class="material-icons folder-big-icon">folder_open</span>
 
-    <div class="folder-info">
-      <span class="material-icons folder-big-icon">folder_open</span>
-      <div>
-        <h2>{{ selectedCategory.category_name }}</h2>
-        <!-- <p>{{ selectedCategory.description }}</p> -->
-        <span class="folder-count">
-          {{ selectedCategory.files.length }} ไฟล์
-        </span>
+          <div class="folder-text">
+            <h2>{{ selectedCategory.category_name }}</h2>
+            <div class="folder-count">
+              {{ selectedCategory.files.length }} ไฟล์
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Files -->
+      <div class="file-grid" *ngIf="selectedCategory.files.length">
+        <div
+          class="file-card"
+          *ngFor="let f of selectedCategory.files"
+          (click)="openFile(f)"
+        >
+          <div class="file-icon-box">
+            <span class="material-icons">picture_as_pdf</span>
+          </div>
+
+          <div class="file-detail">
+            <div class="file-name">{{ f.file_name }}</div>
+            <div class="file-size">{{ f.semester }}</div>
+          </div>
+
+          <span class="material-icons open-icon">open_in_new</span>
+        </div>
+      </div>
+
+      <!-- Empty -->
+      <div class="empty-box" *ngIf="selectedCategory.files.length === 0">
+        <span class="material-icons">folder_off</span>
+        <p>ยังไม่มีไฟล์ในหมวดหมู่นี้</p>
+      </div>
+
     </div>
-
-  </div>
-
-  <!-- Files -->
-  <div class="file-grid" *ngIf="selectedCategory.files.length">
-    <div class="file-card" *ngFor="let f of selectedCategory.files" (click)="openFile(f)">
-      <div class="file-icon-box">
-        <span class="material-icons">picture_as_pdf</span>
-      </div>
-
-      <div class="file-detail">
-        <div class="file-name">{{ f.file_name }}</div>
-        <div class="file-size">{{ f.semester }}</div>
-      </div>
-
-      <span class="material-icons open-icon">open_in_new</span>
-    </div>
-  </div>
-
-  <!-- Empty -->
-  <div class="empty-box" *ngIf="selectedCategory.files.length === 0">
-    <span class="material-icons">folder_off</span>
-    <p>ยังไม่มีไฟล์ในหมวดหมู่นี้</p>
-  </div>
-
+  </main>
 </div>
-
-

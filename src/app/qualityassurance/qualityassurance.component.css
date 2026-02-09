@@ -19,19 +19,23 @@
   letter-spacing: 0.5px;
 }
 
-/* ===== Layout ===== */
+:root {
+  --blue-main: #1A285F;     /* น้ำเงินเข้ม ทางการ */
+  --blue-soft: #3f51b5;    /* น้ำเงินนุ่ม */
+  --blue-light: #e8ecff;   /* พื้นหลังอ่อน */
+}
 .home-container {
   display: flex;
   height: 100vh;
-  background: #f2f2f2;
+  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
 .content {
-   flex: 1;
-  padding: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-left: 300px;
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
 }
 
 /* ===== Page Title ===== */
@@ -52,12 +56,45 @@
 
 /* ===== Header ===== */
 .back-link {
-  background: none;
-  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background: linear-gradient(135deg, #f3f6ff, #ffffff);
   color: #1a285f;
+
+  border: 1px solid #d6dcf5;
+  border-radius: 999px;
+
+  padding: 8px 14px;
+  font-size: 14px;
   font-weight: 600;
+
   cursor: pointer;
+  transition: all 0.25s ease;
 }
+
+.back-link:hover {
+  background: #1a285f;
+  color: #ffffff;
+  transform: translateX(-4px);
+  box-shadow: 0 6px 18px rgba(26, 40, 95, 0.25);
+}
+
+.back-link:active {
+  transform: translateX(-2px) scale(0.98);
+}
+
+.back-link::before {
+  
+  font-size: 16px;
+  transition: transform 0.25s;
+}
+
+.back-link:hover::before {
+  transform: translateX(-4px);
+}
+
 
 /* ===== Create Row ===== */
 .create-row {
@@ -274,4 +311,37 @@
 
 .file-delete:hover {
   transform: scale(1.2);
+}
+
+/* ===== Back Button (Professional) ===== */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  background: #f4f6fb;
+  color: #1a285f;
+  font-weight: 600;
+
+  border: 1px solid #d7dbec;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.back-btn .material-icons {
+  font-size: 20px;
+}
+
+.back-btn:hover {
+  background: #1a285f;
+  color: #fff;
+  transform: translateX(-4px);
+}
+
+.back-btn:active {
+  transform: scale(0.96);
 }

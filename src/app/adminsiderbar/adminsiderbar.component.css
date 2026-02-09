@@ -1,12 +1,22 @@
 .sidebar {
+  position: fixed;           /* ⭐ สำคัญ */
+  top: 0;
+  left: 0;
+
   width: 260px;
+  height: 100vh;
+
   background: #1A285F;
   color: white;
   padding: 20px;
+
   display: flex;
-  height: 100vh;
   flex-direction: column;
+
+  overflow-y: auto;          /* ถ้าเมนูยาว เลื่อนเฉพาะ sidebar */
+  z-index: 1000;
 }
+
 
 /* ===== Logo ===== */
 .logo-box {
