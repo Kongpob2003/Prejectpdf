@@ -1,11 +1,14 @@
 <div class="home-container">
-<app-adminsidebar [mode]="'full'"></app-adminsidebar>
+  <app-adminsidebar [mode]="'full'"></app-adminsidebar>
 
-  <!-- Content -->
   <main class="content">
+
     <!-- ===== Folder View ===== -->
     <div *ngIf="!selectedFolder">
-      <h2>📁 ประกันคุณภาพ</h2>
+      <h2 class="page-title">
+        <span class="material-icons">folder</span>
+        ประกันคุณภาพ
+      </h2>
 
       <div class="create-row">
         <input type="text" placeholder="ชื่อโฟลเดอร์" [(ngModel)]="newFolderName" />
@@ -14,84 +17,68 @@
 
       <div class="folder-grid">
         <div class="folder-card" *ngFor="let f of folders" (click)="openFolder(f)">
+          <span
+            class="material-icons folder-delete"
+            (click)="deleteFolder($event, f)"
+          >
+            delete
+          </span>
 
-          <span 
-      class="material-icons delete-btn folder-delete" 
-      (click)="deleteFolder($event, f)"
-      title="ลบโฟลเดอร์"
-    >
-      delete
-    </span>
-    
           <span class="material-icons folder-icon">folder</span>
           <div class="folder-name">{{ f.name }}</div>
         </div>
       </div>
 
-      <p *ngIf="folders.length === 0" class="empty-text">ยังไม่มีโฟลเดอร์</p>
+      <p *ngIf="folders.length === 0" class="empty-text">
+        ยังไม่มีโฟลเดอร์
+      </p>
     </div>
 
     <!-- ===== File View ===== -->
-<div *ngIf="selectedFolder" class="file-view">
+    <div *ngIf="selectedFolder" class="file-view">
 
-  <!-- Header -->
-  <div class="folder-header">
-    <div class="folder-title">
-      <button class="back-link" (click)="backToFolders()">←</button>
-      <h2>{{ selectedFolder.name }}</h2>
-    </div>
-  </div>
-
-  <label class="upload-box">
-  <span class="material-icons upload-icon">
-    cloud_upload
-  </span>
-
-  <div class="upload-text">
-    เพิ่มไฟล์จากเครื่อง
-  </div>
-
-  <div class="upload-sub">
-    รองรับ PDF / DOC / DOCX
-  </div>
-
-  <input
-    type="file"
-    (change)="onFileSelected($event)"
-    accept=".pdf,.doc,.docx"
-  >
-</label>
-
-
-  <!-- File list -->
-  <div class="file-list" *ngIf="selectedFolder.files.length > 0">
-    
-    <div 
-      class="file-item clickable" 
-      *ngFor="let file of selectedFolder.files" 
-      (click)="openFile(file)"
-    >
-      <span class="material-icons file-icon-color">description</span>
-      
-      <div class="text-content">
-        <div class="file-name">{{ file.name }}</div>
-        <small *ngIf="!file.url" style="color: orange;">(รออัปโหลด)</small>
+      <div class="folder-header">
+        <button class="back-link" (click)="backToFolders()">←</button>
+        <h2>{{ selectedFolder.name }}</h2>
       </div>
-      <span 
-         class="material-icons delete-btn file-delete" 
-         *ngIf="file.url"
-         (click)="deleteFile($event, file)"
-         title="ลบไฟล์"
-       >
-         delete
-       </span>
-      <span cl  ass="material-icons open-icon" *ngIf="file.url">open_in_new</span>
-    </div>    
 
-  </div>  
+      <label class="upload-box">
+        <span class="material-icons upload-icon">cloud_upload</span>
+        <div class="upload-text">เพิ่มไฟล์จากเครื่อง</div>
+        <div class="upload-sub">ลากไฟล์มาวาง หรือคลิกเพื่อเลือก</div>
+        <input type="file" (change)="onFileSelected($event)" />
+      </label>
 
-  <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
-    ยังไม่มีไฟล์ในโฟลเดอร์นี้
-  </p>
+      <div class="file-list" *ngIf="selectedFolder.files.length > 0">
+        <div
+          class="file-item"
+          *ngFor="let file of selectedFolder.files"
+          (click)="openFile(file)"
+        >
+          <span class="material-icons file-icon-color">description</span>
 
+          <div class="text-content">
+            <div class="file-name">{{ file.name }}</div>
+            <small *ngIf="!file.url" style="color: orange;">(รออัปโหลด)</small>
+          </div>
+<!-- ปุ่มลบเอกสาร -->
+  <span
+    class="material-icons file-delete"
+    title="ลบเอกสาร"
+    (click)="deleteFile($event, file)"
+  >
+    delete
+  </span>
+          <span class="material-icons open-icon" *ngIf="file.url">
+            open_in_new
+          </span>
+        </div>
+      </div>
+
+      <p *ngIf="selectedFolder.files.length === 0" class="empty-text">
+        ยังไม่มีไฟล์ในโฟลเดอร์นี้
+      </p>
+
+    </div>
+  </main>
 </div>

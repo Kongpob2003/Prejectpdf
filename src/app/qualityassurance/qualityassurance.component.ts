@@ -227,4 +227,5 @@ export class QualityassuranceComponent {
       alert('ไฟล์นี้ยังไม่ได้อัปโหลด');
     }
   }
+  
 }
