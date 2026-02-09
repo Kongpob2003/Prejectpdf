@@ -170,4 +170,25 @@ export class JaeComponent implements OnInit {
       }
     });
   }
+  deleteFile(file: any, event: Event) {
+  event.stopPropagation(); // ❗ หยุดไม่ให้เปิดไฟล์
+
+  const ok = confirm(
+    `ต้องการลบเอกสาร "${file.file_name}" ของอาจารย์ ${this.selectedTeacher.username} ใช่หรือไม่`
+  );
+
+  if (!ok) return;
+
+  // 🧹 ลบจาก UI ทันที
+  this.selectedYearFiles = this.selectedYearFiles.filter(
+    f => f !== file
+  );
+
+  // 🔁 ลบจาก groupedFiles ด้วย (กันข้อมูลค้าง)
+  this.groupedFiles.forEach(group => {
+    group.files = group.files.filter(f => f !== file);
+  });
+
+ 
+}
 }
