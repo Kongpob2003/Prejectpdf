@@ -14,6 +14,16 @@
    Sidebar
 ===================== */
 
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+
+  /* ⭐ เพิ่ม 2 บรรทัดนี้ */
+  max-height: 260px;     /* ปรับได้ตามใจ */
+  overflow-y: auto;      /* เม้ากลาง / scroll ได้ */
+}
 
 /* =====================
    Content
@@ -551,7 +561,7 @@
 
 /* ===== Subject Input ===== */
 .subject-input {
-  width: 100%;
+  width: 95%;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #ccc;

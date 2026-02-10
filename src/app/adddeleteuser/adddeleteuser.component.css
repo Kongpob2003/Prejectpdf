@@ -188,3 +188,9 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* ===== จำกัดความสูงรายชื่อ (แก้ปัญหาล้นขอบ) ===== */
+.table-container {
+  max-height: 280px;      /* 🔥 ปรับได้ตามใจ */
+  overflow-y: auto;       /* 🔥 เม้ากลาง / scroll ได้ */
+}
