@@ -75,7 +75,9 @@
 <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
   <div class="modal-box" (click)="$event.stopPropagation()">
     <h3>{{ selectedFile?.file_name }}</h3>
-
+    <h3 *ngIf="selectedFile?.title" style="color: #42464b; margin-top: 5px">
+      {{ selectedFile?.title }}
+    </h3>
     <iframe
       *ngIf="safeFileUrl"
       class="pdf-preview"

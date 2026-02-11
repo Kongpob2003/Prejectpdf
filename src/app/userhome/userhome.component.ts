@@ -133,10 +133,22 @@ export class UserHomeComponent {
   /* ======================
      PREVIEW
   ====================== */
-  openModal(file: DocUser) {
+  async openModal(file: DocUser) {
     this.selectedFile = file;
     this.safeFileUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(file.file_url);
+      // ✅ เพิ่มส่วนดึง Title ตรงนี้
+  try {
+    // เรียก API ดึง Title โดยส่ง did ไป
+    const res = await this.backend.getDocTitle(file.did);
+    
+    // ถ้ามี title ส่งกลับมา ให้บันทึกลงใน selectedFile.title
+    if (res && res.title) {
+      this.selectedFile.title = res.title; 
+    }
+  } catch (error) {
+    console.error('Error fetching title:', error);
+  }
     this.showModal = true;
   }
 

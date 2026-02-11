@@ -63,12 +63,12 @@ export class CategoryComponent implements OnInit {
       try {
         const result: any =
           await this.backend.GetFilesByCategory(cat.category_id);
-
+          const safeResult = result || {};
         return {
           category_id: cat.category_id,
           category_name: cat.Name,
-          count: result.count || 0,
-          files: result.data || []
+          count: safeResult.count || 0,
+          files: safeResult.data || []
         };
       } catch (error) {
         console.error(
