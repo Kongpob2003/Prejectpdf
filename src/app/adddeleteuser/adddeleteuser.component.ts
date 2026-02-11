@@ -142,10 +142,32 @@ export class AdddeleteuserComponent implements OnInit {
 
   /* ================= DELETE ================= */
   async deleteUser(uid: number) {
-    if (!confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?')) return;
-    await this.backend.DeleteUser(uid);
-    this.users = this.users.filter(u => u.uid !== uid);
-    this.cdr.detectChanges();
-    alert('ลบผู้ใช้สำเร็จ');
+    // if (!confirm('คุณต้องการลบผู้ใช้นี้หรือไม่?')) return;
+    // await this.backend.DeleteUser(uid);
+    // this.users = this.users.filter(u => u.uid !== uid);
+    // this.cdr.detectChanges();
+    // alert('ลบผู้ใช้สำเร็จ');
+    const confirmMsg = `คุณต้องการปิดการใช้งานผู้ใช้หรือไม่?`;
+    
+    if (!confirm(confirmMsg)) return;
+
+    try {
+      // เรียก API เปลี่ยน Status (ต้องเพิ่ม method นี้ใน Backend Service ก่อน)
+      await this.backend.changeUserStatus(uid); 
+
+      // อัปเดตข้อมูลในตารางทันทีโดยไม่ต้องโหลดใหม่ทั้งหมด
+      // หา user คนนั้นแล้วเปลี่ยน status เป็น '0'
+      const targetUser = this.users.find(u => u.uid !== uid);
+      if (targetUser) {
+        targetUser.status = '0'; 
+      }
+      
+      this.cdr.detectChanges();
+      alert('ปิดการใช้งานผู้ใช้สำเร็จ');
+
+    } catch (error) {
+      console.error(error);
+      alert('เกิดข้อผิดพลาดในการเปลี่ยนสถานะ');
+    }
   }
 }

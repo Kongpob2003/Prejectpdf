@@ -5,6 +5,7 @@ export interface UserLoginRes {
     password: string;
     phone:    string;
     type:     string;
+    status:   string;
 }
 
 export interface UserLocalStorge {
@@ -13,4 +14,5 @@ export interface UserLocalStorge {
     email:    string;
     phone:    string;
     type:     string;
+    status:   string;
 }

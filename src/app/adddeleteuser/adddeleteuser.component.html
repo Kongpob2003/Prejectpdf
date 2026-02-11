@@ -127,26 +127,41 @@
             </thead>
 
             <tbody>
-              <tr *ngFor="let user of users">
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phone }}</td>
-                <td>
-                  <span
-                    class="badge"
-                    [class.badge-admin]="user.type === 'admin'"
-                    [class.badge-user]="user.type === 'user'"
-                  >
-                    {{ user.type === 'admin' ? 'Admin' : 'User' }}
-                  </span>
-                </td>
-                <td>
-                  <button class="btn-delete" (click)="deleteUser(user.uid)">
-                    <span class="material-icons">delete</span>
-                    ลบ
-                  </button>
-                </td>
-              </tr>
+          <tr *ngFor="let user of users" [class.disabled-row]="user.status === '0'">
+  <td>
+    {{ user.username }} 
+    <span *ngIf="user.status === '0'" class="status-label">(ปิดใช้งาน)</span>
+  </td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.phone }}</td>
+  <td>
+    <span
+      class="badge"
+      [class.badge-admin]="user.type === 'admin'"
+      [class.badge-user]="user.type === 'user'"
+    >
+      {{ user.type === 'admin' ? 'Admin' : 'User' }}
+    </span>
+  </td>
+  <td>
+    <button 
+      *ngIf="user.status !== '0'" 
+      class="btn-delete" 
+      (click)="deleteUser(user.uid)"
+    >
+      <span class="material-icons">block</span> ปิดการใช้งาน
+    </button>
+
+    <button 
+      *ngIf="user.status === '0'" 
+      class="btn-disabled" 
+      disabled
+    >
+      <span class="material-icons">lock</span>
+      ถูกปิดการใช้งาน
+    </button>
+  </td>
+</tr>
 
               <tr *ngIf="users.length === 0">
                 <td colspan="5" class="no-data">ไม่มีข้อมูลผู้ใช้</td>

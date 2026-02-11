@@ -213,6 +213,21 @@ public async getReceivedDocuments(uid: number) {
   const response = await lastValueFrom(this.http.get<any[]>(url));
   return response;
 }
+
+//ปฏิทินของ admin
+public async getCalendarEvents() {
+  const url = this.constants.API_ENDPOINT + 'document/calendar/events'; // ปรับ path ตาม router ของคุณ
+  const response = await lastValueFrom(this.http.get<any[]>(url));
+  return response;
+}
+
+//การเปลี่ยนสถานะ
+public async changeUserStatus(uid: number) {
+  const url = this.constants.API_ENDPOINT + 'change-status'; // ปรับ path ให้ตรง router
+  const response = await lastValueFrom(this.http.put(url, { uid }));
+  return response;
+}
+
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {

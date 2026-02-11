@@ -120,16 +120,30 @@
       </div>
     </div>
     <div class="teacher-grid">
-      <div
-        class="teacher-card"
-        *ngFor="let t of person"
-        (click)="toggleTeacher(t.uid)"
-        [class.selected]="selectedTeachers.includes(t.uid)"
-        [style.pointer-events]="isViewMode ? 'none' : 'auto'"
-      >
-        <span class="material-icons">person</span> {{ t.username }}
-      </div>
+      <ng-container *ngFor="let t of person">
+        <div
+          class="teacher-card"
+          *ngIf="t.status === '1'" 
+          (click)="toggleTeacher(t.uid)"
+          [class.selected]="selectedTeachers.includes(t.uid)"
+          [style.pointer-events]="isViewMode ? 'none' : 'auto'"
+        >
+          <span class="material-icons">person</span> {{ t.username }}
+        </div>
+      </ng-container>
     </div>
+    <h3>อาจารย์ที่ถูกปิดการใช้งาน</h3>
+    <div class="teacher-grid">
+      <ng-container *ngFor="let t of person">
+        <div
+          class="teacher-card disabled-card"
+          *ngIf="t.status === '0'"
+        >
+          <span class="material-icons">person_off</span> {{ t.username }}
+        </div>
+      </ng-container>
+    </div>
+      
     <div class="upload-actions">
       <button class="btn-cancel" (click)="closeAllModals()">ปิด</button>
 

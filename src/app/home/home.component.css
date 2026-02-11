@@ -651,3 +651,15 @@
   padding: 8px;
 }
 
+.disabled-card {
+  background-color: #f5f5f5; /* สีพื้นหลังเทา */
+  color: #999;               /* ตัวหนังสือสีจาง */
+  border: 1px solid #ddd;
+  cursor: not-allowed;       /* เมาส์เป็นรูปห้าม */
+  opacity: 0.7;
+}
+
+.disabled-card:hover {
+  background-color: #f5f5f5; /* ห้ามเปลี่ยนสีเมื่อ hover */
+  border-color: #ddd;
+}

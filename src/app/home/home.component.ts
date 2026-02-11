@@ -63,6 +63,7 @@ throw new Error('Method not implemented.');
      SEND / VIEW
   ====================== */
   person: UserLocalStorge[] = [];
+  person_Disable : any[] = [];
   selectedTeachers: number[] = [];
   category: CategoryItemPos[] = [];
   selectedCategories: number[] = [];
@@ -243,7 +244,7 @@ onFileSelected(event: Event) {
     if (!this.selectedFile) return;
 
     const payload = {
-document_id: this.selectedFile.did,
+      document_id: this.selectedFile.did,
       teacher_ids: this.selectedTeachers,
       category_ids: this.selectedCategories,
       text: this.sendSubject,
@@ -281,7 +282,9 @@ clearAllCategories() {
 }
 
 selectAllTeachers() {
-  this.selectedTeachers = this.person.map(p => p.uid);
+  this.selectedTeachers = this.person
+    .filter(p => p.status === '1')
+    .map(p => p.uid);
 }
 clearAllTeachers() {
   this.selectedTeachers = [];

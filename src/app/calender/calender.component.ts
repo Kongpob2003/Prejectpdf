@@ -78,7 +78,7 @@ export class CalenderComponent implements OnInit {
   // โหลดข้อมูลเอกสารทั้งหมด
   async loadDocuments() {
     try {
-      this.allDocuments = await this.backend.GetFile();
+      this.allDocuments = await this.backend.getCalendarEvents();
       console.log('Documents loaded:', this.allDocuments);
       
       // คำนวณสถิติ
