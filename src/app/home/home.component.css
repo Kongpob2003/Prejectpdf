@@ -274,9 +274,16 @@
   background: white;
   width: 600px;
   max-width: 90%;
+  max-height: 90vh;        /* ⭐ สำคัญ */
+  overflow-y: auto;        /* ⭐ ให้เลื่อนทั้ง modal */
   border-radius: 14px;
   padding: 20px;
   pointer-events: auto;
+}
+
+
+.teacher-grid.disabled {
+  max-height: 180px;   /* เตี้ยกว่าอันปกติ */
 }
 
 .pdf-preview {
