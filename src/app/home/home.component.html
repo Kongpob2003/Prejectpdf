@@ -133,13 +133,22 @@
       </ng-container>
     </div>
     <h3>อาจารย์ที่ถูกปิดการใช้งาน</h3>
-    <div class="teacher-grid disabled ">
+    <div class="teacher-grid disabled">
       <ng-container *ngFor="let t of person">
         <div
           class="teacher-card disabled-card"
           *ngIf="t.status === '0'"
+          [class.selected-disabled]="selectedTeachers.includes(t.uid)"
         >
-          <span class="material-icons">person_off</span> {{ t.username }}
+          <span class="material-icons">
+            {{ selectedTeachers.includes(t.uid) ? 'assignment_ind' : 'person_off' }}
+          </span>
+          
+          {{ t.username }}
+
+          <span *ngIf="selectedTeachers.includes(t.uid)" class="disabled-tag">
+            (เคยส่ง)
+          </span>
         </div>
       </ng-container>
     </div>
