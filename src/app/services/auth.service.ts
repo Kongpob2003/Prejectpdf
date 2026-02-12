@@ -5,7 +5,6 @@ import { UserLoginRes } from '../../model/response';
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
     
   private readonly KEY = 'user';
@@ -20,10 +19,16 @@ export class AuthService {
 
   getUser(): UserLoginRes | null {
     if (!isPlatformBrowser(this.platformId)) {
-      return null; // 👈 สำคัญมาก
+      return null;
     }
     const data = localStorage.getItem(this.KEY);
     return data ? JSON.parse(data) : null;
+  }
+
+  // ✅ เพิ่มฟังก์ชันนี้: เพื่อดึง Role ของ user
+  getRole(): string | null {
+    const user = this.getUser();
+    return user ? user.type : null; // ตรวจสอบว่าใน model UserLoginRes มี field 'type' หรือ 'role'
   }
 
   logout() {
