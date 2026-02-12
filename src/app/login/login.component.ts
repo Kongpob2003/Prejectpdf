@@ -47,13 +47,19 @@ export class LoginComponent {
       const user = response as UserLoginRes;
       console.log(response);
       console.log(user.type);
+
+      if (user.status === '0') {
+        alert('บัญชีนี้ของคุณถูกระงับการใช้งาน');
+        return; // ⛔ จบการทำงานทันที ไม่ให้ Login
+      }
       // ใช้งาน AuthService ใน LoginComponent
       this.auth.setUser(user);
 
       // ✅ เช็ค role / type (ถ้ามี)
       if (user.type === 'admin') {
         this.router.navigate(['/home']);
-      } else {
+      }
+      else {
         this.router.navigate(['/userhome']);
       }
     } catch (error) {
