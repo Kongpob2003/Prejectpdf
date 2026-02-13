@@ -21,6 +21,9 @@
             [(ngModel)]="profile.username"
             [disabled]="!isEditing"
           />
+          <small class="error" *ngIf="usernameError">
+            กรุณากรอกชื่อผู้ใช้ (ห้ามเว้นว่าง)
+          </small>
         </div>
 
         <!-- Email -->
