@@ -162,9 +162,9 @@ export class AdddeleteuserComponent implements OnInit {
         targetUser.status = '0'; 
       }
       
-      this.cdr.detectChanges();
+      
       alert('ปิดการใช้งานผู้ใช้สำเร็จ');
-
+      await this.loadUsers();
     } catch (error) {
       console.error(error);
       alert('เกิดข้อผิดพลาดในการเปลี่ยนสถานะ');

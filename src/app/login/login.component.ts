@@ -30,12 +30,13 @@ export class LoginComponent {
       return;
     }
 
+
     // ✅ สร้าง body ให้ตรงกับ backend
     const body = {
       identifier: this.email,   // หรือ username
       password: this.password
     };
-
+    console.log(body);
     try {
       const response = await this.backend.login(body);
 
