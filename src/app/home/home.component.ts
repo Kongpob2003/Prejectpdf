@@ -71,7 +71,7 @@ throw new Error('Method not implemented.');
 
   constructor(
     private router: Router,
- private auth: AuthService,
+    private auth: AuthService,
     private backend: Backend,
     private sanitizer: DomSanitizer,
     private cdr: ChangeDetectorRef,
