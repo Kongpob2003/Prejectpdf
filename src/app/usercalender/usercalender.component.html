@@ -66,7 +66,7 @@
           </div>
 
           <!-- Calendar Days -->
-          <div
+         <div
             class="day-cell"
             *ngFor="let day of calendarDays"
             [class.today]="day.isToday"
@@ -74,11 +74,28 @@
             [class.other-month]="!day.isCurrentMonth"
             (click)="onDayClick(day)"
           >
-            <span class="date">{{ day.date }}</span>
+            <div class="day-header">
+              <span class="date">{{ day.date }}</span>
+              <span class="badge" *ngIf="day.documentCount > 0">
+                {{ day.documentCount }}
+              </span>
+            </div>
 
-            <span class="badge" *ngIf="day.documentCount > 0">
-              {{ day.documentCount }}
-            </span>
+            <div class="cell-docs" *ngIf="day.documents.length > 0">
+              
+              <div 
+                class="cell-doc-item" 
+                *ngFor="let doc of day.documents | slice:0:3"
+                [title]="doc.file_name"
+                (click)="$event.stopPropagation(); openDocument(doc.file_url)"
+              >
+                {{ doc.file_name }}
+              </div>
+
+              <div class="cell-doc-more" *ngIf="day.documents.length > 3">
+                + เพิ่มเติมอีก {{ day.documents.length - 3 }} รายการ
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -96,4 +113,41 @@
       </div>
     </div>
   </main>
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>📅 เอกสารวันที่ {{ selectedDateText }}</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="document-list">
+          <div 
+            class="document-item" 
+            *ngFor="let doc of selectedDocuments"
+            (click)="openDocument(doc.file_url)"
+          >
+            <div class="doc-icon">
+              <span class="material-icons">description</span>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">{{ doc.file_name }}</div>
+              <div class="doc-meta">
+                <span class="status-badge" [class.sent]="doc.statue === '1'">
+                  {{ doc.statue === '1' ? 'ส่งแล้ว' : 'ได้รับ' }}
+                </span>
+              </div>
+            </div>
+            <span class="material-icons arrow-icon">open_in_new</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-close" (click)="closeModal()">ปิดหน้าต่าง</button>
+      </div>
+    </div>
+  </div>
 </div>

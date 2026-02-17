@@ -430,7 +430,7 @@
   }
 }
 
-/* ================= MODAL STYLES ================= */
+/* ================= แสดงปฏิทินรายละเอียดเอกสาร ================= */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -562,3 +562,64 @@
 .btn-close:hover {
   background-color: #5a6268;
 }
+
+/* จัดระเบียบกล่องวันที่ */
+.day-cell {
+  min-height: 100px; /* กำหนดความสูงขั้นต่ำให้กล่องปฏิทินมีที่วาง text */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ดันเนื้อหาไปชิดขอบบน */
+  padding: 5px;
+  cursor: pointer;
+  /* (CSS อื่นๆ ของ day-cell ที่คุณมีอยู่แล้ว ปล่อยไว้เหมือนเดิมครับ) */
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+/* ========================================= */
+/* ✅ สไตล์สำหรับชื่อเอกสารในช่องปฏิทิน */
+/* ========================================= */
+.cell-docs {
+  display: flex;
+  flex-direction: column;
+  gap: 3px; /* ระยะห่างระหว่างไฟล์ */
+  width: 100%;
+  overflow: hidden;
+}
+
+.cell-doc-item {
+  font-size: 11px;             /* ตัวหนังสือขนาดเล็ก */
+  background-color: #e3f2fd;   /* สีพื้นหลังฟ้าอ่อน */
+  color: #1976d2;              /* สีตัวหนังสือฟ้าเข้ม */
+  padding: 3px 5px;
+  border-radius: 4px;
+  border-left: 3px solid #1976d2; /* ขีดสีฟ้าด้านซ้ายให้ดูสวยงาม */
+  
+  /* ตัดคำยาวๆ ให้เป็น ... */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  transition: all 0.2s ease;
+}
+
+.cell-doc-item:hover {
+  background-color: #bbdefb;
+  transform: scale(1.02);
+}
+
+.cell-doc-more {
+  font-size: 11px;
+  color: #666;
+  text-align: left;
+  padding-left: 5px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+

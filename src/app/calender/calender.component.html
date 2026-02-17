@@ -76,11 +76,28 @@
             [class.other-month]="!day.isCurrentMonth"
             (click)="onDayClick(day)"
           >
-            <span class="date">{{ day.date }}</span>
+            <div class="day-header">
+              <span class="date">{{ day.date }}</span>
+              <span class="badge" *ngIf="day.documentCount > 0">
+                {{ day.documentCount }}
+              </span>
+            </div>
 
-            <span class="badge" *ngIf="day.documentCount > 0">
-              {{ day.documentCount }}
-            </span>
+            <div class="cell-docs" *ngIf="day.documents.length > 0">
+              
+              <div 
+                class="cell-doc-item" 
+                *ngFor="let doc of day.documents | slice:0:3"
+                [title]="doc.file_name"
+                (click)="$event.stopPropagation(); openDocument(doc.file_url)"
+              >
+                {{ doc.file_name }}
+              </div>
+
+              <div class="cell-doc-more" *ngIf="day.documents.length > 3">
+                + เพิ่มเติมอีก {{ day.documents.length - 3 }} รายการ
+              </div>
+            </div>
           </div>
         </div>
       </div>
