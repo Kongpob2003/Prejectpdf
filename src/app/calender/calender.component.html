@@ -97,5 +97,43 @@
         </div>
       </div>
     </div>
+
   </main>
+  <div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>📅 เอกสารวันที่ {{ selectedDateText }}</h3>
+        <button class="close-btn" (click)="closeModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="document-list">
+          <div 
+            class="document-item" 
+            *ngFor="let doc of selectedDocuments"
+            (click)="openDocument(doc.file_url)"
+          >
+            <div class="doc-icon">
+              <span class="material-icons">description</span>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">{{ doc.file_name }}</div>
+              <div class="doc-meta">
+                <span class="status-badge" [class.sent]="doc.statue === '1'">
+                  {{ doc.statue === '1' ? 'ส่งแล้ว' : 'ได้รับ' }}
+                </span>
+              </div>
+            </div>
+            <span class="material-icons arrow-icon">open_in_new</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-close" (click)="closeModal()">ปิดหน้าต่าง</button>
+      </div>
+    </div>
+  </div>
 </div>

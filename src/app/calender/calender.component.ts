@@ -26,6 +26,12 @@ interface CalendarDay {
 })
 export class CalenderComponent implements OnInit {
   role: 'admin' | 'user' = 'user';
+
+  // ✅ เพิ่มตัวแปรสำหรับ Modal
+  showModal: boolean = false;
+  selectedDocuments: DocumentItemPos[] = [];
+  selectedDateText: string = '';
+
   // ✅ เพิ่มตัวแปรนี้เพื่อเก็บลิงก์ที่จะไป
   homeLink: string = '/home';
   // ข้อมูลปฏิทิน
@@ -223,8 +229,28 @@ export class CalenderComponent implements OnInit {
   // แสดงรายละเอียดเอกสารในวันที่คลิก (ถ้าต้องการ)
   onDayClick(day: CalendarDay) {
     if (day.documentCount > 0) {
+    
+      this.selectedDocuments = day.documents;
+      
+      // 2. สร้างข้อความวันที่เพื่อแสดงบนหัว Modal (เช่น 15 กุมภาพันธ์ 2569)
+      this.selectedDateText = `${day.date} ${this.monthNames[day.month]} ${day.year + 543}`;
+      
+      // 3. เปิด Modal
+      this.showModal = true;
+      
       console.log('Documents on this day:', day.documents);
-      // สามารถเพิ่ม modal หรือ navigate ไปหน้าอื่นได้
+    }
+  }
+  // ✅ เพิ่มฟังก์ชันปิด Modal
+  closeModal() {
+    this.showModal = false;
+    this.selectedDocuments = [];
+  }
+
+  // ✅ เพิ่มฟังก์ชันเปิดไฟล์ (ถ้าต้องการให้กดที่ชื่อแล้วเปิดไฟล์ได้เลย)
+  openDocument(fileUrl: string) {
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
     }
   }
 }
