@@ -68,6 +68,15 @@
     </h3>
     <iframe *ngIf="safeFileUrl" class="pdf-preview" [src]="safeFileUrl"></iframe>
     <div class="upload-actions">
+      <button 
+        class="btn-submit" 
+        style="background-color: #17a2b8;" 
+        *ngIf="selectedFile?.file_url" 
+        (click)="openDocument(selectedFile?.file_url || '')"
+      >
+        <span class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 4px;">open_in_new</span>
+        เปิดแท็บใหม่
+      </button>
       <button class="btn-cancel" (click)="closeAllModals()">ปิด</button>
       <button class="btn-submit" *ngIf="selectedFile?.statue === '0'" (click)="openSendTeacher()">
         ส่งให้อาจารย์

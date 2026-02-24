@@ -289,4 +289,9 @@ selectAllTeachers() {
 clearAllTeachers() {
   this.selectedTeachers = [];
 }
+openDocument(fileUrl: string) {
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    }
+  }
 }
