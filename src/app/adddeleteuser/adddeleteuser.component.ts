@@ -170,4 +170,27 @@ export class AdddeleteuserComponent implements OnInit {
       alert('เกิดข้อผิดพลาดในการเปลี่ยนสถานะ');
     }
   }
+  /* ================= ACTIVATE (เปิดการใช้งาน) ================= */
+  async activateUser(uid: number) {
+    const confirmMsg = `คุณต้องการเปิดการใช้งานผู้ใช้นี้หรือไม่?`;
+    
+    if (!confirm(confirmMsg)) return;
+
+    try {
+      // เรียกใช้ฟังก์ชันจาก Backend ที่คุณสร้างไว้
+      await this.backend.activateUserStatus(uid); 
+
+      // อัปเดตสถานะในตาราง
+      const targetUser = this.users.find(u => u.uid === uid);
+      if (targetUser) {
+        targetUser.status = '1'; // หรือค่าสถานะปกติของคุณ (เช่น '1' หรือ 'active')
+      }
+      
+      alert('เปิดการใช้งานผู้ใช้สำเร็จ');
+      await this.loadUsers(); // โหลดข้อมูลใหม่
+    } catch (error) {
+      console.error(error);
+      alert('เกิดข้อผิดพลาดในการเปิดสถานะ');
+    }
+  }
 }

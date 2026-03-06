@@ -228,6 +228,13 @@ public async changeUserStatus(uid: number) {
   return response;
 }
 
+//การเปิดสถานะ
+public async activateUserStatus(uid: number) {
+  const url = this.constants.API_ENDPOINT + 'activate-status'; // ปรับ path ให้ตรง router
+  const response = await lastValueFrom(this.http.put(url, { uid }));
+  return response;
+}
+
   ///////////////////////////////////////////////////////////////////////////
   // ลบไฟล์
   public async DeleteFile(documentId: number) {

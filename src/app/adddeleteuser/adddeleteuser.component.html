@@ -153,13 +153,12 @@
     </button>
 
     <button 
-      *ngIf="user.status === '0'" 
-      class="btn-disabled" 
-      disabled
-    >
-      <span class="material-icons">lock</span>
-      ถูกปิดการใช้งาน
-    </button>
+    *ngIf="user.status === '0'" 
+    class="btn-activate" 
+    (click)="activateUser(user.uid)"
+  >
+    <span class="material-icons">check_circle</span> เปิดการใช้งาน
+  </button>
   </td>
 </tr>
 
