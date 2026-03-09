@@ -12,7 +12,7 @@ export class Menubook {
 manuals = [
   {
     name: "คู่มือการใช้งานระบบ.pdf",
-    url: "https://cdn.csmsu.net/extproj_mypdf/adb18786-c983-4fd4-9cea-c56c7914280c.pdf"
+    url: "https://cdn.csmsu.net/extproj_mypdf/9b1ec4dd-7fd5-40a4-9ebe-5ec90ecc89cd.pdf"
   },
 ];
 
@@ -23,7 +23,7 @@ openFile(url: string) {
 downloadFile(url: string) {
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'https://cdn.csmsu.net/extproj_mypdf/adb18786-c983-4fd4-9cea-c56c7914280c.pdf?download=true';
+  link.download = 'https://cdn.csmsu.net/extproj_mypdf/9b1ec4dd-7fd5-40a4-9ebe-5ec90ecc89cd.pdf?download=true';
   link.click();
 }
 }
