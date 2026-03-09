@@ -72,6 +72,14 @@
       หมวดหมู่
     </li>
 
+    <li
+      [class.active]="isActive('/menubook')"
+      (click)="go('/menubook')"
+    >
+      <span class="material-icons">help</span>
+      คู่มือ
+    </li>
+
     <li class="logout" (click)="logout()">
       <span class="material-icons">logout</span>
       ออกจากระบบ

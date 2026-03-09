@@ -1,0 +1,31 @@
+<div class="manual-container">
+<app-adminsidebar [mode]="'full'"></app-adminsidebar>
+  <div class="manual-grid">
+
+    <div class="manual-card" *ngFor="let file of manuals">
+
+      <span class="material-icons pdf-icon">
+        picture_as_pdf
+      </span>
+
+      <div class="manual-name">
+        {{ file.name }}
+      </div>
+
+      <div class="manual-actions">
+
+        <button class="view-btn" (click)="openFile(file.url)">
+          เปิดดู
+        </button>
+
+        <button class="download-btn" (click)="downloadFile(file.url)">
+          ดาวน์โหลด
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

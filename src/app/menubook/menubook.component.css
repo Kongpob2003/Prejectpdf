@@ -1,0 +1,63 @@
+.manual-container{
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  margin-left: 300px;
+  margin-top: 200px;
+}
+
+.manual-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:20px;
+}
+
+.manual-card{
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+
+.manual-card:hover{
+  transform:translateY(-4px);
+}
+
+.pdf-icon{
+  font-size:50px;
+  color:#e53935;
+}
+
+.manual-name{
+  margin-top:10px;
+  font-weight:500;
+  font-size:14px;
+  word-break:break-word;
+}
+
+.manual-actions{
+  margin-top:15px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.view-btn{
+  background:#1A285F;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.download-btn{
+  background:#4CAF50;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}

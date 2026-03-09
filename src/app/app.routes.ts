@@ -50,6 +50,12 @@ export const routes: Routes = [
     data: { roles: ['admin'] }
   },
 
+{
+    path: 'menubook', // สมมติว่าเป็นของ Admin
+    loadComponent: () => import('./menubook/menubook.component').then(m => m.Menubook),
+    canActivate: [authGuard],
+    data: { roles: ['admin'] }
+  },
   // ================= USER ROUTES =================
   {
     path: 'userhome',
