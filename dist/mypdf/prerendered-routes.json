@@ -1,0 +1,24 @@
+{
+  "routes": {
+    "/": {},
+    "/adddeleteuser": {},
+    "/adminsidebar": {},
+    "/calender": {},
+    "/category": {},
+    "/home": {},
+    "/jae": {},
+    "/login": {},
+    "/menubook": {},
+    "/profile": {},
+    "/qualityassurance": {},
+    "/relation": {},
+    "/review": {},
+    "/sidebar": {},
+    "/usercalender": {},
+    "/userhome": {},
+    "/userjae": {},
+    "/userprofile": {},
+    "/userqualityassurance": {},
+    "/userrelation": {}
+  }
+}
