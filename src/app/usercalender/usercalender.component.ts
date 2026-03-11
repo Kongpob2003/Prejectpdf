@@ -65,7 +65,7 @@ export class UserCalenderComponent implements OnInit {
     // โหลดข้อมูลเอกสาร
     // 2. ถ้ามี User ID ให้โหลดเอกสารของคนนั้น
     if (user && user.uid) {
-      console.log('Current User ID:', user.uid);
+      // console.log('Current User ID:', user.uid);
       await this.loadDocuments(user.uid); // ✅ ส่ง UID ไป
     } else {
       console.warn('User ID not found');

@@ -73,8 +73,8 @@ export class RelationComponent {
     this.docMap.set(doc.did, doc);
   });
   
-  console.log('Boards:', this.boardData);
-  console.log('Docs:', this.documents);
+  // console.log('Boards:', this.boardData);
+  // console.log('Docs:', this.documents);
   
   this.cdr.detectChanges();
   }
