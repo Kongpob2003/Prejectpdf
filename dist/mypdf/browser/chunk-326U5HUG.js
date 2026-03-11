@@ -1,1 +1,0 @@
-import{Tb as a,bb as i,vb as n,wb as o}from"./chunk-ALDILD3Q.js";var r=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=i({type:t,selectors:[["app-review"]],decls:2,vars:0,template:function(e,p){e&1&&(n(0,"p"),a(1,"review works!"),o())},encapsulation:2})};export{r as Review};
