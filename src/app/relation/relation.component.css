@@ -80,7 +80,7 @@
 .home-container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
+  background: linear-gradient(180deg, #FEF2F4, #FEF2F4);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
@@ -123,7 +123,7 @@
 }
 
 .btn-add {
-  background: #1A285F;
+  background: #FF8BA7;
   color: white;
   border: none;
   padding: 8px 16px;

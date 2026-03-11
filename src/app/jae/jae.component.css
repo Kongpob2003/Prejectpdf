@@ -6,7 +6,7 @@
 .home-container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
+  background: linear-gradient(180deg, #FEF2F4, #FEF2F4);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
@@ -83,9 +83,9 @@
 
 .year-tabs button.active,
 .term-tabs button.active-term {
-  background: #1A285F;
+  background: #FF8BA7;
   color: white;
-  border-color: #1A285F;
+  border-color: #FF8BA7;
 }
 
 /* ===== File List ===== */
@@ -170,7 +170,7 @@
   border-radius: 999px;
 
   background: #f3f6ff;
-  color: #1A285F;
+  color: #FF8BA7;
 
   border: 1px solid #d6defa;
   cursor: pointer;
@@ -187,7 +187,7 @@
 
 /* hover */
 .back-btn:hover {
-  background: #1A285F;
+  background: #FFC6C7;
   color: #ffffff;
   transform: translateX(-4px);
   box-shadow: 0 6px 16px rgba(26, 40, 95, 0.25);

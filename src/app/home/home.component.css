@@ -6,7 +6,7 @@
 .home-container {
   display: flex;
   height: 100vh;
-  background: linear-gradient(180deg, #f2f4f8, #e9edf5);
+  background: linear-gradient(180deg, #FEF2F4, #FEF2F4);
   font-family: "Segoe UI", system-ui, sans-serif;
 }
 
@@ -76,7 +76,7 @@
 
 .user-info .material-icons {
   font-size: 28px;
-  color: #1A285F;
+  color: #FF8BA7;
 }
 
 /* =====================
@@ -104,7 +104,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #FFA726;
+  background: #C3F0CA;
   color: #000;
   padding: 20px;
   border-radius: 14px;
@@ -131,7 +131,7 @@
    Buttons
 ===================== */
 .upload-btn {
-  background: #1A285F;
+  background: #FF8BA7;
   color: white;
   border: none;
   padding: 10px 18px;
@@ -165,9 +165,9 @@
 }
 
 .tabs button.active {
-  background: #1A285F;
+  background: #FF8BA7;
   color: white;
-  border-color: #1A285F;
+  border-color: #FF8BA7;
 }
 
 /* =====================

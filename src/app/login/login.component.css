@@ -2,7 +2,7 @@
 .container {
   display: flex;
   height: 100vh;
-  background-color: #1A285F;
+  background-color: #FF8BA7;
 }
 
 /* ซ้าย */
@@ -103,7 +103,7 @@ button {
   width: 25%;
   padding: 10px;
   margin-top: 12px;
-  background-color: #1A285F;
+  background-color: #FF8BA7;
   color: white;
   border: none;
   border-radius: 10px;
