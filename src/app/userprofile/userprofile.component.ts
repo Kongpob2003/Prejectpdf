@@ -47,7 +47,6 @@ export class UserprofileComponent {
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.user = await this.auth.getUser();
-      console.log('PROFILE USER:', this.user);
     }
 
     if (this.user) {

@@ -46,8 +46,6 @@ export class LoginComponent {
       }
 
       const user = response as UserLoginRes;
-      console.log(response);
-      console.log(user.type);
 
       if (user.status === '0') {
         alert('บัญชีนี้ของคุณถูกระงับการใช้งาน');
