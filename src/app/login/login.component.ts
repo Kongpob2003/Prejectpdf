@@ -36,7 +36,7 @@ export class LoginComponent {
       identifier: this.email,   // หรือ username
       password: this.password
     };
-    console.log(body);
+   
     try {
       const response = await this.backend.login(body);
 
@@ -61,9 +61,23 @@ export class LoginComponent {
       else {
         this.router.navigate(['/userhome']);
       }
-    } catch (error) {
+    } catch (error : any) {
       console.error(error);
-      alert('ข้อมูลไม่ถูกต้อง');
+      const backendMessage = error.error?.message || error.response?.data?.message;
+      const statusCode = error.status || error.response?.status;
+      //  เช็คเงื่อนไขและ Alert แจ้งเตือนผู้ใช้ให้ตรงจุด
+      if (statusCode === 403 || backendMessage === "Account disabled") {
+        alert('บัญชีนี้ถูกระงับการใช้งาน กรุณาติดต่อผู้ดูแลระบบ');
+
+      } else if (statusCode === 401) {
+        alert('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
+
+      } else if (statusCode === 400) {
+        alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+
+      } else {
+        alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
+      }
     }
   }
  
