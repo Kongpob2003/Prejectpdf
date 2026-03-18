@@ -47,12 +47,27 @@ this.hasError = true;
   close() {
     this.dialogRef.close();
   }
- toggleFullscreen() {
-  const el = document.documentElement;
-  if (!document.fullscreenElement) {
-    el.requestFullscreen();
-  } else {
-    document.exitFullscreen();
+  openFile(file: any) {
+    let targetUrl = '';
+
+    // 1. เช็คว่าเป็นออบเจกต์ SafeResourceUrl ของ Angular หรือไม่
+    if (file && file.changingThisBreaksApplicationSecurity) {
+      targetUrl = file.changingThisBreaksApplicationSecurity;
+    } 
+    // 2. เช็คว่าเป็นออบเจกต์ปกติที่มี Property .url หรือไม่
+    else if (file && file.url) {
+      targetUrl = file.url;
+    } 
+    // 3. เช็คว่าเป็น String URL ตรงๆ หรือไม่
+    else if (typeof file === 'string') {
+      targetUrl = file;
+    }
+
+    // ทำการเปิดลิงก์
+    if (targetUrl) {
+      window.open(targetUrl, '_blank');
+    } else {
+      alert('ไฟล์นี้ยังไม่ได้อัปโหลด');
+    }
   }
-}
 }
