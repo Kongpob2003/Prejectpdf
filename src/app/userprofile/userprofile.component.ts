@@ -32,6 +32,7 @@ export class UserprofileComponent {
   isEditing = false;
   emailDuplicateError = false;
   // ===== VALIDATION FLAGS =====
+  usernameError = false;
   emailError = false;
   passwordError = false;
   phoneError = false;
@@ -68,6 +69,11 @@ export class UserprofileComponent {
     // Reset error ซ้ำก่อนเช็ค
     this.emailDuplicateError = false;
     // ===== VALIDATION =====
+    if (!this.profile.username || this.profile.username.trim() === '') {
+      this.usernameError = true;
+    } else {
+      this.usernameError = false;
+    }
     const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
     this.emailError = !emailRegex.test(this.profile.email);
@@ -75,8 +81,8 @@ export class UserprofileComponent {
     this.phoneError = !/^\d{10}$/.test(this.profile.phone);
 
     // ❌ ถ้าไม่ผ่าน ไม่ยิง backend
-    if (this.emailError || this.passwordError || this.phoneError) {
-      alert('กรุณากรอกข้อมูลให้ถูกต้อง');
+    if (this.usernameError || this.emailError || this.passwordError || this.phoneError) {
+      alert('กรุณากรอกข้อมูลให้ถูกต้องและครบถ้วน');
       return;
     }
 
