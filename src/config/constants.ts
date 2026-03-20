@@ -4,5 +4,5 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Constants {
-  public readonly API_ENDPOINT: string = 'https://backendmypdf-5.onrender.com/';
+  public readonly API_ENDPOINT: string = 'https://backendmypdf-6.onrender.com/';
 }
