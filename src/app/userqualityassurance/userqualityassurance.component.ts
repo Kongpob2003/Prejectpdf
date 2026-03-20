@@ -24,9 +24,7 @@ interface Folder {
   styleUrl: './userqualityassurance.component.css',
 })
 export class UserQualityassuranceComponent {
-openFile(_t31: QAFile) {
-throw new Error('Method not implemented.');
-}
+
 
   folders: Folder[] = [];
   selectedFolder: Folder | null = null;
@@ -78,5 +76,14 @@ throw new Error('Method not implemented.');
 
   backToFolders() {
     this.selectedFolder = null;
+  }
+  openFile(file: QAFile) {
+    if (file.url) {
+      // ถ้ามี URL (มาจาก DB) ให้เปิดในแท็บใหม่
+      window.open(file.url, '_blank');
+    } else {
+      // ถ้าไม่มี URL (เพิ่งเลือกจากเครื่อง)
+      alert('ไฟล์นี้ยังไม่ได้อัปโหลด');
+    }
   }
 }
